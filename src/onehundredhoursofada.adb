@@ -1,20 +1,13 @@
-with Ada.Text_IO; use Ada.Text_IO;
+-------------------------------------------------------------------------------
+--  100 hours of Ada
+--
+--  This is a playground for learning Ada.
+--  It's not doing anything meaningful yet.
+-------------------------------------------------------------------------------
+with Countdown;
 
 procedure OneHundredHoursOfAda is
-   --
-   -- Prints a simple countdown from 10 to lift off.
-   --
-   procedure Countdown is
-   begin
-      for I in reverse 1 .. 10 loop
-         Put_Line (Integer'Image (I) & "...");
-      end loop;
-
-      Put_Line ("Lift off!");
-   end Countdown;
-
 begin
-
-   Countdown;
+   Countdown.Start;
 
 end OneHundredHoursOfAda;

@@ -34,4 +34,17 @@ end Countdown;
 * Loop variables cannot be re-assigned.
 * Execution of a branch in a `case` statement does not fall through to the next branch.
 
-Continue with https://learn.adacore.com/courses/intro-to-ada/chapters/imperative_language.html#imperative-language-declarative-regions
+## 002 
+
+* Function and procedure parameters are by default imutable, because their implicit (if not specified) is `in` (only read access). If you want to modify a parameter, you have to specify mode `in out` or `out`.
+* `out` parameters should be treated like uninitialized variables. They might be useful for assigning values to multiple return parameters (instead of returning a record type).
+* `.ads` files contain the specification, `.adb` files contain the implementation.
+
+📚 Later reading: https://learn.adacore.com/courses/GNAT_Toolchain_Intro/index.html
+
+
+## Backlog
+
+* pass-by-copy
+* testing
+* error handling
