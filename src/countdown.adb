@@ -4,6 +4,7 @@ package body Countdown is
 
    ------------------------------------------------------------------------
    --  Prints a simple countdown from the provided start value to lift off.
+   --  TODO Check `From >= 1`
    ------------------------------------------------------------------------
    procedure Start (From : Integer := 10) is
 

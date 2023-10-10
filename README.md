@@ -1,5 +1,7 @@
 # 100 hours of Ada
 
+This is a playground for learning Ada; it's not doing anything meaningful yet.
+
 Build with:
 ```
 $ alr build
@@ -36,15 +38,14 @@ end Countdown;
 
 ## 002 
 
-* Function and procedure parameters are by default imutable, because their implicit (if not specified) is `in` (only read access). If you want to modify a parameter, you have to specify mode `in out` or `out`.
-* `out` parameters should be treated like uninitialized variables. They might be useful for assigning values to multiple return parameters (instead of returning a record type).
+* Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
+* `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
 * `.ads` files contain the specification, `.adb` files contain the implementation.
 
 📚 Later reading: https://learn.adacore.com/courses/GNAT_Toolchain_Intro/index.html
 
-
 ## Backlog
 
 * pass-by-copy
-* testing
 * error handling
+* testing
