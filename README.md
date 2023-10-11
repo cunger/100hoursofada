@@ -38,16 +38,16 @@ end Countdown;
 
 ## 002 
 
-`.ads` (_Ada specification_) files contain the declarations that are visible from the outside, `.adb` (_Ada body_) files contain the implementation.
+`.ads` (_Ada specification_) files contain the declarations that are visible to the outside, `.adb` (_Ada body_) files contain the implementation.
 
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
 * `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
 
 ## 003 📦
 
-For example, `Ada.Text_IO` is a child package of `Ada`. Everything from the latter's specification is visible for the former.
+Packages can have child packages. For example, `Ada.Text_IO` is a child package of `Ada`. 
 
-In general, parent specifications are visible in the child, i.e. everything declared in the `.ads` file (not stuff in the declaration part of the package body!). For example, constants you want to be visible need to be part of the specification:
+Everything from the parent's specification is visible in the child. That is, everything declared in the `.ads` file; not stuff in the declaration part of the package body. For example, constants you want to be visible need to be part of the specification:
 ```ada
 package Reactor is
 
@@ -81,7 +81,7 @@ procedure Main is
    procedure Print (Line : String) renames IO.Put_Line;
 
 begin
-   Print ("Fnord!);
+   Print ("Fnord!");
 end Main;
 ```
 
