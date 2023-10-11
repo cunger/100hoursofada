@@ -85,14 +85,61 @@ begin
 end Main;
 ```
 
+## 004 Overflows
+
+Integer ranges are checked for overflows, both at compile time and at run time.
+```ada
+procedure Main is
+
+   I : Integer;
+   J : Integer;
+
+begin
+
+   I := Integer'Last + 1;
+   -- Compiler:
+   -- error: static expression fails Constraint_Check
+   -- error: value not in range of type "Standard.Integer"
+
+   I := Integer'Last;
+   J := I + 1;
+   -- Compiler:
+   -- warning: value not in range of type "Standard.Integer"
+   -- warning: Constraint_Error will be raised at run time
+   -- Run time:
+   -- CONSTRAINT_ERROR : overflow check failed
+
+   J := (Integer'Last + Integer'Last) / 10
+   -- no overflow
+end Main;
+```
+
+Not only for standard integers, but also for custom-defined integer types (which allow you to specify the admissible range).
+```ada
+procedure Main is
+
+   type Temperatur_K is range 0 .. Integer'Last;
+   Tk : Temperatur_K;
+
+begin
+   Tk := -10;
+   -- Compiler:
+   -- warning: value not in range of type "Temperatur_K"
+   -- warning: Constraint_Error will be raised at run time
+   -- Run time: 
+   -- CONSTRAINT_ERROR : range check failed
+end Main;
+```
+
 ## 📚 Next
 
-* https://learn.adacore.com/courses/intro-to-ada/chapters/strongly_typed_language.html
+* https://learn.adacore.com/courses/intro-to-ada/chapters/strongly_typed_language.html#enumerations
 * https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/index.html
 
 ## Backlog
 
-* pass-by-copy
+* attributes
+* pass-by-value vs pass-by-reference
 * error handling
 * testing
 * nulls and the lack thereof

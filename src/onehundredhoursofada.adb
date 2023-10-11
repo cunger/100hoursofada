@@ -5,9 +5,11 @@
 --  It's not doing anything meaningful yet.
 -------------------------------------------------------------------------------
 with Countdown;
+with Inspect;
 
 procedure OneHundredHoursOfAda is
 begin
+   Inspect;
    Countdown.Start;
 
 end OneHundredHoursOfAda;
