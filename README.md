@@ -38,14 +38,65 @@ end Countdown;
 
 ## 002 
 
+`.ads` (_Ada specification_) files contain the declarations that are visible from the outside, `.adb` (_Ada body_) files contain the implementation.
+
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
 * `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
-* `.ads` files contain the specification, `.adb` files contain the implementation.
 
-📚 Later reading: https://learn.adacore.com/courses/GNAT_Toolchain_Intro/index.html
+## 003 📦
+
+For example, `Ada.Text_IO` is a child package of `Ada`. Everything from the latter's specification is visible for the former.
+
+In general, parent specifications are visible in the child, i.e. everything declared in the `.ads` file (not stuff in the declaration part of the package body!). For example, constants you want to be visible need to be part of the specification:
+```ada
+package Reactor is
+
+   Model : constant String := "Konvoi";
+   -- visible in all child packages
+
+end Reactor
+
+package body Reactor is
+
+   Model : constant String := "EPR";
+   -- only visible within the body
+   -- NOT visible in child packages
+   -- NOT shadowing: compilation fails because of conflict with declaration
+
+end Reactor
+```
+
+Built-in packages: 
+* `Ada` is the standard language library, including child libraries like `Ada.Calendar`, `Ada.Numerics`, `Ada.Real_Time`, `Ada.Strings`, `Ada.Streams`, and so on. (For their specifications, see [github.com/reznikmm/adalib](https://github.com/reznikmm/adalib).)
+* `Interfaces` for interfacing with other systems, e.g. `Interfaces.C` and `Interfaces.Fortran` 
+* `System` for system-specific stuff (such as `MAX_INT`, or `TICK` for the clock period in seconds)
+
+Packages, procedures, and functions and be renamed in the declaration:
+```ada
+with Ada.Text_IO;
+
+procedure Main is
+   
+   package IO renames Ada.Text_IO;
+   procedure Print (Line : String) renames IO.Put_Line;
+
+begin
+   Print ("Fnord!);
+end Main;
+```
+
+## 📚 Next
+
+* https://learn.adacore.com/courses/intro-to-ada/chapters/strongly_typed_language.html
+* https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/index.html
 
 ## Backlog
 
 * pass-by-copy
 * error handling
 * testing
+* nulls and the lack thereof
+* Procedure with an empty body
+```ada
+procedure NotImplemented is null; 
+```

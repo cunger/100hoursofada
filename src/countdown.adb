@@ -1,4 +1,4 @@
-with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO;
 
 package body Countdown is
 
@@ -8,13 +8,16 @@ package body Countdown is
    ------------------------------------------------------------------------
    procedure Start (From : Integer := 10) is
 
+      package IO renames Ada.Text_IO;
+      procedure Print (Line : String) renames IO.Put_Line;
       function To_String (I : Integer) return String renames Integer'Image;
 
    begin
       for I in reverse 1 .. From loop
-         Put_Line (To_String (I));
+         Print (To_String (I));
       end loop;
 
-      Put_Line ("Lift off!");
+      Print ("Lift off!");
    end Start;
+
 end Countdown;
