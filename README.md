@@ -1,6 +1,6 @@
 # 100 hours of Ada
 
-This is a playground for learning Ada; it's not doing anything meaningful yet.
+This is a playground for learning Ada. There is no specific structure or goal, just bits and pieces to note and try out on the way.
 
 Build with:
 ```
@@ -38,12 +38,39 @@ end Countdown;
 
 ## 002 
 
-`.ads` (_Ada specification_) files contain the declarations that are visible to the outside, `.adb` (_Ada body_) files contain the implementation.
+Ada compilation units are split into two parts:
+* `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
+* `.adb` (_Ada body_) files contain the implementation
 
+Program unit:
+```ada
+kind-of-unit Unit_Name
+   -- local declarations (visible within this unit but nowhere else)
+begin
+   -- sequence ofstatements
+exception
+   -- sequence of statements
+end Unit_Name;
+```
+
+Parameters:
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
 * `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
 
 ## 003 📦
+
+General structure:
+```ada
+package Package_Name is
+   -- public declarations
+private
+   -- private declarations
+end Package_Name;
+
+package body Package_Name is
+   -- implementation
+end Package_Name;
+```
 
 Packages can have child packages. For example, `Ada.Text_IO` is a child package of `Ada`. 
 
@@ -118,7 +145,7 @@ Not only for standard integers, but also for custom-defined integer types (which
 ```ada
 procedure Main is
 
-   type Temperatur_K is range 0 .. Integer'Last;
+   type Temperatur_K is new Integer range 0 .. Integer'Last;
    Tk : Temperatur_K;
 
 begin
@@ -131,17 +158,30 @@ begin
 end Main;
 ```
 
+> An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
+
+## 005 
+
+> A key difference between Ada and most other software development languages is that Ada is designed as an engineering tool as well as a programming tool.
+
+> Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
+programmer when human safety is at risk. Software at that level of risk must be engineered. 
+
+> Ada is designed to maximize the error checking a compiler can do early in the development process
+
+> The default for every Ada construct is _safe_.
+
 ## 📚 Next
 
-* https://learn.adacore.com/courses/intro-to-ada/chapters/strongly_typed_language.html#enumerations
+* https://learn.adacore.com/courses/intro-to-ada/chapters/records.html
 * https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/index.html
 
 ## Backlog
 
 * attributes
-* pass-by-value vs pass-by-reference
+* pass-by-value vs pass-by-reference, access parameters
 * error handling
-* testing
+* AUnit and other approaches to testing
 * nulls and the lack thereof
 * Procedure with an empty body
 ```ada
