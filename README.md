@@ -171,6 +171,33 @@ programmer when human safety is at risk. Software at that level of risk must be 
 
 > The default for every Ada construct is _safe_.
 
+## 006
+
+* elementary types
+* composite types (arrays, records)
+* derived types and subtypes
+```ada
+-- derived types (do not count as Float, cannot be mixed but always need to be converted)
+type Meters is new Float;
+type Miles  is new Float;
+
+-- subtypes (do count as Integer)
+subtype Natural  is Integer range 0 .. Integer'Last;
+subtype Positive is Integer range 1 .. Integer'Last;
+
+-- subtype without constraints as alias
+subtype Amount is Integer;
+```
+
+**Named association:** Parameters in a subprogram can be named. For example, a subprogram that is defined like this:
+```ada
+procedure Point_To(Azimuth, Elevation : Float);
+```
+Can be called like this:
+```ada
+Point_To(Azimuth => 42.8, Elevation => 16.2);
+```
+
 ## 📚 Next
 
 * https://learn.adacore.com/courses/intro-to-ada/chapters/records.html
