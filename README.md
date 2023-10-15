@@ -33,7 +33,7 @@ end Countdown;
 ```
 
 * Expressions (e.g. `I = 0`) and statements (e.g. `I := 0;`) are distinct. That is, expressions are not valid statements.
-* Loop variables cannot be re-assigned.
+* Loop variables are constant within the loop body, i.e. cannot be re-assigned.
 * Execution of a branch in a `case` statement does not fall through to the next branch.
 
 ## 002 
@@ -195,7 +195,51 @@ procedure Point_To(Azimuth, Elevation : Float);
 ```
 Can be called like this:
 ```ada
+-- positional:
+Point_To(42.8, 16.2);
+-- named:
 Point_To(Azimuth => 42.8, Elevation => 16.2);
+```
+Same holds for constructing arrays:
+```ada
+type Color_Channel is (Y, Cb, Cr);
+type Color_Value is range 0 .. 255;
+type Color is array (Color_Channel) of Color_Value;
+
+-- positional:
+Color1 : constant Color := (0, 0, 0);
+-- named:
+Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
+```
+
+## 007
+
+* Arrays have an index type, which can be any enumerable type. It needs to be constrained before the array can be used.
+  ```ada
+  type Valve_State is (Open, Closed, Stuck_Inbetween);
+  type Valve_States is array (1..10) of Valve_State;
+  ```
+* Arrays can be concatenated with `&`. 
+* Arrays an be multidimensional, for example:
+  ```ada
+  type Matrix is array (
+     Positive range <>, -- first dimension
+     Positive range <>  -- second dimension
+  ) of Boolean;
+
+  type Matrices is array (Positive range <>) of Matrix(1 .. 10, 1 .. 20);
+  ```
+
+Now you can make your intent very obvious:
+```ada
+procedure List_Demo is
+   type Index is range 1 .. 10;
+begin
+   for I in Index'First .. Index'Last 
+      loop
+         -- access element as List (I)
+      end loop;
+end List_Demo;
 ```
 
 ## 📚 Next
@@ -205,6 +249,12 @@ Point_To(Azimuth => 42.8, Elevation => 16.2);
 
 ## Backlog
 
+* What’s the difference between `type Blah new Integer range …` and `subtype Integer range …`?
+* type conversions
+* Custom fixed point types: 
+  ```
+  type Type_Name is delta <delta-value> digits <digits-value> (range <start>..<end>);
+  ```
 * attributes
 * pass-by-value vs pass-by-reference, access parameters
 * error handling
@@ -214,3 +264,4 @@ Point_To(Azimuth => 42.8, Elevation => 16.2);
 ```ada
 procedure NotImplemented is null; 
 ```
+* private types 
