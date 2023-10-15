@@ -220,32 +220,64 @@ Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
   type Valve_States is array (1..10) of Valve_State;
   ```
 * Arrays can be concatenated with `&`. 
+* `String` is defined as an array of characters. (So strings are bounded; for unbounded strings see [`Unbounded_String`](https://learn.adacore.com/courses/intro-to-ada/chapters/standard_library_strings.html#intro-ada-unbounded-strings).)
 * Arrays an be multidimensional, for example:
   ```ada
   type Matrix is array (
-     Positive range <>, -- first dimension
-     Positive range <>  -- second dimension
+     Positive range <>, -- first dimension, unconstrained
+     Positive range <>  -- second dimension, unconstrained
   ) of Boolean;
 
   type Matrices is array (Positive range <>) of Matrix(1 .. 10, 1 .. 20);
+  -- note that the dimensions need to be constrained when the type is used
   ```
 
-Now you can make your intent very obvious:
+Now you can make your code very obvious and easy to check:
 ```ada
-procedure List_Demo is
+procedure Iterate is
    type Index is range 1 .. 10;
 begin
    for I in Index'First .. Index'Last 
       loop
          -- access element as List (I)
       end loop;
-end List_Demo;
+end Iterate;
 ```
 
 ## 008
 
 > „As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.“
 
+## 009 
+
+* Identifiers are case-insensitive. 
+* Keeping a type private:
+```ada
+procedure Demo is
+   type Blah is private;
+   -- use type in other declarations
+private
+   type Blah is ...;
+begin
+   null;
+end Demo;
+```
+* Extending a record:
+```ada
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
+
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
+```
 
 ## 📚 Next
 
@@ -269,4 +301,3 @@ end List_Demo;
 ```ada
 procedure NotImplemented is null; 
 ```
-* private types 
