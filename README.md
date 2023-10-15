@@ -242,6 +242,11 @@ begin
 end List_Demo;
 ```
 
+## 008
+
+> „As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.“
+
+
 ## 📚 Next
 
 * https://learn.adacore.com/courses/intro-to-ada/chapters/records.html
