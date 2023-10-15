@@ -169,6 +169,8 @@ programmer when human safety is at risk. Software at that level of risk must be 
 
 > Ada is designed to maximize the error checking a compiler can do early in the development process
 
+It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
+
 > The default for every Ada construct is _safe_.
 
 ## 006
@@ -279,10 +281,10 @@ type Sent_Message is new Message with
    end record;
 ```
 
-## 📚 Next
+## 📚 References
 
-* https://learn.adacore.com/courses/intro-to-ada/chapters/records.html
-* https://learn.adacore.com/courses/Ada_For_The_CPP_Java_Developer/index.html
+* https://learn.adacore.com/courses/intro-to-ada/
+* Richard Riehle: Ada Distilled.
 
 ## Backlog
 
