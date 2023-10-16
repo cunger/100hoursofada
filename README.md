@@ -281,6 +281,10 @@ type Sent_Message is new Message with
    end record;
 ```
 
+## 010 💣
+
+Playing with Ada as a design tool, first baby step: creating requirements and specification for Minesweeper game board.
+
 ## 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
