@@ -6,6 +6,9 @@
 -------------------------------------------------------------------------------
 with Countdown;
 with Inspect;
+with Minesweeper.Board;
+with Minesweeper.Board.Generation;
+with Minesweeper.Board.Actions;
 
 procedure OneHundredHoursOfAda is
 begin

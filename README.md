@@ -252,7 +252,7 @@ end Iterate;
 
 ## 009 
 
-* Identifiers are case-insensitive. 
+* Identifiers are case-insensitive. So `function Fill(Board : Board)` does not work.
 * Keeping a type private:
 ```ada
 procedure Demo is
@@ -285,10 +285,15 @@ type Sent_Message is new Message with
 
 Playing with Ada as a design tool, first baby step: creating requirements and specification for Minesweeper game board.
 
+## 011
+
+If and only if the specification of a package contains incomplete declarations (i.e. subprogramms without implementation), there has to be a package body with these implementations.
+
 ## 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
-* Richard Riehle: Ada Distilled.
+* Richard Riehle: Ada Distilled
+* https://en.wikibooks.org/wiki/Ada_Programming 
 
 ## Backlog
 
