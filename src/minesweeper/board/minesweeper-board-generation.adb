@@ -1,7 +1,10 @@
 package body Minesweeper.Board.Generation is
 
+   --  Randomly place mines on the board.
    procedure Place_Mines (B : in out Board; Number_Of_Mines : Positive);
-   procedure Calculate_Markers (B : in out Board);
+
+   --  For each cell, calculate the number of adjacent mines.
+   procedure Mark_Cells_With_Number_Of_Adjacent_Mines (B : in out Board);
 
    --  Generates a board with the given width and height.
    --  Then randomly places the given number of mines
@@ -28,16 +31,21 @@ package body Minesweeper.Board.Generation is
       )));
 
       Place_Mines (B, Number_Of_Mines);
-      Calculate_Markers (B);
+      Mark_Cells_With_Number_Of_Adjacent_Mines (B);
 
       return B;
    end Generate_Board;
 
-   --  Randomly place mines on the board,
-   --  by picking cells and marking them as Is_Mined := True.
-   procedure Place_Mines (B : in out Board; Number_Of_Mines : Positive) is null;
+   procedure Place_Mines (B : in out Board; Number_Of_Mines : Positive) is
+   begin
+      --  Randomly pick cells and mark them as Is_Mined := True
+      null;
+   end Place_Mines;
 
-   --  For each cell, sum the number of adjacent cells that are mined.
-   procedure Calculate_Markers (B : in out Board) is null;
+   procedure Mark_Cells_With_Number_Of_Adjacent_Mines (B : in out Board) is
+   begin
+      --  For each cell, count the number of adjacent cells that are mined.
+      null;
+   end Mark_Cells_With_Number_Of_Adjacent_Mines;
 
 end Minesweeper.Board.Generation;
