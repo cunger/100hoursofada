@@ -4,17 +4,18 @@ package Minesweeper.Board is
    type Height is range 1 .. 30;
 
    type Cell is private; 
-   type Board is private;
+
+   type Board is array (Width range <>, Height range <>) of Cell;
    
 private
 
    type Cell is record
-      Number_of_Adjacent_Mines : Integer range 1 .. 8;
-      Is_Mined : Boolean := False;
-      Is_Hidden : Boolean := True;
-      Is_Flagged : Boolean := False;
-   end record;
+      Is_Mined   : Boolean;
+      Is_Hidden  : Boolean;
+      Is_Flagged : Boolean;
 
-   type Board is array (Width, Height) of Cell;
+      -- Calculated: the number of mines in neighboring cells
+      Number_of_Adjacent_Mines : Integer range 0 .. 8;
+   end record;
 
 end Minesweeper.Board;
