@@ -304,11 +304,6 @@ If and only if the specification of a package contains incomplete declarations (
   type Type_Name is delta <delta-value> digits <digits-value> (range <start>..<end>);
   ```
 * attributes
-* pass-by-value vs pass-by-reference, access parameters
-* error handling
+* exceptions and error handling
 * AUnit and other approaches to testing
-* nulls and the lack thereof
-* Procedure with an empty body
-```ada
-procedure NotImplemented is null; 
-```
+* null (as value, e.g. for an access type, and as procedure body)

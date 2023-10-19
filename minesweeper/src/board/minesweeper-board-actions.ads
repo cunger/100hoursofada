@@ -1,11 +1,9 @@
 package Minesweeper.Board.Actions is
 
-   procedure Toggle_Flag (C : in out Cell);
-   --  Pre:  cell is hidden
-   --  Post: cell flagged changed
+   procedure Toggle_Flag (C : in out Cell)
+      with (Pre => C.Is_Hidden);
 
-   procedure Reveal (C : in out Cell);
-   --  Pre:  cell is hidden
-   --  Post: cell is not hidden
+   procedure Reveal (C : in out Cell)
+      with (Pre => C.Is_Hidden);
 
 end Minesweeper.Board.Actions;

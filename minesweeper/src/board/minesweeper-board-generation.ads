@@ -5,10 +5,13 @@ package Minesweeper.Board.Generation is
       Number_Of_Columns : Width;
       Number_Of_Rows    : Height;
       Number_Of_Mines   : Positive
-   ) return Board;
+   ) return Board
+      with (Pre => (
+         Number_Of_Mines > 0 and
+         Number_Of_Mines < Number_Of_Columns * Number_Of_Rows
+      ));
    --  TODO
-   --  pre: Number_Of_Mines < Number_Of_Columns * Number_Of_Rows
-   --  post: for all cells Is_Hidden = True
-   --  post: there are Number_of_Mines cells with Is_Mined = True
+   --  UNIT TEST: for all cells Is_Hidden = True
+   --  UNIT TEST: there are Number_of_Mines cells with Is_Mined = True
 
 end Minesweeper.Board.Generation;
