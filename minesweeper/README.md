@@ -1,6 +1,13 @@
 # Minesweeper
 
-This is an exercise in engineering the logic of a minesweeper game (without a graphical user interface).
+This is an exercise in engineering the logic of a minesweeper game (without graphical user interface).
+
+## Build and test
+
+Build with:
+```
+$ alr build
+```
 
 ## Requirements
 

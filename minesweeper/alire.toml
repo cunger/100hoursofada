@@ -1,0 +1,9 @@
+name = "minesweeper"
+description = "Minesweeper practice project (no GUI)"
+version = "0.1.0-dev"
+
+authors = ["Christina Unger"]
+maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
+maintainers-logins = ["cunger"]
+
+executables = ["minesweeper"]

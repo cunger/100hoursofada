@@ -2,17 +2,22 @@
 
 This is a playground for learning Ada. There is no specific structure or goal, just bits and pieces to note and try out on the way.
 
-Build with:
-```
-$ alr build
-```
+## 🧙‍♂️
 
-Run with:
-```
-$ alr run
-```
+> „As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.“
 
-## 001 Lift off! 🚀
+> A key difference between Ada and most other software development languages is that Ada is designed as an engineering tool as well as a programming tool.
+
+> Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
+programmer when human safety is at risk. Software at that level of risk must be engineered. 
+
+> Ada is designed to maximize the error checking a compiler can do early in the development process
+
+It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
+
+> The default for every Ada construct is _safe_.
+
+## Lift off! 🚀
 
 ```ada
 -- countdown.adb (file name needs to correspond to name of the main procedure)
@@ -35,8 +40,10 @@ end Countdown;
 * Expressions (e.g. `I = 0`) and statements (e.g. `I := 0;`) are distinct. That is, expressions are not valid statements.
 * Loop variables are constant within the loop body, i.e. cannot be re-assigned.
 * Execution of a branch in a `case` statement does not fall through to the next branch.
+* Identifiers are case-insensitive. 
+* `function Fill(Board : Board)` does not work.
 
-## 002 
+## 📦
 
 Ada compilation units are split into two parts:
 * `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
@@ -53,11 +60,38 @@ exception
 end Unit_Name;
 ```
 
+Program units are packages or subprograms.
+
+### Functions and procedures
+
 Parameters:
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
 * `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
 
-## 003 📦
+**Named association:** Parameters in a subprogram can be named. For example, a subprogram that is defined like this:
+```ada
+procedure Point_To(Azimuth, Elevation : Float);
+```
+Can be called like this:
+```ada
+-- positional:
+Point_To(42.8, 16.2);
+-- named:
+Point_To(Azimuth => 42.8, Elevation => 16.2);
+```
+Same holds for constructing arrays:
+```ada
+type Color_Channel is (Y, Cb, Cr);
+type Color_Value is range 0 .. 255;
+type Color is array (Color_Channel) of Color_Value;
+
+-- positional:
+Color1 : constant Color := (0, 0, 0);
+-- named:
+Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
+```
+
+### Packages
 
 General structure:
 ```ada
@@ -112,7 +146,7 @@ begin
 end Main;
 ```
 
-## 004 Overflows
+## Overflows
 
 Integer ranges are checked for overflows, both at compile time and at run time.
 ```ada
@@ -160,20 +194,7 @@ end Main;
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
 
-## 005 
-
-> A key difference between Ada and most other software development languages is that Ada is designed as an engineering tool as well as a programming tool.
-
-> Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
-programmer when human safety is at risk. Software at that level of risk must be engineered. 
-
-> Ada is designed to maximize the error checking a compiler can do early in the development process
-
-It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
-
-> The default for every Ada construct is _safe_.
-
-## 006
+## Types
 
 * elementary types
 * composite types (arrays, records)
@@ -191,30 +212,35 @@ subtype Positive is Integer range 1 .. Integer'Last;
 subtype Amount is Integer;
 ```
 
-**Named association:** Parameters in a subprogram can be named. For example, a subprogram that is defined like this:
+* Keeping a type private:
 ```ada
-procedure Point_To(Azimuth, Elevation : Float);
+procedure Demo is
+   type Blah is private;
+   -- use type in other declarations
+private
+   type Blah is ...;
+begin
+   null;
+end Demo;
 ```
-Can be called like this:
+* Extending a record:
 ```ada
--- positional:
-Point_To(42.8, 16.2);
--- named:
-Point_To(Azimuth => 42.8, Elevation => 16.2);
-```
-Same holds for constructing arrays:
-```ada
-type Color_Channel is (Y, Cb, Cr);
-type Color_Value is range 0 .. 255;
-type Color is array (Color_Channel) of Color_Value;
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
 
--- positional:
-Color1 : constant Color := (0, 0, 0);
--- named:
-Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
 ```
 
-## 007
+## Arrays
 
 * Arrays have an index type, which can be any enumerable type. It needs to be constrained before the array can be used.
   ```ada
@@ -246,58 +272,21 @@ begin
 end Iterate;
 ```
 
-## 008
-
-> „As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.“
-
-## 009 
-
-* Identifiers are case-insensitive. So `function Fill(Board : Board)` does not work.
-* Keeping a type private:
-```ada
-procedure Demo is
-   type Blah is private;
-   -- use type in other declarations
-private
-   type Blah is ...;
-begin
-   null;
-end Demo;
-```
-* Extending a record:
-```ada
--- A record type must be tagged in order to be extensible.
-type Message is tagged
-   record
-      Content : Undbounded_String;
-      Length : Natural;
-   end record;
-
--- Extending a record type adds fields.
-type Sent_Message is new Message with
-   record
-      Recipient : Undbounded_String;
-      Timestamp : Date;
-   end record;
-```
-
-## 010 💣
-
-Playing with Ada as a design tool, first baby step: creating requirements and specification for Minesweeper game board.
-
-## 011
-
-If and only if the specification of a package contains incomplete declarations (i.e. subprogramms without implementation), there has to be a package body with these implementations.
-
 ## 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
 * Richard Riehle: Ada Distilled
-* https://en.wikibooks.org/wiki/Ada_Programming 
+* https://en.wikibooks.org/wiki/Ada_Programming
+
+## Explore
+
+* https://github.com/mosteo/aaa/blob/master/tests/tests.gpr
+* https://ada.tips/
+* Crates: https://alire.ada.dev/crates.html
+* https://github.com/mosteo/rxada
 
 ## Backlog
 
-* What’s the difference between `type Blah new Integer range …` and `subtype Integer range …`?
 * type conversions
 * Custom fixed point types: 
   ```

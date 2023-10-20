@@ -1,9 +1,0 @@
-name = "onehundredhoursofada"
-description = "Learning Ada one hour at a time"
-version = "1.0.0-dev"
-
-authors = ["Christina Unger"]
-maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
-maintainers-logins = ["cunger"]
-
-executables = ["onehundredhoursofada"]

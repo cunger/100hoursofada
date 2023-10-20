@@ -1,0 +1,14 @@
+with "minesweeper";
+
+project Minesweeper_Tests is
+
+   for Source_Dirs use ("tests/");
+   for Object_Dir use "obj";
+   for Exec_Dir use "bin";
+   for Main use ("minesweeper-testsuite.adb");
+
+   package Linker is
+      for Switches ("ada") use ("-g");
+   end Linker;
+
+end Minesweeper_Tests;

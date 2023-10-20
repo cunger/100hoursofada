@@ -15,8 +15,7 @@ package body Minesweeper.Board.Generation is
       Number_Of_Columns : Width;
       Number_Of_Rows    : Height;
       Number_Of_Mines   : Positive
-   ) return Board
-   is
+   ) return Board is
 
       B : Board (1 .. Number_Of_Columns, 1 .. Number_Of_Rows);
 
@@ -24,9 +23,9 @@ package body Minesweeper.Board.Generation is
       --  Initialize a board with hidden and unflagged cells,
       --  where no mines are placed yet.
       B := (others => (others => (
-         Is_Mined   => False,
-         Is_Hidden  => True,
-         Is_Flagged => False,
+         Mined   => False,
+         Flagged => False,
+         Visible => False,
          Number_of_Adjacent_Mines => 0
       )));
 
