@@ -4,16 +4,18 @@ This is a playground for learning Ada. There is no specific structure or goal, j
 
 ## 🧙‍♂️
 
-> „As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.“
+Neil Storey:
+
+> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.
+
+Ada Distilled:
 
 > A key difference between Ada and most other software development languages is that Ada is designed as an engineering tool as well as a programming tool.
 
 > Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
 programmer when human safety is at risk. Software at that level of risk must be engineered. 
 
-> Ada is designed to maximize the error checking a compiler can do early in the development process
-
-It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
+> Ada is designed to maximize the error checking a compiler can do early in the development process. It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
 
 > The default for every Ada construct is _safe_.
 
@@ -43,15 +45,25 @@ end Countdown;
 * Identifiers are case-insensitive. 
 * `function Fill(Board : Board)` does not work.
 
-## 📦
 
 Ada compilation units are split into two parts:
 * `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
 * `.adb` (_Ada body_) files contain the implementation
 
-Program unit:
+## Functions and procedures
+
+Specification:
 ```ada
-kind-of-unit Unit_Name
+procedure Blah (Input : Input_Type; Other : Other_Type)
+   with Pre  => (...),
+        Post => (...);
+
+function Blubb (Input : Input_Type) return Output_Type;
+```
+
+Implementation:
+```ada
+procedure Blah (Input : Input_Type; Other : Other_Type) is
    -- local declarations (visible within this unit but nowhere else)
 begin
    -- sequence ofstatements
@@ -59,10 +71,6 @@ exception
    -- sequence of statements
 end Unit_Name;
 ```
-
-Program units are packages or subprograms.
-
-### Functions and procedures
 
 Parameters:
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
@@ -91,15 +99,20 @@ Color1 : constant Color := (0, 0, 0);
 Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
 ```
 
-### Packages
+## 📦 Packages
 
-General structure:
+Specification:
 ```ada
 package Package_Name is
    -- public declarations
 private
    -- private declarations
 end Package_Name;
+```
+
+Implementation:
+```ada
+with Other_Library;
 
 package body Package_Name is
    -- implementation
@@ -272,6 +285,10 @@ begin
 end Iterate;
 ```
 
+## Exceptions and error handling
+
+## Testing
+
 ## 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
@@ -293,6 +310,4 @@ end Iterate;
   type Type_Name is delta <delta-value> digits <digits-value> (range <start>..<end>);
   ```
 * attributes
-* exceptions and error handling
-* AUnit and other approaches to testing
 * null (as value, e.g. for an access type, and as procedure body)
