@@ -2,11 +2,20 @@
 
 This is a playground for learning Ada. There is no specific structure or goal, just bits and pieces to note and try out on the way.
 
+* [Cheat sheet](#cheat-sheet)
+  * [Functions and procedures](#functions-and-procedures)
+  * [Packages](#-packages)
+  * [Checks](#checks)
+  * [Types](#types)
+  * [Arrays](#arrays)
+  * [Exceptions and eror handling](#exceptions-and-error-handling)
+  * [Testing](#testing)
+* [References](#-references)
+* [Explore](#explore)
+
 ## 🧙‍♂️
 
-Neil Storey:
-
-> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.
+> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them. (Neil Storey)
 
 Ada Distilled:
 
@@ -40,11 +49,12 @@ end Countdown;
 ```
 
 * Expressions (e.g. `I = 0`) and statements (e.g. `I := 0;`) are distinct. That is, expressions are not valid statements.
-* Loop variables are constant within the loop body, i.e. cannot be re-assigned.
-* Execution of a branch in a `case` statement does not fall through to the next branch.
 * Identifiers are case-insensitive. 
 * `function Fill(Board : Board)` does not work.
+* Loop variables are constant within the loop body, i.e. cannot be re-assigned.
+* Execution of a branch in a `case` statement does not fall through to the next branch.
 
+# Cheat sheet
 
 Ada compilation units are split into two parts:
 * `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
@@ -159,7 +169,9 @@ begin
 end Main;
 ```
 
-## Overflows
+## Checks
+
+### Overflows
 
 Integer ranges are checked for overflows, both at compile time and at run time.
 ```ada
@@ -206,6 +218,8 @@ end Main;
 ```
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
+
+### Pre- and post-conditions
 
 ## Types
 
@@ -289,20 +303,20 @@ end Iterate;
 
 ## Testing
 
-## 📚 References
+# 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
 * Richard Riehle: Ada Distilled
 * https://en.wikibooks.org/wiki/Ada_Programming
 
-## Explore
+# Explore
 
 * https://github.com/mosteo/aaa/blob/master/tests/tests.gpr
 * https://ada.tips/
 * Crates: https://alire.ada.dev/crates.html
 * https://github.com/mosteo/rxada
 
-## Backlog
+# Backlog
 
 * type conversions
 * Custom fixed point types: 
