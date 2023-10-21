@@ -6,6 +6,4 @@ package Minesweeper.Board.Actions is
    procedure Reveal (C : in out Cell)
       with Pre => Is_Hidden (C);
 
-   function Is_Hidden (C : Cell) return Boolean;
-
 end Minesweeper.Board.Actions;

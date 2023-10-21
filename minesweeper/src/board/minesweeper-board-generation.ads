@@ -10,8 +10,5 @@ package Minesweeper.Board.Generation is
       (Number_Of_Mines > 0) and
       (Number_Of_Mines < Number_Of_Columns * Number_Of_Rows)
    );
-   --  TODO
-   --  UNIT TEST: for all cells Visible = False
-   --  UNIT TEST: there are Number_of_Mines cells with Mined = True
 
 end Minesweeper.Board.Generation;

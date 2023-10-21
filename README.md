@@ -303,6 +303,9 @@ end Iterate;
 
 ## Testing
 
+* [AUnit](https://www.adacore.com/documentation/aunit-cookbook)
+* [Ahven](http://ahven.stronglytyped.org)
+
 # 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
@@ -311,10 +314,13 @@ end Iterate;
 
 # Explore
 
-* https://github.com/mosteo/aaa/blob/master/tests/tests.gpr
-* https://ada.tips/
+* https://github.com/ohenley/awesome-ada 
 * Crates: https://alire.ada.dev/crates.html
+
+Read:
+* https://github.com/mosteo/aaa/blob/master/tests/tests.gpr
 * https://github.com/mosteo/rxada
+* https://github.com/AdaCore/gnatcoll-core
 
 # Backlog
 

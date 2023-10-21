@@ -1,11 +1,17 @@
 package Minesweeper.Board is
 
-   subtype Width  is Integer range 1 .. 30;
-   subtype Height is Integer range 1 .. 30;
+   subtype Width  is Integer range 1 .. 50;
+   subtype Height is Integer range 1 .. 50;
 
    type Cell is private;
 
    type Board is array (Width range <>, Height range <>) of Cell;
+
+   ------------ Accessor functions ----------------------------
+
+   function Is_Flagged (C : Cell) return Boolean;
+   function Is_Mined   (C : Cell) return Boolean;
+   function Is_Hidden  (C : Cell) return Boolean;
 
 private
 

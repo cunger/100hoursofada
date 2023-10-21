@@ -10,9 +10,4 @@ package body Minesweeper.Board.Actions is
       C.Visible := True;
    end Reveal;
 
-   function Is_Hidden (C : Cell) return Boolean is
-   begin
-      return not C.Visible;
-   end Is_Hidden;
-
 end Minesweeper.Board.Actions;
