@@ -1,7 +1,15 @@
-with AUnit;
-with Minesweeper.Board.Generation.Tests;
+with AUnit.Run;
+with AUnit.Reporter.Text;
+with Minesweeper_Test_Suite;
 
 procedure Tests is
+   
+   procedure Run is new AUnit.Run.Test_Runner (Minesweeper_Test_Suite.Suite);
+   
+   Reporter : AUnit.Reporter.Text.Text_Reporter;
+
 begin
-   null;
+
+   Run (Reporter);
+
 end Tests;

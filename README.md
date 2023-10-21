@@ -171,7 +171,70 @@ end Main;
 
 ## Checks
 
-### Overflows
+
+### Pre- and post-conditions
+
+## Types
+
+* elementary types
+* composite types (arrays, records)
+* range types
+```ada
+type Index is range -10 .. 10;
+-- range First .. Last defines an integer range
+-- Index'First = -10
+-- Index'Last = 10
+```
+* derived types and subtypes
+```ada
+-- derived types 
+type Meters is new Float;
+type Miles  is new Float;
+-- creates new types, so they do not count as Float
+-- (i.e. also don't inherit operations like +, *)
+-- and cannot be mixed but always need to be converted
+type Temperature is new Integer range 0 .. 10_000;
+-- ranges become part of the type checking at compile time
+
+-- subtypes 
+subtype Natural  is Integer range 0 .. Integer'Last;
+subtype Positive is Integer range 1 .. Integer'Last;
+-- do count as Integer
+-- ranges are checked at run time
+
+-- subtype without constraints as alias
+subtype Amount is Integer;
+```
+
+* Keeping a type private:
+```ada
+procedure Demo is
+   type Blah is private;
+   -- use type in other declarations
+private
+   type Blah is ...;
+begin
+   null;
+end Demo;
+```
+* Extending a record:
+```ada
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
+
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
+```
+
+### Range constraints
 
 Integer ranges are checked for overflows, both at compile time and at run time.
 ```ada
@@ -218,54 +281,6 @@ end Main;
 ```
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
-
-### Pre- and post-conditions
-
-## Types
-
-* elementary types
-* composite types (arrays, records)
-* derived types and subtypes
-```ada
--- derived types (do not count as Float, cannot be mixed but always need to be converted)
-type Meters is new Float;
-type Miles  is new Float;
-
--- subtypes (do count as Integer)
-subtype Natural  is Integer range 0 .. Integer'Last;
-subtype Positive is Integer range 1 .. Integer'Last;
-
--- subtype without constraints as alias
-subtype Amount is Integer;
-```
-
-* Keeping a type private:
-```ada
-procedure Demo is
-   type Blah is private;
-   -- use type in other declarations
-private
-   type Blah is ...;
-begin
-   null;
-end Demo;
-```
-* Extending a record:
-```ada
--- A record type must be tagged in order to be extensible.
-type Message is tagged
-   record
-      Content : Undbounded_String;
-      Length : Natural;
-   end record;
-
--- Extending a record type adds fields.
-type Sent_Message is new Message with
-   record
-      Recipient : Undbounded_String;
-      Timestamp : Date;
-   end record;
-```
 
 ## Arrays
 

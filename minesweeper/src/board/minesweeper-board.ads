@@ -1,11 +1,11 @@
 package Minesweeper.Board is
 
-   subtype Width  is Integer range 1 .. 50;
-   subtype Height is Integer range 1 .. 50;
+   subtype Height is Positive range 1 .. 100;
+   subtype Width  is Positive range 1 .. 100;
 
    type Cell is private;
 
-   type Board is array (Width range <>, Height range <>) of Cell;
+   type Board is array (Height range <>, Width range <>) of Cell;
 
    ------------ Accessor functions ----------------------------
 

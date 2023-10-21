@@ -12,8 +12,8 @@ package body Minesweeper.Board.Generation is
    --  The cells are initially hidden and unflagged, so
    --  the result is a board that is ready to be played.
    function Generate_Board (
-      Number_Of_Columns : Width;
-      Number_Of_Rows    : Height;
+      Number_Of_Columns : Height;
+      Number_Of_Rows    : Width;
       Number_Of_Mines   : Positive
    ) return Board is
 
