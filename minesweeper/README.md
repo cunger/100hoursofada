@@ -9,6 +9,12 @@ Build with:
 $ alr build
 ```
 
+Run unit tests in the `tests` folder:
+```
+$ cd tests
+$ alr run
+```
+
 ## Requirements
 
 ### Board
