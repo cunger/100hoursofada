@@ -56,23 +56,21 @@ end Countdown;
 
 # Cheat sheet
 
-Ada compilation units are split into two parts:
-* `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
-* `.adb` (_Ada body_) files contain the implementation
-
 ## Functions and procedures
 
 Specification:
 ```ada
-procedure Blah (Input : Input_Type; Other : Other_Type)
-   with Pre  => (...),
-        Post => (...);
+procedure Not_Doing_Anything;
+
+procedure Blah (Input : Input_Type; Other : Other_Type);
 
 function Blubb (Input : Input_Type) return Output_Type;
 ```
 
 Implementation:
 ```ada
+procedure Not_Doing_Anything is null;
+
 procedure Blah (Input : Input_Type; Other : Other_Type) is
    -- local declarations (visible within this unit but nowhere else)
 begin
@@ -110,6 +108,17 @@ Color2 : constant Color := (Y => 0, Cb => 0, Cr => 0);
 ```
 
 ## 📦 Packages
+
+Packages are library units and can be imported like this:
+```ada
+with Library_Unit; -- context clause
+```
+
+They are split into two parts:
+* `.ads` (_Ada specification_) files contain all declarations (private or visible to the outside) 
+* `.adb` (_Ada body_) files contain the implementation
+
+Where the package body is required only to complete incomplete items in the specification (e.g. subprogram declarations without implementation). If there are no incomplete declarations in the specification, then there must be no iplementation part.
 
 Specification:
 ```ada
@@ -173,6 +182,13 @@ end Main;
 
 
 ### Pre- and post-conditions
+
+Specification:
+```ada
+procedure Blah (X : Integer; Y : Integer)
+   with Pre  => (X > 0) and (Y > 0),
+        Post => (...);
+```
 
 ## Types
 
