@@ -7,7 +7,8 @@ package body Minesweeper.Board.Generation.Tests is
    ----------------------------------------------------------------------------
    --  Test suite
    ----------------------------------------------------------------------------
-   package Board_Generation_Test_Caller is new AUnit.Test_Caller (Board_Generation_Test);
+
+   package Board_Generation_Test_Caller is new AUnit.Test_Caller (Test);
 
    function Board_Generation_Test_Suite return Access_Test_Suite is
       S : Access_Test_Suite := New_Suite;
@@ -39,12 +40,12 @@ package body Minesweeper.Board.Generation.Tests is
    --  Implementation of test cases
    ----------------------------------------------------------------------------
 
-   procedure Generated_Board_Has_Expected_Size (T : in out Board_Generation_Test) is
+   procedure Generated_Board_Has_Expected_Size (T : in out Test) is
    begin
       Assert (False, "Not implemented yet");
    end Generated_Board_Has_Expected_Size;
 
-   procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Board_Generation_Test) is
+   procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Test) is
       Cols : Height := 4;
       Rows : Width  := 5;
 
@@ -68,12 +69,12 @@ package body Minesweeper.Board.Generation.Tests is
       end loop;
    end All_Cells_Are_Initially_Hidden_And_Unflagged;
 
-   procedure Check_Number_Of_Mined_Cells (T : in out Board_Generation_Test) is
+   procedure Check_Number_Of_Mined_Cells (T : in out Test) is
    begin
       Assert (False, "Not implemented yet");
    end Check_Number_Of_Mined_Cells;
 
-   procedure Mines_Are_Placed_Randomly (T : in out Board_Generation_Test) is
+   procedure Mines_Are_Placed_Randomly (T : in out Test) is
    begin
       Assert (False, "Not implemented yet");
    end Mines_Are_Placed_Randomly;

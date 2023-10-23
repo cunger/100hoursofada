@@ -76,8 +76,19 @@ procedure Blah (Input : Input_Type; Other : Other_Type) is
 begin
    -- sequence ofstatements
 exception
-   -- sequence of statements
+   when <choice> =>
+      -- sequence of statements
 end Unit_Name;
+
+function Blubb (Input : Input_Type)
+  return Output_Type is
+   -- local declarations
+begin
+   -- sequence of statements
+exception
+   when <choice> =>
+      -- sequence of statements
+end Blubb;
 ```
 
 Parameters:
