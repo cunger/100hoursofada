@@ -1,5 +1,4 @@
 with AUnit.Test_Caller;
-with AUnit.Test_Suites; use AUnit.Test_Suites;
 with AUnit.Assertions; use AUnit.Assertions;
 
 package body Minesweeper.Board.Generation.Tests is
@@ -11,26 +10,26 @@ package body Minesweeper.Board.Generation.Tests is
    package Board_Generation_Test_Caller is new AUnit.Test_Caller (Test);
 
    function Board_Generation_Test_Suite return Access_Test_Suite is
-      S : Access_Test_Suite := New_Suite;
+      S : constant Access_Test_Suite := New_Suite;
    begin
       S.Add_Test (Board_Generation_Test_Caller.Create (
-        "Board generation : size is height * width",
-        Generated_Board_Has_Expected_Size'Access
+         "Board generation : size is height * width",
+         Generated_Board_Has_Expected_Size'Access
       ));
 
       S.Add_Test (Board_Generation_Test_Caller.Create (
-        "Board generation : cells are initially hidden and unflagged",
-        All_Cells_Are_Initially_Hidden_And_Unflagged'Access
+         "Board generation : cells are initially hidden and unflagged",
+         All_Cells_Are_Initially_Hidden_And_Unflagged'Access
       ));
 
       S.Add_Test (Board_Generation_Test_Caller.Create (
-        "Board generation : number of mined cells is correct",
-        Check_Number_Of_Mined_Cells'Access
+         "Board generation : number of mined cells is correct",
+         Check_Number_Of_Mined_Cells'Access
       ));
-      
+
       S.Add_Test (Board_Generation_Test_Caller.Create (
-        "Board generation : mines are placed randomly",
-        Mines_Are_Placed_Randomly'Access
+         "Board generation : mines are placed randomly",
+         Mines_Are_Placed_Randomly'Access
       ));
 
       return S;
@@ -46,8 +45,8 @@ package body Minesweeper.Board.Generation.Tests is
    end Generated_Board_Has_Expected_Size;
 
    procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Test) is
-      Cols : Height := 4;
-      Rows : Width  := 5;
+      Cols : constant Height := 4;
+      Rows : constant Width  := 5;
 
       B : Board (1 .. Cols, 1 .. Rows);
       C : Cell;
@@ -62,7 +61,7 @@ package body Minesweeper.Board.Generation.Tests is
          for J in 1 .. Rows loop
             -- inspect the cell at (I,J)
             C := B (I, J);
-            
+
             Assert (Is_Hidden (C), "Cell is not hidden (but should initially be)");
             Assert (not Is_Flagged (C), "Cell is flagged (but should initially not be)");
          end loop;

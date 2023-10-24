@@ -1,6 +1,3 @@
-with AUnit.Test_Caller;
-with AUnit.Test_Suites; use AUnit.Test_Suites;
-
 with Minesweeper.Board.Generation.Tests; use Minesweeper.Board.Generation.Tests;
 with Minesweeper.Board.Actions.Tests; use Minesweeper.Board.Actions.Tests;
 

@@ -4,6 +4,8 @@ This is an exercise in engineering the logic of a minesweeper game (without grap
 
 ## Build and test
 
+⚠️ Make sure to compile with switch `-gnata` to enable pre- and post-condition checks.
+
 Build with:
 ```
 $ alr build
@@ -34,7 +36,7 @@ $ alr run
 |-------------|----------------|-------|
 | `MSW-R01` | | |
 | `MSW-R02` | | |
-| `MSW-R03` | preconditions of `Generate_Board` | |
+| `MSW-R03` | precondition of `Generate_Board` | |
 | `MSW-R04` | | |
 | `MSW-R05` | | |
 | `MSW-R06` | | |

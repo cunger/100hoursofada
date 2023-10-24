@@ -1,6 +1,6 @@
 with AUnit.Test_Caller;
-with AUnit.Test_Suites; use AUnit.Test_Suites;
 with AUnit.Assertions; use AUnit.Assertions;
+with System.Assertions;
 
 package body Minesweeper.Board.Actions.Tests is
 
@@ -11,16 +11,16 @@ package body Minesweeper.Board.Actions.Tests is
    package Board_Actions_Test_Caller is new AUnit.Test_Caller (Test);
 
    function Board_Actions_Test_Suite return Access_Test_Suite is
-      S : Access_Test_Suite := New_Suite;
+      S : constant Access_Test_Suite := New_Suite;
    begin
       S.Add_Test (Board_Actions_Test_Caller.Create (
-        "Board actions : a hidden cell can be flagged and unflagged",
-        Flagging_And_Unflagging_A_Cell'Access
+         "Board actions : a hidden cell can be flagged and unflagged",
+         Flagging_And_Unflagging_A_Cell'Access
       ));
 
       S.Add_Test (Board_Actions_Test_Caller.Create (
-        "Board actions : one a cell is revealed, no more actions are possible",
-        Revealing_A_Cell'Access
+         "Board actions : one a cell is revealed, no more actions are possible",
+         Revealing_A_Cell'Access
       ));
 
       return S;
@@ -45,13 +45,13 @@ package body Minesweeper.Board.Actions.Tests is
    begin
       C := CreateCell;
 
-      Toggle_Flag(C);
+      Toggle_Flag (C);
       Assert (Is_Flagged (C), "");
 
-      Toggle_Flag(C);
-      Assert (Not (Is_Flagged (C)), "");
+      Toggle_Flag (C);
+      Assert (not Is_Flagged (C), "");
 
-      Toggle_Flag(C);
+      Toggle_Flag (C);
       Assert (Is_Flagged (C), "");
    end Flagging_And_Unflagging_A_Cell;
 
@@ -61,17 +61,16 @@ package body Minesweeper.Board.Actions.Tests is
       C := CreateCell;
 
       Reveal (C);
-      Assert (Not (Is_Hidden (C)), "");
+      Assert (not Is_Hidden (C), "");
 
-      --  cannot be hidden anymore, because there is no procedure to do this
-      --  cannot be flagged:
+      Cannot_Be_Flagged:
       begin
          Toggle_Flag (C);
 
          Assert (False, "should not have been possible to toggle flag");
       exception
-         when Constraint_Error => Assert (True, "");
-      end;
+         when System.Assertions.Assert_Failure => Assert (True, "");
+      end Cannot_Be_Flagged;
    end Revealing_A_Cell;
 
 end Minesweeper.Board.Actions.Tests;

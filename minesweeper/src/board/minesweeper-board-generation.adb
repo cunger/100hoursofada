@@ -30,6 +30,7 @@ package body Minesweeper.Board.Generation is
       )));
 
       Place_Mines (B, Number_Of_Mines);
+
       Mark_Cells_With_Number_Of_Adjacent_Mines (B);
 
       return B;
