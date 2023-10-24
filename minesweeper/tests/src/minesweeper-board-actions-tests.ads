@@ -12,6 +12,9 @@ private
    --  Test cases
 
    procedure Flagging_And_Unflagging_A_Cell (T : in out Test);
+   --  Test for MSW-R09
+
    procedure Revealing_A_Cell (T : in out Test);
+   --  Test for MSW-R10
 
 end Minesweeper.Board.Actions.Tests;

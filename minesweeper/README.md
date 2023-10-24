@@ -34,7 +34,7 @@ $ alr run
 |-------------|----------------|-------|
 | `MSW-R01` | | |
 | `MSW-R02` | | |
-| `MSW-R03` | | |
+| `MSW-R03` | preconditions of `Generate_Board` | |
 | `MSW-R04` | | |
 | `MSW-R05` | | |
 | `MSW-R06` | | |

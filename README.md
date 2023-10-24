@@ -191,7 +191,6 @@ end Main;
 
 ## Checks
 
-
 ### Pre- and post-conditions
 
 Specification:
@@ -308,6 +307,36 @@ end Main;
 ```
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
+
+### 💥 Exceptions
+
+Exceptions are objects, not types.
+
+Declaring, raising and handling an exception in a nutshell:
+```ada
+with Ada.Text_IO;
+with Ada.Exception;
+
+declare
+
+   All_Is_Not_Fine : exception;
+
+begin
+
+   raise All_Is_Not_Fine;
+
+   -- or with a message
+   raise All_Is_Not_Fine with "Ooops";
+
+exception
+   when E : All_Is_Not_Fine =>
+      Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Message (E));
+      raise; -- if you want to re-raise the exception
+end;
+```
+An exception part can be added to all blocks (also to subprograms, for example).
+
+Predfined exceptions are `Constraint_Error` (for overflows an bound errors), `Storage_Error` (for memory issues), `Tasking_Error` (for task-related problems), and `Program_Error` (more arcane). Leave them to Ada and always define the exceptions you want to raise.
 
 ## Arrays
 

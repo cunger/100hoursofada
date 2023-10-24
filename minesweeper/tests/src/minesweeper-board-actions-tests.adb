@@ -30,14 +30,48 @@ package body Minesweeper.Board.Actions.Tests is
    --  Implementation of test cases
    ----------------------------------------------------------------------------
 
-   procedure Flagging_And_Unflagging_A_Cell (T : in out Test) is
+   function CreateCell return Cell is
    begin
-      Assert (False, "Not implemented yet");
+      return (
+         Mined   => False,
+         Flagged => False,
+         Visible => False,
+         Number_of_Adjacent_Mines => 0
+      );
+   end CreateCell;
+
+   procedure Flagging_And_Unflagging_A_Cell (T : in out Test) is
+      C : Cell;
+   begin
+      C := CreateCell;
+
+      Toggle_Flag(C);
+      Assert (Is_Flagged (C), "");
+
+      Toggle_Flag(C);
+      Assert (Not (Is_Flagged (C)), "");
+
+      Toggle_Flag(C);
+      Assert (Is_Flagged (C), "");
    end Flagging_And_Unflagging_A_Cell;
 
    procedure Revealing_A_Cell (T : in out Test) is
+      C : Cell;
    begin
-      Assert (False, "Not implemented yet");
+      C := CreateCell;
+
+      Reveal (C);
+      Assert (Not (Is_Hidden (C)), "");
+
+      --  cannot be hidden anymore, because there is no procedure to do this
+      --  cannot be flagged:
+      begin
+         Toggle_Flag (C);
+
+         Assert (False, "should not have been possible to toggle flag");
+      exception
+         when Constraint_Error => Assert (True, "");
+      end;
    end Revealing_A_Cell;
 
 end Minesweeper.Board.Actions.Tests;
