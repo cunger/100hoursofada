@@ -20,7 +20,7 @@ private
       Flagged : Boolean;
       Visible : Boolean;
 
-      --  Calculated: the number of mines in neighboring cells
+      -- Calculated: the number of mines in neighboring cells
       Number_of_Adjacent_Mines : Integer range 0 .. 8;
    end record;
 

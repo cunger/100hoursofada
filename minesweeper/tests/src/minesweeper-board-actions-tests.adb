@@ -5,7 +5,7 @@ with System.Assertions;
 package body Minesweeper.Board.Actions.Tests is
 
    ----------------------------------------------------------------------------
-   --  Test suite
+   -- Test suite
    ----------------------------------------------------------------------------
 
    package Board_Actions_Test_Caller is new AUnit.Test_Caller (Test);
@@ -27,7 +27,7 @@ package body Minesweeper.Board.Actions.Tests is
    end Board_Actions_Test_Suite;
 
    ----------------------------------------------------------------------------
-   --  Implementation of test cases
+   -- Implementation of test cases
    ----------------------------------------------------------------------------
 
    function CreateCell return Cell is

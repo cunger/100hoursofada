@@ -4,7 +4,7 @@ with AUnit.Assertions; use AUnit.Assertions;
 package body Minesweeper.Board.Generation.Tests is
 
    ----------------------------------------------------------------------------
-   --  Test suite
+   -- Test suite
    ----------------------------------------------------------------------------
 
    package Board_Generation_Test_Caller is new AUnit.Test_Caller (Test);
@@ -36,7 +36,7 @@ package body Minesweeper.Board.Generation.Tests is
    end Board_Generation_Test_Suite;
 
    ----------------------------------------------------------------------------
-   --  Implementation of test cases
+   -- Implementation of test cases
    ----------------------------------------------------------------------------
 
    procedure Generated_Board_Has_Expected_Size (T : in out Test) is

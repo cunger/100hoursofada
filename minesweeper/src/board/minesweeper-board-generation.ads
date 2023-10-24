@@ -1,6 +1,6 @@
 package Minesweeper.Board.Generation is
 
-   --  Generates a board that is ready to be played.
+   -- Generates a board that is ready to be played.
    function Generate_Board (
       Number_Of_Columns : Height;
       Number_Of_Rows    : Width;

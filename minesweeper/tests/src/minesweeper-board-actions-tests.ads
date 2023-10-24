@@ -9,12 +9,12 @@ private
 
    type Test is new Test_Fixture with null record;
 
-   --  Test cases
+   -- Test cases
 
    procedure Flagging_And_Unflagging_A_Cell (T : in out Test);
-   --  Test for MSW-R09
+   -- Test for MSW-R09
 
    procedure Revealing_A_Cell (T : in out Test);
-   --  Test for MSW-R10
+   -- Test for MSW-R10
 
 end Minesweeper.Board.Actions.Tests;

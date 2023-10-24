@@ -20,6 +20,7 @@ project Tests is
          ,"-gnatyA" -- Use of array index numbers in array attributes
          ,"-gnatyB" -- Check Boolean operators
          ,"-gnatyb" -- Blanks not allowed at statement end
+         ,"-gnatyC" -- Check comments with single space
          ,"-gnatye" -- Check end/exit labels
          ,"-gnatyf" -- No form feeds or vertical tabs
          ,"-gnatyh" -- No horizontal tabs
@@ -27,7 +28,7 @@ project Tests is
          ,"-gnatyI" -- check mode IN keywords
          ,"-gnatyk" -- Check keyword casing
          ,"-gnatyl" -- Check layout
-         ,"-gnatym" -- Check maximum line length
+         ,"-gnatyM100" -- Check maximum line length of 100
          ,"-gnatyn" -- Check casing of entities in Standard
          ,"-gnatyO" -- Check that overriding subprograms are explicitly marked as such
          ,"-gnatyp" -- Check pragma casing

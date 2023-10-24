@@ -9,17 +9,17 @@ private
 
    type Test is new Test_Fixture with null record;
 
-   --  Test cases
+   -- Test cases
 
    procedure Generated_Board_Has_Expected_Size (T : in out Test);
 
    procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Test);
-   --  Test for MSW-R07
+   -- Test for MSW-R07
    
    procedure Check_Number_Of_Mined_Cells (T : in out Test);
-   --  Test for MSW-R04
+   -- Test for MSW-R04
 
    procedure Mines_Are_Placed_Randomly (T : in out Test);
-   --  Test for MSW-R05
+   -- Test for MSW-R05
 
 end Minesweeper.Board.Generation.Tests;
