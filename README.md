@@ -5,17 +5,17 @@ This is a playground for learning Ada. There is no specific structure or goal, j
 * [Cheat sheet](#cheat-sheet)
   * [Functions and procedures](#functions-and-procedures)
   * [Packages](#-packages)
-  * [Checks](#checks)
-  * [Types](#types)
+  * [Constraints and error handling](#constraints-and-error-handling)
+    * [Pre- and post-conditions](#pre--and-post-conditions)
+    * [Range constraints](#range-constraints)
+    * [Exceptions](#-exceptions)
   * [Arrays](#arrays)
-  * [Exceptions and eror handling](#exceptions-and-error-handling)
+  * [Types](#types)
   * [Testing](#testing)
 * [References](#-references)
 * [Explore](#explore)
 
 ## 🧙‍♂️
-
-> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them. (Neil Storey)
 
 Ada Distilled:
 
@@ -29,6 +29,8 @@ programmer when human safety is at risk. Software at that level of risk must be 
 > The default for every Ada construct is _safe_.
 
 ## Lift off! 🚀
+
+> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them. (Neil Storey)
 
 ```ada
 -- countdown.adb (file name needs to correspond to name of the main procedure)
@@ -189,7 +191,7 @@ begin
 end Main;
 ```
 
-## Checks
+## Constraints and error handling
 
 ### Pre- and post-conditions
 
@@ -198,66 +200,6 @@ Specification:
 procedure Blah (X : Integer; Y : Integer)
    with Pre  => (X > 0) and (Y > 0),
         Post => (...);
-```
-
-## Types
-
-* elementary types
-* composite types (arrays, records)
-* range types
-```ada
-type Index is range -10 .. 10;
--- range First .. Last defines an integer range
--- Index'First = -10
--- Index'Last = 10
-```
-* derived types and subtypes
-```ada
--- derived types 
-type Meters is new Float;
-type Miles  is new Float;
--- creates new types, so they do not count as Float
--- (i.e. also don't inherit operations like +, *)
--- and cannot be mixed but always need to be converted
-type Temperature is new Integer range 0 .. 10_000;
--- ranges become part of the type checking at compile time
-
--- subtypes 
-subtype Natural  is Integer range 0 .. Integer'Last;
-subtype Positive is Integer range 1 .. Integer'Last;
--- do count as Integer
--- ranges are checked at run time
-
--- subtype without constraints as alias
-subtype Amount is Integer;
-```
-
-* Keeping a type private:
-```ada
-procedure Demo is
-   type Blah is private;
-   -- use type in other declarations
-private
-   type Blah is ...;
-begin
-   null;
-end Demo;
-```
-* Extending a record:
-```ada
--- A record type must be tagged in order to be extensible.
-type Message is tagged
-   record
-      Content : Undbounded_String;
-      Length : Natural;
-   end record;
-
--- Extending a record type adds fields.
-type Sent_Message is new Message with
-   record
-      Recipient : Undbounded_String;
-      Timestamp : Date;
-   end record;
 ```
 
 ### Range constraints
@@ -370,7 +312,66 @@ begin
 end Iterate;
 ```
 
-## Exceptions and error handling
+## Types
+
+* elementary types
+* composite types (arrays, records)
+* range types
+```ada
+type Index is range -10 .. 10;
+-- range First .. Last defines an integer range
+-- Index'First = -10
+-- Index'Last = 10
+```
+* derived types and subtypes
+```ada
+-- derived types 
+type Meters is new Float;
+type Miles  is new Float;
+-- creates new types, so they do not count as Float
+-- (i.e. also don't inherit operations like +, *)
+-- and cannot be mixed but always need to be converted
+type Temperature is new Integer range 0 .. 10_000;
+-- ranges become part of the type checking at compile time
+
+-- subtypes 
+subtype Natural  is Integer range 0 .. Integer'Last;
+subtype Positive is Integer range 1 .. Integer'Last;
+-- do count as Integer
+-- ranges are checked at run time
+
+-- subtype without constraints as alias
+subtype Amount is Integer;
+```
+
+Keeping a type private:
+```ada
+procedure Demo is
+   type Blah is private;
+   -- use type in other declarations
+private
+   type Blah is ...;
+begin
+   null;
+end Demo;
+```
+
+Extending a record:
+```ada
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
+
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
+```
 
 ## Testing
 
