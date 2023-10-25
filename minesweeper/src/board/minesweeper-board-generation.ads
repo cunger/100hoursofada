@@ -7,7 +7,7 @@ package Minesweeper.Board.Generation is
       Number_Of_Mines   : Positive
    ) return Board
    with Pre => (
-      (Number_Of_Mines > 0) and
+      (Number_Of_Mines > 0) and then
       (Number_Of_Mines < Number_Of_Columns * Number_Of_Rows)
    );
 

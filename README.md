@@ -5,12 +5,12 @@ This is a playground for learning Ada. There is no specific structure or goal, j
 * [Cheat sheet](#cheat-sheet)
   * [Functions and procedures](#functions-and-procedures)
   * [Packages](#-packages)
+  * [Types](#types)
+    * [Range constraints](#range-constraints)
   * [Constraints and error handling](#constraints-and-error-handling)
     * [Pre- and post-conditions](#pre--and-post-conditions)
-    * [Range constraints](#range-constraints)
     * [Exceptions](#-exceptions)
   * [Arrays](#arrays)
-  * [Types](#types)
   * [Testing](#testing)
 * [References](#-references)
 * [Explore](#explore)
@@ -55,8 +55,22 @@ end Countdown;
 * `function Fill(Board : Board)` does not work.
 * Loop variables are constant within the loop body, i.e. cannot be re-assigned.
 * Execution of a branch in a `case` statement does not fall through to the next branch.
+* `and` and `or` are not short-circuiting, but their variants `and then` and `or else` are.
 
 # Cheat sheet
+
+Blocks are of the general form:
+```ada
+declare
+   -- local declarations (visible within this unit but nowhere else)
+   -- can include functions, procedures, and variables
+   -- note that declared variables are not initialized by default
+begin
+   -- sequence of statements or nested blocks
+exception
+   -- handling exceptions
+end;
+```
 
 ## Functions and procedures
 
@@ -76,7 +90,7 @@ procedure Not_Doing_Anything is null;
 procedure Blah (Input : Input_Type; Other : Other_Type) is
    -- local declarations (visible within this unit but nowhere else)
 begin
-   -- sequence ofstatements
+   -- sequence of statements or blocks
 exception
    when <choice> =>
       -- sequence of statements
@@ -95,7 +109,8 @@ end Blubb;
 
 Parameters:
 * Function and procedure parameters are by default imutable: Their implicit mode is `in` (read-only access). If you want to modify a parameter, you have to explicitely specify mode `in out` or `out`.
-* `out` parameters should be treated like uninitialized variables. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
+* `out` parameters should be treated like uninitialized variables, because they could be. They can be useful for assigning values to multiple return parameters (instead of returning a record type).
+* Whether parameters are passed by value or by reference is decided by the compiler. For example, since `in` parameters cannot be modified, they can be passed as value or reference, depending on size and other conditions. You don't have to worry about it as a programmer.
 
 **Named association:** Parameters in a subprogram can be named. For example, a subprogram that is defined like this:
 ```ada
@@ -191,20 +206,93 @@ begin
 end Main;
 ```
 
-## Constraints and error handling
+## Types
 
-### Pre- and post-conditions
-
-Specification:
+* elementary types
+* composite types: arrays, records
+* acess types (a.k.a. pointers)
+* derived types and subtypes
 ```ada
-procedure Blah (X : Integer; Y : Integer)
-   with Pre  => (X > 0) and (Y > 0),
-        Post => (...);
+-- derived types 
+type Meters is new Float;
+type Miles  is new Float;
+-- creates new types, so they do not count as Float
+-- (i.e. also don't inherit operations like +, *)
+-- and cannot be mixed but always need to be converted
+type Temperature is new Integer range 0 .. 10_000;
+-- ranges become part of the type checking at compile time
+
+-- subtypes 
+subtype Natural  is Integer range 0 .. Integer'Last;
+subtype Positive is Integer range 1 .. Integer'Last;
+-- do count as Integer
+-- ranges are checked at run time
+
+-- subtype without constraints as alias
+subtype Amount is Integer;
+```
+
+Restrict types (See range constraints below):
+```ada
+type Index is new Integer range 0 .. 100;
+type Index is range -10 .. 10; -- equivalent short-hand form
+-- Index'First = -10
+-- Index'Last = 10
+
+type Index is new Float range -1.0 .. 1.0;
+-- also works with other number types
+
+type Hour is mod 24;
+-- TODO fixed-point and decimal types
+```
+
+Parametrized types:
+```ada
+PixelMatrix is array (Integer range <>, Integer range <>) of Color;
+
+type Bitmap (Width, Height : Positive) is record
+   Pixels : PixelMatrix(1 .. width, 1 .. height);
+end record;
+
+-- declare like: B : Bitmap(32, 32); 
+-- use parameters like: B.Width, B.Height
+```
+
+Generics:
+TODO
+
+Keeping a type private:
+```ada
+procedure Demo is
+   type Blah is private;
+   -- needs to be declared before it can be used in other declarations
+private
+   type Blah is <definition>;
+begin
+   null;
+end Demo;
+```
+
+Extending a record type:
+```ada
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
+
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
 ```
 
 ### Range constraints
 
-Integer ranges are checked for overflows, both at compile time and at run time.
+Bounded types are checked for overflows, both at compile time and at run time.
 ```ada
 procedure Main is
 
@@ -231,7 +319,6 @@ begin
 end Main;
 ```
 
-Not only for standard integers, but also for custom-defined integer types (which allow you to specify the admissible range).
 ```ada
 procedure Main is
 
@@ -249,6 +336,31 @@ end Main;
 ```
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
+
+## Constraints and error handling
+
+### Pre- and post-conditions
+
+```ada
+procedure Blah
+with Pre  => ...,
+     Post => ...
+is begin
+   ...
+end Blah; 
+```
+
+Note that conditions and invariants belong to the decalaration, not the implementation.
+So if you have a specification file, they have to go there:
+```ada
+procedure Blah (X : Integer; Y : in out Integer)
+with Pre  => (X > 0) and (Y > 0),
+     Post => Y /= Y'Old;
+
+function Blubb (Flag : Boolean)
+with Pre  => not Flag,
+     Post => ...;
+```
 
 ### 💥 Exceptions
 
@@ -273,6 +385,7 @@ begin
 exception
    when E : All_Is_Not_Fine =>
       Ada.Text_IO.Put_Line (Ada.Exceptions.Exception_Message (E));
+   when others =>
       raise; -- if you want to re-raise the exception
 end;
 ```
@@ -282,14 +395,14 @@ Predfined exceptions are `Constraint_Error` (for overflows an bound errors), `St
 
 ## Arrays
 
-* Arrays have an index type, which can be any enumerable type. It needs to be constrained before the array can be used.
+* Arrays can have any enumerable, bounded type as an index type. (It an be unbound when declaring the array but needs to be constrained before the array can be used.)
   ```ada
   type Valve_State is (Open, Closed, Stuck_Inbetween);
   type Valve_States is array (1..10) of Valve_State;
   ```
 * Arrays can be concatenated with `&`. 
 * `String` is defined as an array of characters. (So strings are bounded; for unbounded strings see [`Unbounded_String`](https://learn.adacore.com/courses/intro-to-ada/chapters/standard_library_strings.html#intro-ada-unbounded-strings).)
-* Arrays an be multidimensional, for example:
+* Arrays can be multidimensional, for example:
   ```ada
   type Matrix is array (
      Positive range <>, -- first dimension, unconstrained
@@ -299,6 +412,7 @@ Predfined exceptions are `Constraint_Error` (for overflows an bound errors), `St
   type Matrices is array (Positive range <>) of Matrix(1 .. 10, 1 .. 20);
   -- note that the dimensions need to be constrained when the type is used
   ```
+  This is different from arrays of arrays (which you can also have, of course).
 
 Now you can make your code very obvious and easy to check:
 ```ada
@@ -312,66 +426,7 @@ begin
 end Iterate;
 ```
 
-## Types
-
-* elementary types
-* composite types (arrays, records)
-* range types
-```ada
-type Index is range -10 .. 10;
--- range First .. Last defines an integer range
--- Index'First = -10
--- Index'Last = 10
-```
-* derived types and subtypes
-```ada
--- derived types 
-type Meters is new Float;
-type Miles  is new Float;
--- creates new types, so they do not count as Float
--- (i.e. also don't inherit operations like +, *)
--- and cannot be mixed but always need to be converted
-type Temperature is new Integer range 0 .. 10_000;
--- ranges become part of the type checking at compile time
-
--- subtypes 
-subtype Natural  is Integer range 0 .. Integer'Last;
-subtype Positive is Integer range 1 .. Integer'Last;
--- do count as Integer
--- ranges are checked at run time
-
--- subtype without constraints as alias
-subtype Amount is Integer;
-```
-
-Keeping a type private:
-```ada
-procedure Demo is
-   type Blah is private;
-   -- use type in other declarations
-private
-   type Blah is ...;
-begin
-   null;
-end Demo;
-```
-
-Extending a record:
-```ada
--- A record type must be tagged in order to be extensible.
-type Message is tagged
-   record
-      Content : Undbounded_String;
-      Length : Natural;
-   end record;
-
--- Extending a record type adds fields.
-type Sent_Message is new Message with
-   record
-      Recipient : Undbounded_String;
-      Timestamp : Date;
-   end record;
-```
+## Concurrency
 
 ## Testing
 
@@ -381,6 +436,7 @@ type Sent_Message is new Message with
 # 📚 References
 
 * https://learn.adacore.com/courses/intro-to-ada/
+* David Given: [A random walk through Ada](https://cowlark.com/2014-04-27-ada/index.html)
 * Richard Riehle: Ada Distilled
 * https://en.wikibooks.org/wiki/Ada_Programming
 
@@ -403,3 +459,4 @@ Read:
   ```
 * attributes
 * null (as value, e.g. for an access type, and as procedure body)
+* clocks and delay
