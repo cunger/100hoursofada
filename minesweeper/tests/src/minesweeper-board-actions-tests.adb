@@ -30,7 +30,7 @@ package body Minesweeper.Board.Actions.Tests is
    -- Implementation of test cases
    ----------------------------------------------------------------------------
 
-   function CreateCell return Cell is
+   function Create_Cell return Cell is
    begin
       return (
          Mined   => False,
@@ -38,30 +38,26 @@ package body Minesweeper.Board.Actions.Tests is
          Visible => False,
          Number_of_Adjacent_Mines => 0
       );
-   end CreateCell;
+   end Create_Cell;
 
    procedure Flagging_And_Unflagging_A_Cell (T : in out Test) is
-      C : Cell;
+      C : Cell := Create_Cell;
    begin
-      C := CreateCell;
+      Toggle_Flag (C);
+      Assert (Is_Flagged (C), "Cell should be flagged");
 
       Toggle_Flag (C);
-      Assert (Is_Flagged (C), "");
+      Assert (not Is_Flagged (C), "Cell should not be flagged");
 
       Toggle_Flag (C);
-      Assert (not Is_Flagged (C), "");
-
-      Toggle_Flag (C);
-      Assert (Is_Flagged (C), "");
+      Assert (Is_Flagged (C), "Cell should be flagged");
    end Flagging_And_Unflagging_A_Cell;
 
    procedure Revealing_A_Cell (T : in out Test) is
-      C : Cell;
+      C : Cell := Create_Cell;
    begin
-      C := CreateCell;
-
       Reveal (C);
-      Assert (not Is_Hidden (C), "");
+      Assert (not Is_Hidden (C), "Cell should have been revealed");
 
       Cannot_Be_Flagged:
       begin

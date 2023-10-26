@@ -11,9 +11,7 @@ private
 
    -- Test cases
 
-   procedure Generated_Board_Has_Expected_Size (T : in out Test);
-
-   procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Test);
+   procedure All_Cells_Are_Hidden_And_Unflagged (T : in out Test);
    -- Test for MSW-R07
    
    procedure Check_Number_Of_Mined_Cells (T : in out Test);

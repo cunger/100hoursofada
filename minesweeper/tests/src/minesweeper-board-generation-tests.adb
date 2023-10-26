@@ -13,13 +13,8 @@ package body Minesweeper.Board.Generation.Tests is
       S : constant Access_Test_Suite := New_Suite;
    begin
       S.Add_Test (Board_Generation_Test_Caller.Create (
-         "Board generation : size is height * width",
-         Generated_Board_Has_Expected_Size'Access
-      ));
-
-      S.Add_Test (Board_Generation_Test_Caller.Create (
          "Board generation : cells are initially hidden and unflagged",
-         All_Cells_Are_Initially_Hidden_And_Unflagged'Access
+         All_Cells_Are_Hidden_And_Unflagged'Access
       ));
 
       S.Add_Test (Board_Generation_Test_Caller.Create (
@@ -36,41 +31,53 @@ package body Minesweeper.Board.Generation.Tests is
    end Board_Generation_Test_Suite;
 
    ----------------------------------------------------------------------------
+   -- Fixture: a generated test board
+   ----------------------------------------------------------------------------
+
+   Cols  : constant Height   := 10;
+   Rows  : constant Width    := 10;
+   Mines : constant Positive := 23;
+
+   B : Board (1 .. Cols, 1 .. Rows) :=
+      Generate_Board (
+         Number_Of_Columns => Cols,
+         Number_Of_Rows    => Rows,
+         Number_Of_Mines   => Mines
+      );
+
+   ----------------------------------------------------------------------------
    -- Implementation of test cases
    ----------------------------------------------------------------------------
 
-   procedure Generated_Board_Has_Expected_Size (T : in out Test) is
-   begin
-      Assert (False, "Not implemented yet");
-   end Generated_Board_Has_Expected_Size;
-
-   procedure All_Cells_Are_Initially_Hidden_And_Unflagged (T : in out Test) is
-      Cols : constant Height := 4;
-      Rows : constant Width  := 5;
-
-      B : Board (1 .. Cols, 1 .. Rows);
+   procedure All_Cells_Are_Hidden_And_Unflagged (T : in out Test) is
       C : Cell;
    begin
-      B := Generate_Board (
-         Number_Of_Columns => Cols,
-         Number_Of_Rows    => Rows,
-         Number_Of_Mines   => 1
-      );
-
       for I in 1 .. Cols loop
          for J in 1 .. Rows loop
-            -- inspect the cell at (I,J)
             C := B (I, J);
 
             Assert (Is_Hidden (C), "Cell is not hidden (but should initially be)");
             Assert (not Is_Flagged (C), "Cell is flagged (but should initially not be)");
          end loop;
       end loop;
-   end All_Cells_Are_Initially_Hidden_And_Unflagged;
+   end All_Cells_Are_Hidden_And_Unflagged;
 
    procedure Check_Number_Of_Mined_Cells (T : in out Test) is
+      N : Natural;
    begin
-      Assert (False, "Not implemented yet");
+      -- Count the number of mined cells on the board.
+      N := 0;
+      for I in 1 .. Cols loop
+         for J in 1 .. Rows loop
+            if Is_Mined (B (I, J))
+            then
+               N := N + 1;
+            end if;
+         end loop;
+      end loop;
+
+      -- Should be the same as the number of mines we wanted to be placed.
+      Assert (N = Mines, "Expected" & Mines'Image & " mined cells, but got" & N'Image);
    end Check_Number_Of_Mined_Cells;
 
    procedure Mines_Are_Placed_Randomly (T : in out Test) is
