@@ -23,6 +23,11 @@ package body Minesweeper.Board.Generation.Tests is
       ));
 
       S.Add_Test (Board_Generation_Test_Caller.Create (
+         "Board generation : number of adjacent mines is calculated correctly",
+         Check_Number_Of_Adjacent_Mines'Access
+      ));
+
+      S.Add_Test (Board_Generation_Test_Caller.Create (
          "Board generation : mines are placed randomly",
          Mines_Are_Placed_Randomly'Access
       ));
@@ -38,7 +43,7 @@ package body Minesweeper.Board.Generation.Tests is
    Rows  : constant Width    := 10;
    Mines : constant Positive := 23;
 
-   B : Board (1 .. Cols, 1 .. Rows) :=
+   B : constant Board (1 .. Cols, 1 .. Rows) :=
       Generate_Board (
          Number_Of_Columns => Cols,
          Number_Of_Rows    => Rows,
@@ -80,9 +85,19 @@ package body Minesweeper.Board.Generation.Tests is
       Assert (N = Mines, "Expected" & Mines'Image & " mined cells, but got" & N'Image);
    end Check_Number_Of_Mined_Cells;
 
-   procedure Mines_Are_Placed_Randomly (T : in out Test) is
+   procedure Check_Number_Of_Adjacent_Mines (T : in out Test) is
    begin
       Assert (False, "Not implemented yet");
+   end Check_Number_Of_Adjacent_Mines;
+
+   procedure Mines_Are_Placed_Randomly (T : in out Test) is
+      Other_Board : constant Board := Generate_Board (
+         Number_Of_Columns => Cols,
+         Number_Of_Rows    => Rows,
+         Number_Of_Mines   => Mines
+      );
+   begin
+      Assert (Other_Board /= B, "Two randonly generated boards should not be the same");
    end Mines_Are_Placed_Randomly;
 
 end Minesweeper.Board.Generation.Tests;

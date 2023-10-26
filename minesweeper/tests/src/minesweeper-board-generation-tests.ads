@@ -13,9 +13,12 @@ private
 
    procedure All_Cells_Are_Hidden_And_Unflagged (T : in out Test);
    -- Test for MSW-R07
-   
+
    procedure Check_Number_Of_Mined_Cells (T : in out Test);
    -- Test for MSW-R04
+
+   procedure Check_Number_Of_Adjacent_Mines (T : in out Test);
+   -- Test for MSW-R06
 
    procedure Mines_Are_Placed_Randomly (T : in out Test);
    -- Test for MSW-R05
