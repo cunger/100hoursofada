@@ -4,14 +4,14 @@ This is an exercise in engineering the logic of a minesweeper game (without grap
 
 ## Build and test
 
-⚠️ Make sure to compile with switch `-gnata` to enable pre- and post-condition checks.
-
 Build with:
 ```
 $ alr build
 ```
+⚠️ Make sure to compile with switch `-gnata` to enable pre- and post-condition checks.
 
-Run unit tests in the `tests` folder:
+The unit tests are implemented as an own project in `tests`, which builds on the minesweeper implementation. 
+Run them with:
 ```
 $ cd tests
 $ alr run
