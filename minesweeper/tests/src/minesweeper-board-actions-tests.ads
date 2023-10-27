@@ -14,7 +14,10 @@ private
    procedure Flagging_And_Unflagging_A_Cell (T : in out Test);
    -- Test for MSW-R09
 
-   procedure Revealing_A_Cell (T : in out Test);
+   procedure A_Flagged_Cell_Cannot_Be_Revealed (T : in out Test);
    -- Test for MSW-R10
+
+   procedure Revealing_An_Unflagged_Cell (T : in out Test);
+   -- Test for MSW-R11
 
 end Minesweeper.Board.Actions.Tests;

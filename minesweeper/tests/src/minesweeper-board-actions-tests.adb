@@ -19,8 +19,13 @@ package body Minesweeper.Board.Actions.Tests is
       ));
 
       S.Add_Test (Board_Actions_Test_Caller.Create (
-         "Board actions : one a cell is revealed, no more actions are possible",
-         Revealing_A_Cell'Access
+         "Board actions : a flagged cell cannot be revealed",
+         A_Flagged_Cell_Cannot_Be_Revealed'Access
+      ));
+
+      S.Add_Test (Board_Actions_Test_Caller.Create (
+         "Board actions : once a cell is revealed, no more actions are possible",
+         Revealing_An_Unflagged_Cell'Access
       ));
 
       return S;
@@ -30,18 +35,14 @@ package body Minesweeper.Board.Actions.Tests is
    -- Implementation of test cases
    ----------------------------------------------------------------------------
 
-   function Create_Cell return Cell is
-   begin
-      return (
+   -- Check that a hidden cell can be flagged and unflagged repeatedly.
+   procedure Flagging_And_Unflagging_A_Cell (T : in out Test) is
+      C : Cell := (
          Mined   => False,
          Flagged => False,
          Visible => False,
          Number_of_Adjacent_Mines => 0
       );
-   end Create_Cell;
-
-   procedure Flagging_And_Unflagging_A_Cell (T : in out Test) is
-      C : Cell := Create_Cell;
    begin
       Toggle_Flag (C);
       Assert (Is_Flagged (C), "Cell should be flagged");
@@ -51,10 +52,39 @@ package body Minesweeper.Board.Actions.Tests is
 
       Toggle_Flag (C);
       Assert (Is_Flagged (C), "Cell should be flagged");
+
+      Toggle_Flag (C);
+      Assert (not Is_Flagged (C), "Cell should not be flagged");
    end Flagging_And_Unflagging_A_Cell;
 
-   procedure Revealing_A_Cell (T : in out Test) is
-      C : Cell := Create_Cell;
+   -- Check that a flagged cell cannot be revealed.
+   procedure A_Flagged_Cell_Cannot_Be_Revealed (T : in out Test) is
+      C : Cell := (
+         Mined   => False,
+         Flagged => True,
+         Visible => False,
+         Number_of_Adjacent_Mines => 0
+      );
+   begin
+      Cannot_Be_Revealed:
+      begin
+         Reveal (C);
+
+         Assert (False, "should not have been possible to reveal cell");
+      exception
+         when System.Assertions.Assert_Failure => Assert (True, "");
+      end Cannot_Be_Revealed;
+   end A_Flagged_Cell_Cannot_Be_Revealed;
+
+   -- Check that an unflagged cell can be revealed,
+   -- and once it is, it cannot be flagged anymore.
+   procedure Revealing_An_Unflagged_Cell (T : in out Test) is
+      C : Cell := (
+         Mined   => False,
+         Flagged => False,
+         Visible => False,
+         Number_of_Adjacent_Mines => 0
+      );
    begin
       Reveal (C);
       Assert (not Is_Hidden (C), "Cell should have been revealed");
@@ -67,6 +97,6 @@ package body Minesweeper.Board.Actions.Tests is
       exception
          when System.Assertions.Assert_Failure => Assert (True, "");
       end Cannot_Be_Flagged;
-   end Revealing_A_Cell;
+   end Revealing_An_Unflagged_Cell;
 
 end Minesweeper.Board.Actions.Tests;

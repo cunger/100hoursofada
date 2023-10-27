@@ -39,9 +39,9 @@ package body Minesweeper.Board.Generation.Tests is
    -- Fixture: a generated test board
    ----------------------------------------------------------------------------
 
-   Cols  : constant Height   := 10;
-   Rows  : constant Width    := 10;
-   Mines : constant Positive := 23;
+   Cols  : constant Height  := 10;
+   Rows  : constant Width   := 10;
+   Mines : constant Natural := 23;
 
    B : constant Board (1 .. Cols, 1 .. Rows) :=
       Generate_Board (
@@ -54,11 +54,13 @@ package body Minesweeper.Board.Generation.Tests is
    -- Implementation of test cases
    ----------------------------------------------------------------------------
 
+   -- Check whether in the initial state of the generated board
+   -- all cells are hidden and unflagged.
    procedure All_Cells_Are_Hidden_And_Unflagged (T : in out Test) is
       C : Cell;
    begin
-      for I in 1 .. Cols loop
-         for J in 1 .. Rows loop
+      for I in B'Range (1) loop
+         for J in B'Range (2) loop
             C := B (I, J);
 
             Assert (Is_Hidden (C), "Cell is not hidden (but should initially be)");
@@ -67,13 +69,15 @@ package body Minesweeper.Board.Generation.Tests is
       end loop;
    end All_Cells_Are_Hidden_And_Unflagged;
 
+   -- Check whether the generated board has as many mined cells as specified,
+   -- so no mines are placed in the same cell.
    procedure Check_Number_Of_Mined_Cells (T : in out Test) is
       N : Natural;
    begin
       -- Count the number of mined cells on the board.
       N := 0;
-      for I in 1 .. Cols loop
-         for J in 1 .. Rows loop
+      for I in B'Range (1) loop
+         for J in B'Range (2) loop
             if Is_Mined (B (I, J))
             then
                N := N + 1;
@@ -90,6 +94,8 @@ package body Minesweeper.Board.Generation.Tests is
       Assert (False, "Not implemented yet");
    end Check_Number_Of_Adjacent_Mines;
 
+   -- Placing mines on the board is done randomly, so the likelihood of
+   -- two generated boards of sufficient size being the same is very low.
    procedure Mines_Are_Placed_Randomly (T : in out Test) is
       Other_Board : constant Board := Generate_Board (
          Number_Of_Columns => Cols,

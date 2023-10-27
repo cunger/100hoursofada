@@ -235,9 +235,10 @@ subtype Amount is Integer;
 Restrict types (See range constraints below):
 ```ada
 type Index is new Integer range 0 .. 100;
-type Index is range -10 .. 10; -- equivalent short-hand form
--- Index'First = -10
--- Index'Last = 10
+-- compiler has to choose pre-defined Integer type
+
+type Index is range -10 .. 10;
+-- compiler can choose the best representation of the values
 
 type Index is new Float range -1.0 .. 1.0;
 -- also works with other number types

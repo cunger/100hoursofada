@@ -4,11 +4,10 @@ package Minesweeper.Board.Generation is
    function Generate_Board (
       Number_Of_Columns : Height;
       Number_Of_Rows    : Width;
-      Number_Of_Mines   : Positive
-   ) return Board
-   with Pre => (
-      (Number_Of_Mines > 0) and then
-      (Number_Of_Mines < Number_Of_Columns * Number_Of_Rows)
-   );
+      Number_Of_Mines   : Natural
+   )
+   return Board
+   with
+      Pre => (Number_Of_Mines < Number_Of_Columns * Number_Of_Rows);
 
 end Minesweeper.Board.Generation;

@@ -28,9 +28,10 @@ $ alr run
 * `MSW-R05` The placing of mines is random, so repeated board generations with the same configuration yield different mine placings.
 * `MSW-R06` Each cell of the board holds a number that corresponds to the number of mines in its neighbourhood, where the neighbourhood is a collection of all adjacent cells (row and/or column +/- 1).
 * `MSW-R07` Each cell is initially hidden and unflagged. 
-* `MSW-R08` Each hidden cell can be revealed.
+* `MSW-R08` Each cell can be revealed.
 * `MSW-R09` Each hidden cell can can be flagged and unflagged any number of times.
-* `MSW-R10` Once a cell was revealed, its state is fixed, i.e. it cannot be hidden again and it cannot be flagged or unflagged.
+* `MSW-R10` A flagged cell cannot be revealed.
+* `MSW-R11` Once a cell was revealed, its state is fixed, i.e. it cannot be hidden again and it cannot be flagged or unflagged.
 
 | Requirement | Implemented by | Tests |
 |-------------|----------------|-------|
@@ -45,9 +46,14 @@ $ alr run
 | `MSW-R09` | | |
 | `MSW-R10` | | |
 
+### Game rules
+
+* Revealing a mined cell means the player loses.
+* The player wins when all mined cells are flagged, and all unmined cells are revealed.
+
 ### Game modes
 
-* `MSW-R11` There are three game modes:
+* There are three game modes:
     * Beginner: 9x9 board with 10 mines
     * Intermediate: 16x16 board with 40 mines
     * Expert: 16x30 board with 99 mines
