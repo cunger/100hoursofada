@@ -7,7 +7,7 @@ package Minesweeper.Board is
 
    type Board is array (Height range <>, Width range <>) of Cell;
 
-   ------------ Accessor functions ----------------------------
+   ------------ Cell accessor functions --------------------
 
    function Is_Flagged (C : Cell) return Boolean;
    function Is_Mined   (C : Cell) return Boolean;

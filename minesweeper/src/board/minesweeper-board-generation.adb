@@ -39,6 +39,10 @@ package body Minesweeper.Board.Generation is
    end Generate_Board;
 
    -- Randomly pick cells and mark them as mined.
+   -- Note:
+   -- If you want to mine most of the board, this procedure probably takes too long.
+   -- Alternative implementation would be to shuffle all coordinates of the board,
+   -- take a slice of those and place mines on the corresponding cells.
    procedure Place_Mines (B : in out Board; Number_Of_Mines : Natural) is
 
       subtype Height_Range is Height range B'Range (1);
@@ -73,10 +77,40 @@ package body Minesweeper.Board.Generation is
       end loop;
    end Place_Mines;
 
-   -- For each cell, count the number of adjacent cells that are mined.
+   -- For each cell, count the number of adjacent cells that are mined
+   -- and store this number in the cell.
    procedure Mark_Cells_With_Number_Of_Adjacent_Mines (B : in out Board) is
+      subtype Height_Range is Height range B'Range (1);
+      subtype Width_Range  is Width  range B'Range (2);
+
+      Count : Natural range 0 .. 8;
    begin
-      null;
+      -- For each cell at (I, J):
+      for I in B'Range (1) loop
+         for J in B'Range (2) loop
+            -- Start counting the number of adjacent mines.
+            Count := 0;
+
+            -- For each adjacent cells at (I_Adjacent, J_Adjacent):
+            -- Check that the coordinate is on the board and not equal to (I, J),
+            -- and then increase the count if the adjacent cell is mined.
+            for I_Adjacent in (I - 1) .. (I + 1) loop
+               for J_Adjacent in (J - 1) .. (J + 1) loop
+                  if I_Adjacent in Height_Range and then
+                     J_Adjacent in Width_Range and then
+                     I_Adjacent /= I and then
+                     J_Adjacent /= J and then
+                     Is_Mined (B (I_Adjacent, J_Adjacent))
+                  then
+                     Count := Count + 1;
+                  end if;
+               end loop;
+            end loop;
+
+            -- Store the number of adjacent mines on the cell.
+            B (I, J).Number_of_Adjacent_Mines := Count;
+         end loop;
+      end loop;
    end Mark_Cells_With_Number_Of_Adjacent_Mines;
 
 end Minesweeper.Board.Generation;
