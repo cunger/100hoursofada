@@ -1,4 +1,4 @@
-package body Minesweeper.Board.Actions is
+package body Minesweeper.Boards.Actions is
 
    procedure Toggle_Flag (C : in out Cell) is
    begin
@@ -10,4 +10,4 @@ package body Minesweeper.Board.Actions is
       C.Visible := True;
    end Reveal;
 
-end Minesweeper.Board.Actions;
+end Minesweeper.Boards.Actions;

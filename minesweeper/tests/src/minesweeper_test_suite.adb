@@ -1,5 +1,5 @@
-with Minesweeper.Board.Generation.Tests; use Minesweeper.Board.Generation.Tests;
-with Minesweeper.Board.Actions.Tests; use Minesweeper.Board.Actions.Tests;
+with Minesweeper.Boards.Generation.Tests; use Minesweeper.Boards.Generation.Tests;
+with Minesweeper.Boards.Actions.Tests; use Minesweeper.Boards.Actions.Tests;
 
 package body Minesweeper_Test_Suite is
 

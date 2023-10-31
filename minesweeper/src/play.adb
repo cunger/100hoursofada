@@ -1,7 +1,6 @@
-with Minesweeper.Board.Generation;
-with Minesweeper.Board.Actions;
+with Minesweeper.Game;
 
 procedure Play is
 begin
-   null;
+   Minesweeper.Game.Play (Minesweeper.Game.Beginner);
 end Play;

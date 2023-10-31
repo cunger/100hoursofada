@@ -1,7 +1,7 @@
 with AUnit.Test_Caller;
 with AUnit.Assertions; use AUnit.Assertions;
 
-package body Minesweeper.Board.Generation.Tests is
+package body Minesweeper.Boards.Generation.Tests is
 
    ----------------------------------------------------------------------------
    -- Test suite
@@ -39,9 +39,9 @@ package body Minesweeper.Board.Generation.Tests is
    -- Fixture: a generated test board
    ----------------------------------------------------------------------------
 
-   Cols  : constant Height  := 10;
-   Rows  : constant Width   := 10;
-   Mines : constant Natural := 23;
+   Cols  : constant Positive := 10;
+   Rows  : constant Positive := 10;
+   Mines : constant Positive := 23;
 
    B : constant Board (1 .. Cols, 1 .. Rows) :=
       Generate_Board (
@@ -106,4 +106,4 @@ package body Minesweeper.Board.Generation.Tests is
       Assert (Other_Board /= B, "Two randonly generated boards should not be the same");
    end Mines_Are_Placed_Randomly;
 
-end Minesweeper.Board.Generation.Tests;
+end Minesweeper.Boards.Generation.Tests;

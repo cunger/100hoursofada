@@ -1,4 +1,4 @@
-package body Minesweeper.Board is
+package body Minesweeper.Boards is
 
    function Is_Mined (C : Cell) return Boolean is
    begin
@@ -15,4 +15,4 @@ package body Minesweeper.Board is
       return not C.Visible;
    end Is_Hidden;
 
-end Minesweeper.Board;
+end Minesweeper.Boards;

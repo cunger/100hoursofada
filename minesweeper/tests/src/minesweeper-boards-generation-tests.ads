@@ -1,7 +1,7 @@
 with AUnit.Test_Fixtures; use AUnit.Test_Fixtures;
 with AUnit.Test_Suites; use AUnit.Test_Suites;
 
-package Minesweeper.Board.Generation.Tests is
+package Minesweeper.Boards.Generation.Tests is
 
    function Board_Generation_Test_Suite return Access_Test_Suite;
 
@@ -23,4 +23,4 @@ private
    procedure Mines_Are_Placed_Randomly (T : in out Test);
    -- Test for MSW-R05
 
-end Minesweeper.Board.Generation.Tests;
+end Minesweeper.Boards.Generation.Tests;

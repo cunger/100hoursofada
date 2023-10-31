@@ -1,11 +1,8 @@
-package Minesweeper.Board is
-
-   subtype Height is Positive range 1 .. 100;
-   subtype Width  is Positive range 1 .. 100;
+package Minesweeper.Boards is
 
    type Cell is private;
 
-   type Board is array (Height range <>, Width range <>) of Cell;
+   type Board is array (Positive range <>, Positive range <>) of Cell;
 
    ------------ Cell accessor functions --------------------
 
@@ -24,4 +21,4 @@ private
       Number_of_Adjacent_Mines : Integer range 0 .. 8;
    end record;
 
-end Minesweeper.Board;
+end Minesweeper.Boards;

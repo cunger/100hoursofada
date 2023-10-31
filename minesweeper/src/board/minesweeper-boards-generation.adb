@@ -1,6 +1,6 @@
 with Ada.Numerics.Discrete_Random;
 
-package body Minesweeper.Board.Generation is
+package body Minesweeper.Boards.Generation is
 
    -- Randomly place mines on the board.
    procedure Place_Mines (B : in out Board; Number_Of_Mines : Natural);
@@ -14,9 +14,9 @@ package body Minesweeper.Board.Generation is
    -- The cells are initially hidden and unflagged, so
    -- the result is a board that is ready to be played.
    function Generate_Board (
-      Number_Of_Columns : Height;
-      Number_Of_Rows    : Width;
-      Number_Of_Mines   : Natural
+      Number_Of_Columns : Positive;
+      Number_Of_Rows    : Positive;
+      Number_Of_Mines   : Positive
    ) return Board is
 
       B : Board (1 .. Number_Of_Columns, 1 .. Number_Of_Rows);
@@ -45,28 +45,28 @@ package body Minesweeper.Board.Generation is
    -- take a slice of those and place mines on the corresponding cells.
    procedure Place_Mines (B : in out Board; Number_Of_Mines : Natural) is
 
-      subtype Height_Range is Height range B'Range (1);
-      subtype Width_Range  is Width  range B'Range (2);
+      subtype Row_Range is Positive range B'Range (1);
+      subtype Col_Range is Positive range B'Range (2);
 
-      package Random_Height is new Ada.Numerics.Discrete_Random (Height_Range);
-      package Random_Width  is new Ada.Numerics.Discrete_Random (Width_Range);
+      package Random_Row_Index is new Ada.Numerics.Discrete_Random (Row_Range);
+      package Random_Col_Index is new Ada.Numerics.Discrete_Random (Col_Range);
 
-      Height_Generator : Random_Height.Generator;
-      Width_Generator  : Random_Width.Generator;
+      Row_Index_Generator : Random_Row_Index.Generator;
+      Col_Index_Generator : Random_Col_Index.Generator;
 
-      I : Height;
-      J : Width;
+      I : Positive;
+      J : Positive;
 
       Mines_Left_To_Place : Natural := Number_Of_Mines;
    begin
       while Mines_Left_To_Place > 0 loop
          -- Reset random number generators
-         Random_Height.Reset (Height_Generator);
-         Random_Width.Reset (Width_Generator);
+         Random_Row_Index.Reset (Row_Index_Generator);
+         Random_Col_Index.Reset (Col_Index_Generator);
 
          -- Pick cell at random coordinates
-         I := Random_Height.Random (Height_Generator);
-         J := Random_Width.Random (Width_Generator);
+         I := Random_Row_Index.Random (Row_Index_Generator);
+         J := Random_Col_Index.Random (Col_Index_Generator);
 
          -- If it is not mined yet, then mine it.
          if not Is_Mined (B (I, J)) then
@@ -80,14 +80,14 @@ package body Minesweeper.Board.Generation is
    -- For each cell, count the number of adjacent cells that are mined
    -- and store this number in the cell.
    procedure Mark_Cells_With_Number_Of_Adjacent_Mines (B : in out Board) is
-      subtype Height_Range is Height range B'Range (1);
-      subtype Width_Range  is Width  range B'Range (2);
+      subtype Row_Range is Positive range B'Range (1);
+      subtype Col_Range is Positive range B'Range (2);
 
       Count : Natural range 0 .. 8;
    begin
       -- For each cell at (I, J):
-      for I in B'Range (1) loop
-         for J in B'Range (2) loop
+      for I in Row_Range loop
+         for J in Col_Range loop
             -- Start counting the number of adjacent mines.
             Count := 0;
 
@@ -96,8 +96,8 @@ package body Minesweeper.Board.Generation is
             -- and then increase the count if the adjacent cell is mined.
             for I_Adjacent in (I - 1) .. (I + 1) loop
                for J_Adjacent in (J - 1) .. (J + 1) loop
-                  if I_Adjacent in Height_Range and then
-                     J_Adjacent in Width_Range and then
+                  if I_Adjacent in Row_Range and then
+                     J_Adjacent in Col_Range and then
                      I_Adjacent /= I and then
                      J_Adjacent /= J and then
                      Is_Mined (B (I_Adjacent, J_Adjacent))
@@ -113,4 +113,4 @@ package body Minesweeper.Board.Generation is
       end loop;
    end Mark_Cells_With_Number_Of_Adjacent_Mines;
 
-end Minesweeper.Board.Generation;
+end Minesweeper.Boards.Generation;

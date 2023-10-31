@@ -2,7 +2,7 @@ with AUnit.Test_Caller;
 with AUnit.Assertions; use AUnit.Assertions;
 with System.Assertions;
 
-package body Minesweeper.Board.Actions.Tests is
+package body Minesweeper.Boards.Actions.Tests is
 
    ----------------------------------------------------------------------------
    -- Test suite
@@ -99,4 +99,4 @@ package body Minesweeper.Board.Actions.Tests is
       end Cannot_Be_Flagged;
    end Revealing_An_Unflagged_Cell;
 
-end Minesweeper.Board.Actions.Tests;
+end Minesweeper.Boards.Actions.Tests;

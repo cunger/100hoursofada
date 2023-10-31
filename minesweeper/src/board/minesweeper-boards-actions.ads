@@ -1,4 +1,4 @@
-package Minesweeper.Board.Actions is
+package Minesweeper.Boards.Actions is
 
    procedure Toggle_Flag (C : in out Cell)
    with
@@ -10,4 +10,4 @@ package Minesweeper.Board.Actions is
       Pre =>  not Is_Flagged (C),
       Post => not Is_Hidden (C);
 
-end Minesweeper.Board.Actions;
+end Minesweeper.Boards.Actions;
