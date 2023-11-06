@@ -19,7 +19,7 @@ package body Minesweeper.Boards.Generation is
       Number_Of_Mines   : Positive
    ) return Board is
 
-      B : Board (1 .. Number_Of_Columns, 1 .. Number_Of_Rows);
+      B : Board (1 .. Number_Of_Rows, 1 .. Number_Of_Columns);
 
    begin
       -- Initialize a board with hidden and unflagged cells,
@@ -38,43 +38,55 @@ package body Minesweeper.Boards.Generation is
       return B;
    end Generate_Board;
 
-   -- Randomly pick cells and mark them as mined.
-   -- Note:
-   -- If you want to mine most of the board, this procedure probably takes too long.
-   -- Alternative implementation would be to shuffle all coordinates of the board,
-   -- take a slice of those and place mines on the corresponding cells.
+   -- Marks randomly picked cells as mined.
+   -- Does so by shuffling all coordinates of the board, taking a slice of those
+   -- and place mines on the corresponding cells.
    procedure Place_Mines (B : in out Board; Number_Of_Mines : Natural) is
-
       subtype Row_Range is Positive range B'Range (1);
       subtype Col_Range is Positive range B'Range (2);
 
-      package Random_Row_Index is new Ada.Numerics.Discrete_Random (Row_Range);
-      package Random_Col_Index is new Ada.Numerics.Discrete_Random (Col_Range);
+      -- Define positions on the board
+      type Coordinate is record
+         Row : Row_Range;
+         Col : Col_Range;
+      end record;
 
-      Row_Index_Generator : Random_Row_Index.Generator;
-      Col_Index_Generator : Random_Col_Index.Generator;
+      subtype Coordinate_Index is Integer range 1 .. Row_Range'Last * Col_Range'Last;
+      type Coordinates is array (Coordinate_Index) of Coordinate;
 
-      I : Positive;
-      J : Positive;
+      -- All positions on the board
+      All_Coordinates : Coordinates;
 
-      Mines_Left_To_Place : Natural := Number_Of_Mines;
+      -- For generating random indices
+      package Random_Index is new Ada.Numerics.Discrete_Random (Coordinate_Index);
+      Random_Index_Generator : Random_Index.Generator;
    begin
-      while Mines_Left_To_Place > 0 loop
-         -- Reset random number generators
-         Random_Row_Index.Reset (Row_Index_Generator);
-         Random_Col_Index.Reset (Col_Index_Generator);
+      -- Collect all coordinates on the board in the All_Coordinates array
+      All_Rows : for I in Row_Range loop
+         All_Cols : for J in Col_Range loop
+            All_Coordinates ((I - 1) * Col_Range'Last + J) := (I, J);
+         end loop All_Cols;
+      end loop All_Rows;
 
-         -- Pick cell at random coordinates
-         I := Random_Row_Index.Random (Row_Index_Generator);
-         J := Random_Col_Index.Random (Col_Index_Generator);
+      -- Shuffle the coordinates
+      Random_Index.Reset (Random_Index_Generator);
 
-         -- If it is not mined yet, then mine it.
-         if not Is_Mined (B (I, J)) then
-            B (I, J).Mined := True;
-            Mines_Left_To_Place := Mines_Left_To_Place - 1;
-         end if;
-         -- Else try with the next random coordinates.
-      end loop;
+      declare
+         Random_I : Positive;
+         Temp_Coordinate : Coordinate;
+      begin
+         Shuffle : for I in All_Coordinates'Range loop
+            Random_I := Random_Index.Random (Random_Index_Generator);
+            Temp_Coordinate := All_Coordinates (I);
+            All_Coordinates (I) := All_Coordinates (Random_I);
+            All_Coordinates (Random_I) := Temp_Coordinate;
+         end loop Shuffle;
+      end;
+
+      -- Set the cells at the first Number_Of_Mines coordinates to Mined := True
+      Mine_Cells : for I in 1 .. Number_Of_Mines loop
+         B (All_Coordinates (I).Row, All_Coordinates (I).Col).Mined := True;
+      end loop Mine_Cells;
    end Place_Mines;
 
    -- For each cell, count the number of adjacent cells that are mined

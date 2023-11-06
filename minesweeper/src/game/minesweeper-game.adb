@@ -4,7 +4,7 @@ with Minesweeper.Boards.Actions; use Minesweeper.Boards.Actions;
 
 package body Minesweeper.Game is
 
-   procedure Game_Loop (B : Board);
+   procedure Run_Game_Loop (B : Board);
 
    procedure Play (Difficulty : Difficulty_Level) is
    begin
@@ -23,7 +23,8 @@ package body Minesweeper.Game is
       B : Board (1 .. Rows, 1 .. Cols);
    begin
       B := Generate_Board (Rows, Cols, Mines);
-      Game_Loop (B);
+
+      Run_Game_Loop (B);
    end Play_Beginner;
 
    procedure Play_Intermediate is
@@ -34,7 +35,8 @@ package body Minesweeper.Game is
       B : Board (1 .. Rows, 1 .. Cols);
    begin
       B := Generate_Board (Rows, Cols, Mines);
-      Game_Loop (B);
+
+      Run_Game_Loop (B);
    end Play_Intermediate;
 
    procedure Play_Expert is
@@ -45,13 +47,21 @@ package body Minesweeper.Game is
       B : Board (1 .. Rows, 1 .. Cols);
    begin
       B := Generate_Board (Rows, Cols, Mines);
-      Game_Loop (B);
+
+      Run_Game_Loop (B);
    end Play_Expert;
 
-   procedure Game_Loop (B : Board) is
+   procedure Run_Game_Loop (B : Board) is
+      Game_Over : Boolean := False;
+      Game_Won  : Boolean := False;
    begin
-      -- TODO
       null;
-   end Game_Loop;
+      -- while not Game_Over and not Game_Won loop
+         -- TODO get user action
+         -- TODO apply user action to board
+         -- TODO check and update Game_Over
+         -- TODO check and update Game_Won    
+      -- end loop;
+   end Run_Game_Loop;
 
 end Minesweeper.Game;
