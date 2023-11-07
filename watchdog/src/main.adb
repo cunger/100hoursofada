@@ -1,6 +1,6 @@
-with Watchdog; pragma Unreferenced (Watchdog);
+with Simulation;
 
 procedure Main is
 begin
-   null;
+   Simulation.Start;
 end Main;

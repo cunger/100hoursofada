@@ -17,9 +17,9 @@ This is a playground for learning Ada. There is no specific structure or goal, j
 
 ## 🧙‍♂️
 
-Ada Distilled:
+> "Slow is smooth, smooth is fast." Don't rush to failure.
 
-> A key difference between Ada and most other software development languages is that Ada is designed as an engineering tool as well as a programming tool.
+Ada Distilled:
 
 > Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
 programmer when human safety is at risk. Software at that level of risk must be engineered. 
