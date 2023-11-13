@@ -1,9 +1,8 @@
 with Watchdog;
-with Ada.Text_IO;
+with Util.Log.Loggers;
 
 package body Simulation is
-
-   procedure Print (Line : String) renames Ada.Text_IO.Put_Line;
+   Log : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("simulation");
 
    -- Pretending the procedure is building up slag,
    -- until a defined breakpoint where it hangs.
@@ -15,7 +14,7 @@ package body Simulation is
 
    procedure Start is
    begin
-      Print ("Starting simulation... (cancel it with Ctrl+C)");
+      Log.Info ("Starting simulation... (cancel it with Ctrl+C)");
 
       -- Example loop where each iteration needs to complete within a set amount of time
       Processing : loop
@@ -23,14 +22,13 @@ package body Simulation is
          -- simulate that the processing hangs and doesn't do anything anymore.
          -- If it's not rebooted, it simply exits.
          if Slag_Buildup >= Slag_Breakpoint then
-            Print ("Oops, hanging...");
+            Log.Warn ("Oops, hanging...");
             delay 10.0;
             exit Processing;
          end if;
 
          Read_Sensor;
          Check_Status;
-         Print ("All fine!");
 
          Slag_Buildup := Slag_Buildup + 1;
 

@@ -1,16 +1,15 @@
-with Ada.Text_IO;
+with Util.Log.Loggers;
 
 -- Note: This is work in progress; really just tinkering at the moment.
 package body Watchdog is
-
-   procedure Print (Line : String) renames Ada.Text_IO.Put_Line;
+   Log : constant Util.Log.Loggers.Logger := Util.Log.Loggers.Create ("watchdog");
 
    -- Main task of the watchdog: Wait for pings, and if they don't come,
    -- reboot the process.
    task body Run is
       Elapsed_Cycles : Natural := 0;
    begin
-      Print ("Starting watchdog...");
+      Log.Info ("Starting...");
 
       loop
          if Elapsed_Cycles = Max_Cycles then
@@ -20,7 +19,7 @@ package body Watchdog is
          select
             accept Ping do
                Elapsed_Cycles := 0;
-               Print ("Received ping.");
+               Log.Debug ("Received ping.");
             end Ping;
          else
             delay until (Clock + Cycle);
@@ -29,7 +28,7 @@ package body Watchdog is
       end loop;
    exception
       when Timeout =>
-         Print ("Timeout! Will reboot the process...");
+         Log.Warn ("Timeout! Will reboot the process...");
          -- TODO restart the application
    end Run;
 

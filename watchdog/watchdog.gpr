@@ -1,3 +1,5 @@
+with "utilada_base";
+
 project Watchdog is
 
    for Source_Dirs use ("src/");
