@@ -1,4 +1,5 @@
 with Watchdog;
+with Ada.Real_Time;
 with Util.Log.Loggers;
 
 package body Simulation is
@@ -15,6 +16,8 @@ package body Simulation is
    procedure Start is
    begin
       Log.Info ("Starting simulation... (cancel it with Ctrl+C)");
+
+      Watchdog.Start_With (Promised_Ping_Interval => Ada.Real_Time.Milliseconds (1000));
 
       -- Example loop where each iteration needs to complete within a set amount of time
       Processing : loop
@@ -34,7 +37,7 @@ package body Simulation is
 
          Watchdog.Ping;
 
-         delay 1.0;
+         delay 0.6;
       end loop Processing;
    end Start;
 

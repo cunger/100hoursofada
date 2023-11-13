@@ -1,6 +1,29 @@
 # 100 hours of Ada
 
-This is a playground for learning Ada. There is no specific structure or goal, just bits and pieces to note and try out on the way.
+This is a playground for learning Ada, including the following projects:
+
+* `minesweeper` is implementing the board generation and part of the game logic of Minesweeper. Mainly for learning AUnit and trying pre- and post-conditions.
+* `watchdog` is a basic implementation of a [watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer). Mainly to get familiar with tasks and timing.
+* `playground` collects bits and pieces to try out.
+
+# Wisdom 🧙‍♂️
+
+> "Slow is smooth, smooth is fast." Don't rush to failure.
+
+Ada Distilled:
+
+> Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
+programmer when human safety is at risk. Software at that level of risk must be engineered. 
+
+> Ada is designed to maximize the error checking a compiler can do early in the development process. It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
+
+> The default for every Ada construct is _safe_.
+
+Neil Storey:
+
+> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them.
+
+# Notes
 
 * [Cheat sheet](#cheat-sheet)
   * [Functions and procedures](#functions-and-procedures)
@@ -15,22 +38,7 @@ This is a playground for learning Ada. There is no specific structure or goal, j
 * [References](#-references)
 * [Explore](#explore)
 
-## 🧙‍♂️
-
-> "Slow is smooth, smooth is fast." Don't rush to failure.
-
-Ada Distilled:
-
-> Ada as an engineering tool, requires the software developers to adopt an engineering attitude to using it. It is not enough to simply be a good computer
-programmer when human safety is at risk. Software at that level of risk must be engineered. 
-
-> Ada is designed to maximize the error checking a compiler can do early in the development process. It allows you to expresses your intent so it's not only clear for human readers but also explicit for the compiler, so your adherence to it can be checked automatically at compile time. 
-
-> The default for every Ada construct is _safe_.
-
 ## Lift off! 🚀
-
-> As safety cannot be demonstrated by testing alone, a system‘s acceptance must be based on confidence gained in other ways. Key factors in any safety case are the development and production processes used and the quality methods used to oversee them. (Neil Storey)
 
 ```ada
 -- countdown.adb (file name needs to correspond to name of the main procedure)
