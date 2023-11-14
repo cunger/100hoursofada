@@ -23,37 +23,36 @@ package body Watchdog is
    -------------------------
 
    task body Run is
+
       Expected_Ping_Interval : Time_Span;
+      -- The application sets the max interval in which it promises to ping the watchdog.
 
       Last_Ping : Time;
-      Time_Since_Last_Ping : Time_Span;
+      -- The watchdog keeps track of when it received the last ping.
+
    begin
-      -- First wait for the application to start the watchdog with a given timespan.
+      -- First wait for the application to start the watchdog with an interval.
       accept Start_With (Promised_Ping_Interval : Time_Span) do
-         Log.Info ("Starting...");
          Expected_Ping_Interval := Promised_Ping_Interval;
+
+         Log.Info ("Starting watchdog timer...");
+
+         Last_Ping := Clock;
       end Start_With;
 
-      -- Once started, initialize Last_Ping and wait.
-      Last_Ping := Clock;
-      loop
-         -- Wait for pings.
+      Wait : loop
          select
+            -- Wait for pings. When they come, reset Last_Ping.
             accept Ping do
-               Log.Debug ("Received ping.");
+               Log.Debug ("Received ping."); -- will be deactivated to avoid overhead
                Last_Ping := Clock;
             end Ping;
-         else
-            delay until (Clock + Expected_Ping_Interval);
-         end select;
-
-         -- If there was no ping within the expected interval, reboot the process.
-         -- FIXME
-         Time_Since_Last_Ping := Clock - Last_Ping;
-         Log.Debug ("Time since last ping: " & Duration'Image (To_Duration (Time_Since_Last_Ping)));
-         if Time_Since_Last_Ping > Expected_Ping_Interval then
+         or
+            -- If there is no ping within the expected interval, reboot the process.
+            delay until (Last_Ping + Expected_Ping_Interval);
             Log.Error ("Timeout! Will reboot the process...");
-         end if;
-      end loop;
+            exit Wait;
+         end select;
+      end loop Wait;
    end Run;
 end Watchdog;
