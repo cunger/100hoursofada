@@ -9,11 +9,12 @@ package Watchdog is
    -- Starts the watchdog with an expected ping interval.
 
    procedure Ping;
-   -- Call this to ping the watchdog, indicating that everything is fine.
+   -- Lets the watchdog know that everything is fine.
 
 private
-   -- Includes a timer that counts down to zero and then raises an exception.
-   -- Every ime it receives a ping from the application, the timer is reset.
+   -- The task is expecting pings from the application,
+   -- each within in the promised interval.
+   -- If the application fails to ping, the watchdog reboots it.
    task Run is
       entry Start_With (Promised_Ping_Interval : Time_Span);
       entry Ping;
