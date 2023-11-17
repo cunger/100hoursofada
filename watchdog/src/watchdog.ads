@@ -25,10 +25,10 @@ private
    Reboot_Watched_Application : Callback;
    -- The application provides a callback that is called when it fails to ping.
 
-   task Run is
+   task Timer is
       entry Start;
       entry Ping;
-   end Run;
+   end Timer;
    -- The watchdog itself is a task, that expects pings from the application,
    -- each within in the promised interval.
    -- If the application fails to ping, the watchdog calls the reboot callback.

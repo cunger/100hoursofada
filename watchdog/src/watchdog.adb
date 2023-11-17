@@ -1,3 +1,4 @@
+with Ada.Exceptions;
 with Util.Log.Loggers;
 
 -- Note: This is work in progress; really just tinkering at the moment.
@@ -16,22 +17,21 @@ package body Watchdog is
       Expected_Ping_Interval := Promised_Ping_Interval;
       Reboot_Watched_Application := Reboot_Callback;
 
-      Run.Start;
+      Timer.Start;
    end Start_With;
 
    procedure Ping is
    begin
-      Run.Ping;
+      Timer.Ping;
    end Ping;
 
    -------------------------
    -- Task implementation --
    -------------------------
 
-   task body Run is
+   task body Timer is
 
-      Last_Ping : Time;
-      -- The watchdog keeps track of when it received the last ping.
+      Last_Ping : Time; -- Keeping track of when the last ping was received.
 
    begin
       -- First wait for the application to start the watchdog.
@@ -54,5 +54,8 @@ package body Watchdog is
             Reboot_Watched_Application.all;
          end select;
       end loop Wait;
-   end Run;
+   exception
+      when E : Tasking_Error | Program_Error | Constraint_Error =>
+         Log.Error ("Exception: " & Ada.Exceptions.Exception_Message (E));
+   end Timer;
 end Watchdog;
