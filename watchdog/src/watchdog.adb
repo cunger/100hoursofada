@@ -52,6 +52,7 @@ package body Watchdog is
             delay until (Last_Ping + Expected_Ping_Interval);
             Log.Error ("Timeout! Rebooting the application...");
             Reboot_Watched_Application.all;
+            Last_Ping := Clock;
          end select;
       end loop Wait;
    exception
