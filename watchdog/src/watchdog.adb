@@ -8,9 +8,15 @@ package body Watchdog is
    -- Interface for applications to start and ping the watchdog --
    ---------------------------------------------------------------
 
-   procedure Start_With (Promised_Ping_Interval : Time_Span) is
+   procedure Start_With (
+      Promised_Ping_Interval : Time_Span;
+      Reboot_Callback : Callback
+   ) is
    begin
-      Run.Start_With (Promised_Ping_Interval);
+      Expected_Ping_Interval := Promised_Ping_Interval;
+      Reboot_Watched_Application := Reboot_Callback;
+
+      Run.Start;
    end Start_With;
 
    procedure Ping is
@@ -24,34 +30,28 @@ package body Watchdog is
 
    task body Run is
 
-      Expected_Ping_Interval : Time_Span;
-      -- The application sets the max interval in which it promises to ping the watchdog.
-
       Last_Ping : Time;
       -- The watchdog keeps track of when it received the last ping.
 
    begin
-      -- First wait for the application to start the watchdog with an interval.
-      accept Start_With (Promised_Ping_Interval : Time_Span) do
-         Expected_Ping_Interval := Promised_Ping_Interval;
-
-         Log.Info ("Starting watchdog timer...");
-
+      -- First wait for the application to start the watchdog.
+      accept Start do
+         Log.Debug ("Watching!");
          Last_Ping := Clock;
-      end Start_With;
+      end Start;
 
       Wait : loop
          select
             -- Wait for pings. When they come, reset Last_Ping.
             accept Ping do
-               Log.Debug ("Received ping."); -- will be deactivated to avoid overhead
+               Log.Debug ("Received ping.");
                Last_Ping := Clock;
             end Ping;
          or
             -- If there is no ping within the expected interval, reboot the process.
             delay until (Last_Ping + Expected_Ping_Interval);
-            Log.Error ("Timeout! Will reboot the process...");
-            exit Wait;
+            Log.Error ("Timeout! Rebooting the application...");
+            Reboot_Watched_Application.all;
          end select;
       end loop Wait;
    end Run;

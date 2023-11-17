@@ -6,7 +6,10 @@
 -------------------------------------------------------------------------------
 package Simulation is
 
-   procedure Start;
+   procedure Setup;
+   -- Getting ready to run. This includies starting the watchdog.
+
+   procedure Start_Processing;
    -- Starts simulating a processing loop, which builds up slag over time
    -- and at some point will hang.
 

@@ -5,20 +5,31 @@ with Ada.Real_Time; use Ada.Real_Time;
 
 package Watchdog is
 
-   procedure Start_With (Promised_Ping_Interval : Time_Span);
-   -- Starts the watchdog with an expected ping interval.
+   type Callback is access procedure;
+
+   procedure Start_With (
+      Promised_Ping_Interval : Time_Span;
+      Reboot_Callback : Callback
+   );
+   -- Starts the watchdog with an expected ping interval and
+   -- a callback to reboot the caller if it fails to ping.
 
    procedure Ping;
    -- Lets the watchdog know that everything is fine.
 
 private
-   -- The task is expecting pings from the application,
-   -- each within in the promised interval.
-   -- If the application fails to ping, the watchdog reboots it.
+
+   Expected_Ping_Interval : Time_Span;
+   -- The application sets the max interval in which it promises to ping the watchdog.
+
+   Reboot_Watched_Application : Callback;
+   -- The application provides a callback that is called when it fails to ping.
+
    task Run is
-      entry Start_With (Promised_Ping_Interval : Time_Span);
+      entry Start;
       entry Ping;
    end Run;
-   -- TODO Still missing: procedure pointer what to call for a restart
-   -- when the application fails to ping
+   -- The watchdog itself is a task, that expects pings from the application,
+   -- each within in the promised interval.
+   -- If the application fails to ping, the watchdog calls the reboot callback.
 end Watchdog;

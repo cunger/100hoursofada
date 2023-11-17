@@ -10,16 +10,25 @@ package body Simulation is
    Slag_Buildup : Natural := 0;
    Slag_Breakpoint : constant Positive := 10;
 
+   -- Empty procedures that pretend to do some work.
    procedure Read_Sensor is null;
    procedure Check_Status is null;
 
-   procedure Start is
+   procedure Setup is
    begin
-      Log.Info ("Starting simulation... (cancel it with Ctrl+C)");
+      Log.Info ("All set up. Starting watchdog...");
 
-      Watchdog.Start_With (Promised_Ping_Interval => Ada.Real_Time.Milliseconds (1000));
+      Watchdog.Start_With (
+         Promised_Ping_Interval => Ada.Real_Time.Milliseconds (1000),
+         Reboot_Callback => Reboot'Access
+      );
+   end Setup;
 
-      -- Example loop where each iteration needs to complete within a set amount of time
+   procedure Start_Processing is
+   begin
+      Log.Info ("Starting processing... (cancel with Ctrl+C)");
+
+      -- Processing loop. Each iteration needs to complete within a set amount of time.
       Processing : loop
          -- Check the slag buildup. If we reached a critical level,
          -- simulate that the processing hangs and doesn't do anything anymore.
@@ -39,12 +48,14 @@ package body Simulation is
 
          delay 0.6;
       end loop Processing;
-   end Start;
+   end Start_Processing;
 
    procedure Reboot is
    begin
+      Log.Info ("Reboot...");
+
       Slag_Buildup := 0;
-      Start;
+      Start_Processing;
    end Reboot;
 
 end Simulation;
