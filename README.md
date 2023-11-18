@@ -1,6 +1,6 @@
 # 100 hours of Ada
 
-This is a playground for learning Ada, including the following projects:
+This is a playground for learning Ada, with the following toy projects:
 
 * `minesweeper` is implementing the board generation and part of the game logic of Minesweeper. Mainly for learning AUnit and trying pre- and post-conditions.
 * `watchdog` is a basic implementation of a [watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer). Mainly to get familiar with tasks and timing.
