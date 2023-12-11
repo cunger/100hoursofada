@@ -4,10 +4,12 @@ with Util.Strings;
 
 package body AOC2023_02 is
 
-   function All_Possible (Draws : String) return Boolean;
-
    function Parse_Draw (Str : String) return Draw;
 
+   function All_Possible (Draws : String) return Boolean;
+   function Find_Minimal_Cubes (Draws : String) return Draw;
+
+   -- Part 1
    function Sum_IDs_Of_Possible_Games return Natural is
       Input : Ada.Text_IO.File_Type;
       Sum   : Natural := 0;
@@ -32,13 +34,37 @@ package body AOC2023_02 is
       return Sum;
    end Sum_IDs_Of_Possible_Games;
 
+   -- Part 2
+   function Sum_Powers_Of_Minimal_Sets return Natural is
+      Input : Ada.Text_IO.File_Type;
+      Sum   : Natural := 0;
+   begin
+      Ada.Text_IO.Open (File => Input, Mode => Ada.Text_IO.In_File, Name => Input_File_Name);
+
+      while not Ada.Text_IO.End_Of_File (Input) loop
+         Process_Line : declare
+            Line        : constant String   := Ada.Text_IO.Get_Line (Input);
+            Index_Colon : constant Positive := Util.Strings.Index (Line, ':', From => Line'First);
+            Draws       : constant String   := Line (Index_Colon + 2 .. Line'Last);
+            Minimal_Set : Draw;
+         begin
+            Minimal_Set := Find_Minimal_Cubes (Draws);
+            Sum         := Sum + (Minimal_Set.Red * Minimal_Set.Blue * Minimal_Set.Green);
+         end Process_Line;
+      end loop;
+
+      Ada.Text_IO.Close (Input);
+
+      return Sum;
+   end Sum_Powers_Of_Minimal_Sets;
+
    function All_Possible (Draws : String) return Boolean is
       All_Possible : Boolean := True;
 
       -- Variables for looping over all draws
-      Start_Index             : Natural := Draws'First;
+      Start_Index          : Natural := Draws'First;
       Index_Next_Semicolon : Natural;
-      Parsed_Draw             : Draw;
+      Parsed_Draw          : Draw;
    begin
       For_Each_Draw : loop
          exit For_Each_Draw when (Start_Index >= Draws'Last);
@@ -64,11 +90,46 @@ package body AOC2023_02 is
       return All_Possible;
    end All_Possible;
 
+   function Find_Minimal_Cubes (Draws : String) return Draw is
+      Min_Red, Min_Blue, Min_Green : Natural := 0;
+
+      -- Variables for looping over all draws
+      Start_Index          : Natural := Draws'First;
+      Index_Next_Semicolon : Natural;
+      Parsed_Draw          : Draw;
+   begin
+      For_Each_Draw : loop
+         exit For_Each_Draw when (Start_Index >= Draws'Last);
+
+         Index_Next_Semicolon := Util.Strings.Index (Draws, ';', From => Start_Index);
+         if Index_Next_Semicolon = 0 then
+            Index_Next_Semicolon := Draws'Last + 1;
+         end if;
+
+         Parsed_Draw := Parse_Draw (Draws (Start_Index .. Index_Next_Semicolon - 1));
+         Start_Index := Index_Next_Semicolon + 1;
+
+         if Parsed_Draw.Red > Min_Red then
+            Min_Red := Parsed_Draw.Red;
+         end if;
+
+         if Parsed_Draw.Blue > Min_Blue then
+            Min_Blue := Parsed_Draw.Blue;
+         end if;
+
+         if Parsed_Draw.Green > Min_Green then
+            Min_Green := Parsed_Draw.Green;
+         end if;
+      end loop For_Each_Draw;
+
+      return (Red => Min_Red, Blue => Min_Blue, Green => Min_Green);
+   end Find_Minimal_Cubes;
+
    function Parse_Draw (Str : String) return Draw is
       Reds, Blues, Greens : Natural := 0;
 
       -- Variables for looping over the colors
-      Start_Index         : Natural := Str'First;
+      Start_Index      : Natural := Str'First;
       Index_Next_Comma : Natural;
    begin
       For_Each_Color_Info : loop

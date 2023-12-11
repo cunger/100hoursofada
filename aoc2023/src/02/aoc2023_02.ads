@@ -6,7 +6,11 @@ package AOC2023_02 is
 
    Input_File_Name : constant String := "src/02/input_02.txt";
 
+   -- Part 1
    function Sum_IDs_Of_Possible_Games return Natural;
+
+   -- Part 2
+   function Sum_Powers_Of_Minimal_Sets return Natural;
 
 private
 

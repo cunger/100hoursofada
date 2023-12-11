@@ -19,6 +19,7 @@ procedure AOC2023 is
 
          when 2 =>
             Log.Info ("Part 1: " & AOC2023_02.Sum_IDs_Of_Possible_Games'Image);
+            Log.Info ("Part 2: " & AOC2023_02.Sum_Powers_Of_Minimal_Sets'Image);
 
          -- TODO More days to come...
 
@@ -30,7 +31,7 @@ procedure AOC2023 is
 begin
    Util.Log.Loggers.Initialize ("log4j.properties");
 
-   -- Solve_Day (1);
+   Solve_Day (1);
    Solve_Day (2);
 
    -- TODO More days to come...
