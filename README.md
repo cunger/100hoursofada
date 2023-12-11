@@ -128,9 +128,9 @@ procedure Point_To(Azimuth, Elevation : Float);
 Can be called like this:
 ```ada
 -- positional:
-Point_To(42.8, 16.2);
+Point_To (42.8, 16.2);
 -- named:
-Point_To(Azimuth => 42.8, Elevation => 16.2);
+Point_To (Azimuth => 42.8, Elevation => 16.2);
 ```
 Same holds for constructing arrays:
 ```ada
@@ -261,10 +261,10 @@ Parametrized types:
 PixelMatrix is array (Integer range <>, Integer range <>) of Color;
 
 type Bitmap (Width, Height : Positive) is record
-   Pixels : PixelMatrix(1 .. width, 1 .. height);
+   Pixels : PixelMatrix (1 .. width, 1 .. height);
 end record;
 
--- declare like: B : Bitmap(32, 32); 
+-- declare like: B : Bitmap (32, 32); 
 -- use parameters like: B.Width, B.Height
 ```
 
@@ -419,7 +419,7 @@ Predfined exceptions are `Constraint_Error` (for overflows an bound errors), `St
      Positive range <>  -- second dimension, unconstrained
   ) of Boolean;
 
-  type Matrices is array (Positive range <>) of Matrix(1 .. 10, 1 .. 20);
+  type Matrices is array (Positive range <>) of Matrix (1 .. 10, 1 .. 20);
   -- note that the dimensions need to be constrained when the type is used
   ```
   This is different from arrays of arrays (which you can also have, of course).
