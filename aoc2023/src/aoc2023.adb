@@ -1,6 +1,7 @@
 with Util.Log.Loggers;
 with AOC2023_01;
 with AOC2023_02;
+with AOC2023_04;
 
 procedure AOC2023 is
 
@@ -21,6 +22,9 @@ procedure AOC2023 is
             Log.Info ("Part 1: " & AOC2023_02.Sum_IDs_Of_Possible_Games'Image);
             Log.Info ("Part 2: " & AOC2023_02.Sum_Powers_Of_Minimal_Sets'Image);
 
+         when 4 =>
+            Log.Info ("Part 1: " & AOC2023_04.Points_Of_Scratch_Cards'Image);
+
          -- TODO More days to come...
 
          when others =>
@@ -33,6 +37,7 @@ begin
 
    Solve_Day (1);
    Solve_Day (2);
+   Solve_Day (4);
 
    -- TODO More days to come...
 

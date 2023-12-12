@@ -24,6 +24,4 @@ private
       Green : Natural;
    end record;
 
-   Unexpected_Input_Format : exception;
-
 end AOC2023_02;
