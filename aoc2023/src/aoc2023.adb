@@ -23,7 +23,8 @@ procedure AOC2023 is
             Log.Info ("Part 2: " & AOC2023_02.Sum_Powers_Of_Minimal_Sets'Image);
 
          when 4 =>
-            Log.Info ("Part 1: " & AOC2023_04.Points_Of_Scratch_Cards'Image);
+            Log.Info ("Part 1: " & AOC2023_04.Total_Number_Of_Points'Image);
+            Log.Info ("Part 2: " & AOC2023_04.Total_Number_Of_Cards'Image);
 
          -- TODO More days to come...
 
