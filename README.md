@@ -436,6 +436,39 @@ begin
 end Iterate;
 ```
 
+## Vectors
+
+A [vector](https://www.adaic.org/resources/add_content/standards/05rm/html/RM-A-18-2.html) is like an array that expands with each element that is added.
+
+Specifying a vector type:
+```ada
+with Ada.Containers.Vectors;
+
+package Boolean_Vectors is new Ada.Containers.Vectors (
+   Index_Type   => Positive,
+   Element_Type => Boolean
+);
+
+subtype Boolean_Vector is Boolean_Vectors.Vector;
+```
+
+Elements `E` can be added to a vector `V` simply by appending `V.Append (E)` (or prepending `V.Prepend (E)`).
+
+Traversing a vector using a cursor:
+```ada
+V : Vector;
+C : Cursor;
+
+C := First (V); -- or: Last (V)
+C := Next (C);  -- or: Previous (C)
+
+-- Check whether the vector contains an element at the cursor position,
+-- and access that element.
+if Has_Element (C) then
+   E := Element (C);
+end if;
+```
+
 ## Concurrency
 
 ## Testing
@@ -444,6 +477,8 @@ end Iterate;
 * [Ahven](http://ahven.stronglytyped.org)
 
 # 📚 References
+
+* [Reference Manual](https://www.adaic.org/resources/add_content/standards/05rm/html/RM-TOC.html)
 
 * https://learn.adacore.com/courses/intro-to-ada/
 * David Given: [A random walk through Ada](https://cowlark.com/2014-04-27-ada/index.html)

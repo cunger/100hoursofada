@@ -26,6 +26,9 @@ package body AOC2023_08 is
       Destination : Node
    ) return Natural
       with Pre => not Is_Empty (Navigation);
+      -- TODO Also needs to check that the start and destination
+      --      are indeed contained in the map. Otherwise we'll
+      --      end up with an infinite loop.
 
    -- Part 1: Count the number of steps needed to traverse
    -- the wasteland from "AAA" to "ZZZ".
