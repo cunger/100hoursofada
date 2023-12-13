@@ -1,20 +1,8 @@
 pragma Ada_2022;
 
-with Ada.Text_IO;
 with Util.Strings;
 
 package body AOC2023_04 is
-
-   -- For storing the winning numbers of a card, use an array that specifies
-   -- for each number in the range whether it appears on the card as winning
-   -- number or not. (Idea stolen from John Perry.)
-   type Number  is range 0 .. 99;
-   type Numbers is array (Number) of Boolean;
-
-   package Num_IO is new Ada.Text_IO.Integer_IO (Number);
-
-   -- For storing how many matching numbers each card has.
-   type Card_Pile is array (1 .. 211) of Natural;
 
    -- Process the cards in the input file and store the number of matches for each card.
    function Process_Scratch_Cards return Card_Pile;
