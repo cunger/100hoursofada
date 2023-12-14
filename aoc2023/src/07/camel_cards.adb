@@ -35,7 +35,7 @@ package body Camel_Cards is
    function Determine_Type (Cards : in Hand) return Hand_Type is
       type Card_Counts is array (Card) of Natural range 0 .. 5;
 
-      Counts : Card_Counts := (others => 0);
+      Counts : Card_Counts := [others => 0];
    begin
       -- Count how often each card occurs in the hand.
       for I in Hand'Range loop
@@ -81,6 +81,26 @@ package body Camel_Cards is
       end Count_Pairs;
    end Determine_Type;
 
-   procedure Sort_By_Increasing_Strength (Inputs : in out Hand_Infos) is null;
+   function "<" (Left, Right : in Hand_Info) return Boolean is
+   begin
+      -- First check the type of the hand (using the ordering in the enum definition).
+      if Left.Kind < Right.Kind then
+         return True;
+      elsif Left.Kind > Right.Kind then
+         return False;
+      end if;
+
+      -- If the type is equal, check the cards one by one.
+      for I in Left.Cards'Range loop
+         if Left.Cards (I) < Right.Cards (I) then
+            return True;
+         elsif Left.Cards (I) > Right.Cards (I) then
+            return False;
+         end if;
+      end loop;
+
+      -- If we haven't returned yet, then the hands have equal strength.
+      return False;
+   end "<";
 
 end Camel_Cards;

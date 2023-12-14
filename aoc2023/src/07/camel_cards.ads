@@ -1,6 +1,6 @@
-package Camel_Cards is
+with Ada.Containers.Vectors;
 
-   Invalid_Input : exception;
+package Camel_Cards is
 
    -----------
    -- Types --
@@ -24,26 +24,47 @@ package Camel_Cards is
       Five_Of_A_Kind
    );
 
-   -- Info about a hand: the cards it holds, its type, and the amount that was bet.
+   -- Info about a hand: the cards it holds, its type, and the amount that was bid.
    type Hand_Info is record
       Cards : Hand;
       Kind  : Hand_Type;
       Bid   : Natural;
    end record;
 
-   type Hand_Infos is array (1 .. 1000) of Hand_Info;
+   subtype Rank is Positive range 1 .. 1000;
 
-   -- Functionality
+   package Hand_Info_Vectors is new Ada.Containers.Vectors (
+      Index_Type   => Rank,
+      Element_Type => Hand_Info
+   );
+
+   subtype Hand_Infos is Hand_Info_Vectors.Vector;
+
+   -------------------
+   -- Functionality --
+   -------------------
+
+   function Parse_Card (Letter : in Character) return Card;
 
    -- Parses a string as a hand of cards.
-   -- Example: "A24JJ" is parsed as (Ace, Two, Four, Jack, Jack)
+   -- Example: "A24JJ" is parsed as [Ace, Two, Four, Jack, Jack]
    -- Raises:  Invalid_Input exception
-   function Parse_Hand (Str : String) return Hand
+   function Parse_Hand (Str : in String) return Hand
       with Pre => Str'Length = 5;
 
    function Determine_Type (Cards : in Hand) return Hand_Type
       with Post => not (Determine_Type'Result = Unknown);
 
-   procedure Sort_By_Increasing_Strength (Inputs : in out Hand_Infos);
+   -- Comparison of hand infos based on their strength.
+   -- Used to determine order in Sort_By_Increasing_Strength.
+   function "<" (Left, Right : in Hand_Info) return Boolean;
+
+   package Hand_Info_Sorting is new Hand_Info_Vectors.Generic_Sorting;
+
+   ----------------
+   -- Exceptions --
+   ----------------
+
+   Invalid_Input : exception;
 
 end Camel_Cards;
