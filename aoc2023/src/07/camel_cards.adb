@@ -1,0 +1,86 @@
+pragma Ada_2022;
+
+package body Camel_Cards is
+
+   function Parse_Card (Letter : in Character) return Card is
+   begin
+      return (case Letter is
+         when '2' => Two,
+         when '3' => Three,
+         when '4' => Four,
+         when '5' => Five,
+         when '6' => Six,
+         when '7' => Seven,
+         when '8' => Eight,
+         when '9' => Nine,
+         when 'T' => Ten,
+         when 'J' => Jack,
+         when 'Q' => Queen,
+         when 'K' => King,
+         when 'A' => Ace,
+         when others => raise Invalid_Input with "Not a valid card: " & Letter
+      );
+   end Parse_Card;
+
+   function Parse_Hand (Str : String) return Hand is
+      Parsed : Hand;
+   begin
+      for I in 1 .. 5 loop
+         Parsed (I) := Parse_Card (Str (Str'First + (I - 1)));
+      end loop;
+
+      return Parsed;
+   end Parse_Hand;
+
+   function Determine_Type (Cards : in Hand) return Hand_Type is
+      type Card_Counts is array (Card) of Natural range 0 .. 5;
+
+      Counts : Card_Counts := (others => 0);
+   begin
+      -- Count how often each card occurs in the hand.
+      for I in Hand'Range loop
+         Counts (Cards (I)) := @ + 1;
+      end loop;
+
+      -- If a card occurs five times, then we have five of a kind.
+      if (for some C of Counts => C = 5) then
+         return Five_Of_A_Kind;
+      end if;
+
+      -- If a card occurs four times, then we have four of a kind.
+      if (for some C of Counts => C = 4) then
+         return Four_Of_A_Kind;
+      end if;
+
+      -- If a card occurs three times, then we have either a full house
+      -- (if the other two cards are equal) or three of a kind.
+      if (for some C of Counts => C = 3) then
+         if (for all C of Counts => C = 0 or C >= 2) then
+            return Full_House;
+         else
+            return Three_Of_A_Kind;
+         end if;
+      end if;
+
+      -- Otherwise we have either two pairs, one, or none.
+      Count_Pairs : declare
+         Number_Of_Pairs : Natural := 0;
+      begin
+         for C of Counts loop
+            if C = 2 then
+               Number_Of_Pairs := @ + 1;
+            end if;
+         end loop;
+
+         case Number_Of_Pairs is
+            when 0      => return High_Card;
+            when 1      => return One_Pair;
+            when 2      => return Two_Pair;
+            when others => return Unknown; -- This should never happen.
+         end case;
+      end Count_Pairs;
+   end Determine_Type;
+
+   procedure Sort_By_Increasing_Strength (Inputs : in out Hand_Infos) is null;
+
+end Camel_Cards;

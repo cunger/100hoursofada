@@ -3,6 +3,7 @@ with Util.Log.Loggers;
 with AOC2023_01;
 with AOC2023_02;
 with AOC2023_04;
+with AOC2023_07;
 with AOC2023_08;
 
 procedure AOC2023 is
@@ -28,6 +29,9 @@ procedure AOC2023 is
             Log.Info ("Part 1: " & AOC2023_04.Total_Number_Of_Points'Image);
             Log.Info ("Part 2: " & AOC2023_04.Total_Number_Of_Cards'Image);
 
+         when 7 =>
+            Log.Info ("Part 1: " & AOC2023_07.Total_Winnings'Image);
+
          when 8 =>
             Log.Info ("Part 1: " & AOC2023_08.Steps_From_AAA_To_ZZZ'Image);
 
@@ -44,6 +48,7 @@ begin
    Solve_Day (1);
    Solve_Day (2);
    Solve_Day (4);
+   Solve_Day (7);
    Solve_Day (8);
 
    -- TODO More days to come...
