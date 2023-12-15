@@ -30,7 +30,8 @@ procedure AOC2023 is
             Log.Info ("Part 2: " & AOC2023_04.Total_Number_Of_Cards'Image);
 
          when 7 =>
-            Log.Info ("Part 1: " & AOC2023_07.Total_Winnings'Image);
+            Log.Info ("Part 1: " & AOC2023_07.Total_Winnings (With_Joker => False)'Image);
+            Log.Info ("Part 2: " & AOC2023_07.Total_Winnings (With_Joker => True)'Image);
 
          when 8 =>
             Log.Info ("Part 1: " & AOC2023_08.Steps_From_AAA_To_ZZZ'Image);

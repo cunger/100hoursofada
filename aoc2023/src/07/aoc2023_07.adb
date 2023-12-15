@@ -5,7 +5,7 @@ with Camel_Cards; use Camel_Cards;
 package body AOC2023_07 is
 
    -- Part 1
-   function Total_Winnings return Natural is
+   function Total_Winnings (With_Joker : Boolean := False) return Natural is
       use Hand_Info_Vectors;
 
       Input     : Ada.Text_IO.File_Type;
@@ -22,12 +22,14 @@ package body AOC2023_07 is
             Bid      : Natural;
             One_Hand : Hand_Info;
          begin
-            Cards    := Parse_Hand (Line (Line'First .. Line'First + 4));
+            Cards    := Parse_Hand (Line (Line'First .. Line'First + 4), With_Joker);
             Bid      := Integer'Value (Line (Line'First + 6 .. Line'Last));
             One_Hand := (Cards, Determine_Type (Cards), Bid);
             All_Hands.Append (One_Hand);
          end;
       end loop;
+
+      Ada.Text_IO.Close (Input);
 
       -- Sort hands in increasing strength.
       Hand_Info_Sorting.Sort (All_Hands);
