@@ -2,7 +2,7 @@ pragma Ada_2022;
 
 package body Camel_Cards is
 
-   function Parse_Card (Letter : in Character) return Card is
+   function Parse_Card (Letter : in Character; With_Joker : Boolean := False) return Card is
    begin
       return (case Letter is
          when '2' => Two,
@@ -14,7 +14,7 @@ package body Camel_Cards is
          when '8' => Eight,
          when '9' => Nine,
          when 'T' => Ten,
-         when 'J' => Jack,
+         when 'J' => (if With_Joker then Joker else Jack),
          when 'Q' => Queen,
          when 'K' => King,
          when 'A' => Ace,
@@ -22,25 +22,48 @@ package body Camel_Cards is
       );
    end Parse_Card;
 
-   function Parse_Hand (Str : String) return Hand is
+   function Parse_Hand (Str : String; With_Joker : Boolean := False) return Hand is
       Parsed : Hand;
    begin
       for I in 1 .. 5 loop
-         Parsed (I) := Parse_Card (Str (Str'First + (I - 1)));
+         Parsed (I) := Parse_Card (Str (Str'First + (I - 1)), With_Joker);
       end loop;
 
       return Parsed;
    end Parse_Hand;
 
-   function Determine_Type (Cards : in Hand) return Hand_Type is
-      type Card_Counts is array (Card) of Natural range 0 .. 5;
+   function Most_Frequent_Card (Counts : in Card_Counts) return Card is
+      Winner : Card := Joker;
+   begin
+      for C in Card_Counts'Range loop
+         if not (C = Joker) and
+            (Counts (C) > 0) and
+            ((Counts (C) > Counts (Winner)) or Winner = Joker)
+         then
+            Winner := C;
+         end if;
+      end loop;
 
+      return Winner;
+   end Most_Frequent_Card;
+
+   function Determine_Type (Cards : in Hand) return Hand_Type is
       Counts : Card_Counts := [others => 0];
+      Card_With_Max_Counts : Card;
    begin
       -- Count how often each card occurs in the hand.
       for I in Hand'Range loop
          Counts (Cards (I)) := @ + 1;
       end loop;
+
+      -- Use Jokers to increase strength of the hand:
+      -- Increase the count of the most frequent non-Joker card
+      -- by the amount of Jokers.
+      Card_With_Max_Counts := Most_Frequent_Card (Counts);
+      if not (Card_With_Max_Counts = Joker) then
+         Counts (Card_With_Max_Counts) := @ + Counts (Joker);
+         Counts (Joker) := 0;
+      end if;
 
       -- If a card occurs five times, then we have five of a kind.
       if (for some C of Counts => C = 5) then
