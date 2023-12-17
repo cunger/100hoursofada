@@ -4,8 +4,6 @@
 
 package AOC2023_02 is
 
-   Input_File_Name : constant String := "src/02/input_02.txt";
-
    -- Part 1
    function Sum_IDs_Of_Possible_Games return Natural;
 
@@ -13,6 +11,8 @@ package AOC2023_02 is
    function Sum_Powers_Of_Minimal_Sets return Natural;
 
 private
+
+   Input_File_Name : constant String := "src/02/input_02.txt";
 
    Max_Red   : constant Natural := 12;
    Max_Blue  : constant Natural := 14;

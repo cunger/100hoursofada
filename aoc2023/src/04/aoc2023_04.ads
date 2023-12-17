@@ -5,8 +5,6 @@ with Ada.Text_IO;
 
 package AOC2023_04 is
 
-   Input_File_Name : constant String := "src/04/input_04.txt";
-
    -- Part 1
    function Total_Number_Of_Points return Natural;
 
@@ -14,6 +12,8 @@ package AOC2023_04 is
    function Total_Number_Of_Cards return Natural;
 
 private
+
+   Input_File_Name : constant String := "src/04/input_04.txt";
 
    -- For storing the winning numbers of a card, use an array that specifies
    -- for each number in the range whether it appears on the card as winning

@@ -35,6 +35,7 @@ Neil Storey:
     * [Pre- and post-conditions](#pre--and-post-conditions)
     * [Exceptions](#-exceptions)
   * [Arrays](#arrays)
+  * [Vectors](#vectors)
   * [Testing](#testing)
 * [References](#-references)
 * [Explore](#explore)

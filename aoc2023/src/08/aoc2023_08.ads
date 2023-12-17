@@ -8,12 +8,12 @@ with Ada.Strings.Hash;
 
 package AOC2023_08 is
 
-   Input_File_Name : constant String := "src/08/input_08.txt";
-
    -- Part 1
    function Steps_From_AAA_To_ZZZ return Natural;
 
 private
+
+   Input_File_Name : constant String := "src/08/input_08.txt";
 
    Unexpected_Input_Exception : exception;
 
