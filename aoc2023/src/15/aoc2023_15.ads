@@ -1,11 +1,11 @@
 package AOC2023_15 is
 
-   Input_File_Name : constant String := "src/15/input_15.txt";
-
    -- Part 1
    function Hash_Sum_Of_Initialization_Sequence return Natural;
 
 private
+
+   Input_File_Name : constant String := "src/15/input_15.txt";
 
    subtype Hash_Value is Natural range 0 .. 255;
 

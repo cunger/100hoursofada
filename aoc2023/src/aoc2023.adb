@@ -50,11 +50,11 @@ procedure AOC2023 is
 begin
    Util.Log.Loggers.Initialize ("log4j.properties");
 
-   -- Solve_Day (1);
-   -- Solve_Day (2);
-   -- Solve_Day (4);
-   -- Solve_Day (7);
-   -- Solve_Day (8);
+   Solve_Day (1);
+   Solve_Day (2);
+   Solve_Day (4);
+   Solve_Day (7);
+   Solve_Day (8);
    Solve_Day (15);
 
    -- TODO More days to come...
