@@ -2,6 +2,7 @@ pragma Ada_2022;
 
 with Ada.Text_IO;
 with Camel_Cards; use Camel_Cards;
+
 package body AOC2023_07 is
 
    -- Part 1

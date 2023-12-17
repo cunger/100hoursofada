@@ -2,9 +2,8 @@ pragma Ada_2022;
 
 with Ada.Text_IO;
 with Ada.Assertions; use Ada.Assertions;
-with Camel_Cards; use Camel_Cards;
 
-procedure Camel_Cards_Test is
+procedure Camel_Cards.Test is
 
    With_Joker : Boolean;
 
@@ -36,7 +35,9 @@ procedure Camel_Cards_Test is
          Str & " is " & Actual'Image & " but should be " & Expected'Image
       );
    end Check_Most_Frequent_Card;
+
 begin
+
    Ada.Text_IO.Put_Line ("Running tests...");
 
    Ada.Text_IO.Put_Line ("Hand type without Joker...");
@@ -71,4 +72,5 @@ begin
    Check_Most_Frequent_Card ("JJJJJ", Joker);
 
    Ada.Text_IO.Put_Line ("All fine.");
-end Camel_Cards_Test;
+
+end Camel_Cards.Test;

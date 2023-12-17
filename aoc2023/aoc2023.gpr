@@ -8,7 +8,8 @@ project AOC2023 is
       "src/02/",
       "src/04/",
       "src/07/",
-      "src/08/"
+      "src/08/",
+      "src/15"
    );
    for Object_Dir use "obj";
    for Exec_Dir use "bin";
@@ -21,7 +22,7 @@ project AOC2023 is
           "-g"         -- Generate debug info
          ,"-gnata"     -- Enable assertions
          ,"-gnatwa"    -- Enable all warnings
-         ,"-gnatwe"    -- Treat warnings as errors
+         --,"-gnatwe"    -- Treat warnings as errors
          ,"-gnaty"     -- Enable all style checks
          ,"-gnatyC"    -- Check comments without extra space
          ,"-gnatyM100" -- Check maximum line length of 100
