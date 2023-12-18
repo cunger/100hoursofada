@@ -8,7 +8,7 @@ procedure Inspect is
 begin
 
    Print ("Integer size: " & Integer'Image (Integer'Size));
-   Print ("Integer MIN: " & Integer'Image (Integer'First));
-   Print ("Integer MAX: " & Integer'Image (Integer'Last));
+   Print ("Integer MIN:  " & Integer'Image (Integer'First));
+   Print ("Integer MAX:  " & Integer'Image (Integer'Last));
 
 end Inspect;
