@@ -39,6 +39,7 @@ procedure AOC2023 is
 
          when 15 =>
             Log.Info ("Part 1: " & AOC2023_15.Hash_Sum_Of_Initialization_Sequence'Image);
+            Log.Info ("Part 2: " & AOC2023_15.Total_Focusing_Power'Image);
 
          -- TODO More days to come...
 

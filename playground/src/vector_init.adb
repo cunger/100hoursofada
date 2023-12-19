@@ -1,5 +1,3 @@
-pragma Ada_2022;
-
 with Ada.Containers.Vectors;
 with Ada.Text_IO;
 

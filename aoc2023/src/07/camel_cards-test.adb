@@ -1,5 +1,3 @@
-pragma Ada_2022;
-
 with Ada.Text_IO;
 with Ada.Assertions; use Ada.Assertions;
 

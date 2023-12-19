@@ -1,5 +1,3 @@
-pragma Ada_2022;
-
 with Util.Strings;
 
 package body AOC2023_04 is

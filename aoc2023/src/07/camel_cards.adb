@@ -1,5 +1,3 @@
-pragma Ada_2022;
-
 package body Camel_Cards is
 
    function Parse_Card (Letter : in Character; With_Joker : Boolean := False) return Card is
