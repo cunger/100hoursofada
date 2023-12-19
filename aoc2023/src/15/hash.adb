@@ -1,6 +1,6 @@
 package body Hash is
 
-   function Hash_256 (Str : String) return Hash_Value is
+   function Hash_256 (Str : in String) return Hash_Value is
       Hash : Natural := 0;
    begin
       For_Each_Character : for Char of Str loop

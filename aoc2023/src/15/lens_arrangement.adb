@@ -5,7 +5,7 @@ package body Lens_Arrangement is
 
    All_Boxes : Boxes := [others => Empty_Vector];
 
-   procedure Perform_Step (Step : String) is
+   procedure Perform_Step (Step : in String) is
    begin
       if Util.Strings.Ends_With (Step, "-") then
          declare
@@ -31,12 +31,12 @@ package body Lens_Arrangement is
       end if;
    end Perform_Step;
 
-   function To_Fixed_Size (From : String) return Label_String is
+   function To_Fixed_Size (From : in String) return Label_String is
    begin
       return From & [(From'Length + 1) .. Label_String'Last => ' '];
    end To_Fixed_Size;
 
-   function Find_Index (Box_No : Hash_Value; Label : Label_String) return Natural is
+   function Find_Index (Box_No : in Hash_Value; Label : in Label_String) return Natural is
       Position   : Cursor  := First (All_Boxes (Box_No));
       Lens_Index : Natural := 0;
    begin
@@ -52,7 +52,7 @@ package body Lens_Arrangement is
       return Lens_Index;
    end Find_Index;
 
-   procedure Remove (Box_No : Hash_Value; Label : Label_String) is
+   procedure Remove (Box_No : in Hash_Value; Label : in Label_String) is
       Lens_Index : Natural;
    begin
       Lens_Index := Find_Index (Box_No, Label);
@@ -62,7 +62,7 @@ package body Lens_Arrangement is
       end if;
    end Remove;
 
-   procedure Upsert (Box_No : Hash_Value; Label : Label_String; Focal_Length : Digit) is
+   procedure Upsert (Box_No : in Hash_Value; Label : in Label_String; Focal_Length : in Digit) is
       Lens_Index : Natural;
    begin
       Lens_Index := Find_Index (Box_No, Label);
