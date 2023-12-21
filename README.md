@@ -218,7 +218,11 @@ end Main;
 
 ## Types
 
-* elementary types
+* enumeration
+```ada
+type State is (Idle, Waiting, Processing, Stuck);
+```
+
 * composite types: arrays, records
 * acess types (a.k.a. pointers)
 * derived types and subtypes
@@ -404,6 +408,8 @@ An exception part can be added to all blocks (also to subprograms, for example).
 
 Predfined exceptions are `Constraint_Error` (for overflows an bound errors), `Storage_Error` (for memory issues), `Tasking_Error` (for task-related problems), and `Program_Error` (more arcane). Leave them to Ada and always define the exceptions you want to raise.
 
+Every run-time error results in an exception and can be handled.
+
 ## Arrays
 
 * Arrays can have any enumerable, bounded type as an index type. (It an be unbound when declaring the array but needs to be constrained before the array can be used.)
@@ -498,6 +504,7 @@ Read:
 
 # Backlog
 
+* mod types (`type Hash is mod Hash_Value`)
 * type conversions
 * Custom fixed point types: 
   ```
@@ -505,4 +512,4 @@ Read:
   ```
 * attributes
 * null (as value, e.g. for an access type, and as procedure body)
-* clocks and delay
+* toolchains
