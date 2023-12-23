@@ -6,6 +6,7 @@ with AOC2023_04;
 with AOC2023_07;
 with AOC2023_08;
 with AOC2023_15;
+with AOC2023_16;
 
 procedure AOC2023 is
 
@@ -41,7 +42,8 @@ procedure AOC2023 is
             Log.Info ("Part 1: " & AOC2023_15.Hash_Sum_Of_Initialization_Sequence'Image);
             Log.Info ("Part 2: " & AOC2023_15.Total_Focusing_Power'Image);
 
-         -- TODO More days to come...
+         when 16 =>
+            Log.Info ("Part 1: " & AOC2023_16.Number_Of_Energized_Tiles'Image);
 
          when others =>
             Log.Error ("No solution yet for puzzles of day " & Number'Image);
@@ -57,7 +59,6 @@ begin
    Solve_Day (7);
    Solve_Day (8);
    Solve_Day (15);
-
-   -- TODO More days to come...
+   Solve_Day (16);
 
 end AOC2023;
