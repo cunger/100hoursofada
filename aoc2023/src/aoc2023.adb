@@ -44,6 +44,7 @@ procedure AOC2023 is
 
          when 16 =>
             Log.Info ("Part 1: " & AOC2023_16.Number_Of_Energized_Tiles'Image);
+            Log.Info ("Part 2: " & AOC2023_16.Max_Number_Of_Energized_Tiles'Image);
 
          when others =>
             Log.Error ("No solution yet for puzzles of day " & Number'Image);
