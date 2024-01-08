@@ -37,6 +37,7 @@ Neil Storey:
   * [Arrays](#arrays)
   * [Vectors](#vectors)
   * [Testing](#testing)
+  * [Concurrency](#concurrency)
 * [References](#-references)
 * [Explore](#explore)
 
@@ -477,6 +478,32 @@ end if;
 ```
 
 ## Concurrency
+
+> A concurrent program is [...] one that has more than one thread of control. 
+Execution of this program will, if processors are available, run each of those threads of control in parallel.
+Otherwise, the threads will be interleaved. [pseudo-parallelism]
+
+```ada
+procedure Main
+   task A;
+   task B;
+
+   task body A is null;
+   task body B is null;
+begin
+   -- A and B are executed concurrently.
+   -- They are activated immediately, before any other statements in the begin body.
+
+   null;
+
+   -- The procedure will stop when all statements have been executed
+   -- and A and B have finished.
+end Main;
+```
+
+Communication between tasks:
+* rendevouz via entry points (synchronous)
+* protected objects (asynchronous)
 
 ## Testing
 
