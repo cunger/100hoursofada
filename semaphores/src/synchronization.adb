@@ -19,26 +19,23 @@ package body Synchronization is
 
    protected body Timed_Semaphore is
 
-      procedure Release_After (Interval : Time_Span) is
-      begin
-         Reset_Interval := Interval;
-      end Release_After;
-
       entry Acquire when Remaining_Number_Of_Executions > 0 is
       begin
-         -- Interval time starts counting when the first lock is acquired.
+         -- The time interval starts counting when the first lock is acquired.
+         -- When it is over, all locks are released.
          if Remaining_Number_Of_Executions = Max_Number_Of_Executions then
             Set_Handler (
-               Reset_Interval_Has_Passed,
-               Clock + Reset_Interval,
-               Release_All'Access
+               Event   => Release_Interval_Has_Passed,
+               In_Time => Release_Interval,
+               Handler => Release_All'Access
             );
          end if;
 
          Remaining_Number_Of_Executions := @ - 1;
       end Acquire;
 
-      procedure Release_All is
+      procedure Release_All (Event : in out Timing_Event) is
+         pragma Unreferenced (Event);
       begin
          Remaining_Number_Of_Executions := Max_Number_Of_Executions;
       end Release_All;

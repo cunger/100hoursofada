@@ -7,6 +7,3 @@ maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
 maintainers-logins = ["cunger"]
 
 executables = ["main"]
-
-[[depends-on]]
-utilada = "2.6.0"

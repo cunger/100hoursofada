@@ -3,24 +3,28 @@ with Ada.Real_Time.Timing_Events; use Ada.Real_Time.Timing_Events;
 
 package Synchronization is
 
-   -- TODO exaplanation
+   -- A semaphore is a synchronization primitive that controls
+   -- the number of locks that are available at any one time.
    --
-   -- Example:
+   -- In order to define a semaphore, specify the number of
+   -- processes that you want to allow in parallel,
+   -- for example:
    --
    -- S : Semaphore (10);
    --
+   -- Each process should acquire a lock before running,
+   -- and release that lock when it's done:
+   --
    -- S.Acquire;
-   -- [your computation]
+   -- ...
    -- S.Release;
    protected type Semaphore (Max_Number_Of_Executions : Positive) is
 
-      -- Before starting the computation you want to secure,
-      -- acquire a lock. If none is free currently, you will
+      -- Acquire a lock. If none is free currently, you will
       -- be queued until there is one.
       entry Acquire;
 
-      -- After finishing the computation you want to secure,
-      -- release the lock again.
+      -- Release the lock again, so other processes can run.
       procedure Release;
 
    private
@@ -29,23 +33,36 @@ package Synchronization is
 
    end Semaphore;
 
-
-   Interval_Not_Set : exception;
-
-   protected type Timed_Semaphore (Max_Number_Of_Executions : Positive) is
+   -- A timed semaphore is a synchronization primitive that controls
+   -- the number of locks that are available within a specific time span.
+   --
+   -- In order to define a timed semaphore, specify a time interval and
+   -- the number of processes that you want to allow within that interval,
+   -- for example:
+   --
+   -- S : Time_Semaphore (10, Within_Seconds => 60);
+   --
+   -- Each process should acquire a lock before running:
+   --
+   -- S.Acquire;
+   -- ...
+   --
+   -- The lock is released automatically after the specified interval.
+   protected type Timed_Semaphore (
+      Max_Number_Of_Executions : Positive;
+      Within_Seconds : Positive
+   ) is
 
       entry Acquire;
 
-      procedure Release_After (Interval : Time_Span);
-
    private
-
-      Reset_Interval : Time_Span := Seconds (60);
-      Reset_Interval_Has_Passed : Timing_Event;
 
       Remaining_Number_Of_Executions : Natural := Max_Number_Of_Executions;
 
-      procedure Release_All;
+      Release_Interval : Time_Span := Seconds (Within_Seconds);
+      Release_Interval_Has_Passed : Timing_Event;
+
+      procedure Release_All (Event : in out Timing_Event);
 
    end Timed_Semaphore;
 
