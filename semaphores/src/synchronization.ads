@@ -24,7 +24,7 @@ package Synchronization is
       -- be queued until there is one.
       entry Acquire;
 
-      -- Release the lock again, so other processes can run.
+      -- Release the lock again, so other processes can use it.
       procedure Release;
 
    private
@@ -53,6 +53,8 @@ package Synchronization is
       Within_Seconds : Positive
    ) is
 
+      -- Acquire a lock. If none is free currently, you will
+      -- be queued until there is one.
       entry Acquire;
 
    private
