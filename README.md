@@ -32,6 +32,7 @@ Neil Storey:
   * [Packages](#-packages)
   * [Types](#types)
     * [Range constraints](#range-constraints)
+  * [Scope and visibility](#scope-and-visibility)
   * [Constraints and error handling](#constraints-and-error-handling)
     * [Pre- and post-conditions](#pre--and-post-conditions)
     * [Exceptions](#-exceptions)
@@ -67,7 +68,7 @@ end Countdown;
 * `function Fill(Board : Board)` does not work.
 * Loop variables are constant within the loop body, i.e. cannot be re-assigned.
 * Execution of a branch in a `case` statement does not fall through to the next branch.
-* `and` and `or` are not short-circuiting, but their variants `and then` and `or else` are.
+* `and` and `or` are not short-circuiting (both operands are evaluated in no fixed order), but their variants `and then` and `or else` are (for example `I /= 0 and then N/I > 1`) 
 
 # Cheat sheet
 
@@ -83,6 +84,8 @@ exception
    -- handling exceptions
 end;
 ```
+
+The statement `null;` does nothing.
 
 ## Functions and procedures
 
@@ -220,14 +223,64 @@ end Main;
 
 ## Types
 
-* enumeration
+### Elementary types
+
+**Access types** (a.k.a. pointers)
+
+**Scalar types**
+
+Defined for all scalar types: `'Min`, `'Max`, `in`, `not in`
+
+* Discrete types
+
+  Defined for all discrete types: `'First`, `'Last`, `'Range`
+
+  * enumeration
+  ```ada
+  type State is (Idle, Waiting, Processing, Stuck);
+  type Boolean is (False, True);
+  ```
+  * integer (signed and modular)
+
+* Real types
+  * floating
+  * fixed (decimal and ordinal)
+
+Type conversion:
 ```ada
-type State is (Idle, Waiting, Processing, Stuck);
+Float(2)
+Integer(2.0)
+Positive(10)
+...
 ```
 
-* composite types: arrays, records
-* acess types (a.k.a. pointers)
-* derived types and subtypes
+### Composite types
+
+* arrays
+* records
+* interfaces
+* protected objects
+* tasks
+
+Extending a record type:
+```ada
+-- A record type must be tagged in order to be extensible.
+type Message is tagged
+   record
+      Content : Undbounded_String;
+      Length : Natural;
+   end record;
+
+-- Extending a record type adds fields.
+type Sent_Message is new Message with
+   record
+      Recipient : Undbounded_String;
+      Timestamp : Date;
+   end record;
+```
+
+### Derived types and subtypes
+
 ```ada
 -- derived types 
 type Meters is new Float;
@@ -246,7 +299,11 @@ subtype Positive is Integer range 1 .. Integer'Last;
 
 -- subtype without constraints as alias
 subtype Amount is Integer;
+
+I : Integer range 1 .. 100; -- static subtype
+J : Integer range 1 .. N;   -- dynamic subtype
 ```
+
 
 Restrict types (See range constraints below):
 ```ada
@@ -273,38 +330,6 @@ end record;
 
 -- declare like: B : Bitmap (32, 32); 
 -- use parameters like: B.Width, B.Height
-```
-
-Generics:
-TODO
-
-Keeping a type private:
-```ada
-procedure Demo is
-   type Blah is private;
-   -- needs to be declared before it can be used in other declarations
-private
-   type Blah is <definition>;
-begin
-   null;
-end Demo;
-```
-
-Extending a record type:
-```ada
--- A record type must be tagged in order to be extensible.
-type Message is tagged
-   record
-      Content : Undbounded_String;
-      Length : Natural;
-   end record;
-
--- Extending a record type adds fields.
-type Sent_Message is new Message with
-   record
-      Recipient : Undbounded_String;
-      Timestamp : Date;
-   end record;
 ```
 
 ### Range constraints
@@ -353,6 +378,20 @@ end Main;
 ```
 
 > An Ada software engineer will avoid using pre-defined types such as Integer. Instead, that engineer will create an integer data type with all of its own unique and reliable properties. 
+
+## Scope and visibility
+
+Keeping a type private:
+```ada
+procedure Demo is
+   type Blah is private;
+   -- needs to be declared before it can be used in other declarations
+private
+   type Blah is <definition>;
+begin
+   null;
+end Demo;
+```
 
 ## Constraints and error handling
 
