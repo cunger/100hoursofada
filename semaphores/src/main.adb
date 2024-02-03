@@ -7,7 +7,7 @@ procedure Main is
    -- allows for max 5 executions at any one time
 
    T : Timed_Semaphore (10, Within_Seconds => 60);
-   -- allows for max 5 executions within one minute
+   -- allows for max 10 executions within one minute
 
    task type Execution;
    task type Timed_Execution;
