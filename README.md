@@ -8,6 +8,8 @@ This is a playground for learning Ada, with the following toy projects:
 * `aoc2023` solves some Advent of Code puzzles.
 * `playground` collects bits and pieces to try out.
 
+The general project structure was extracted into a template: https://github.com/cunger/alr-template
+
 # Wisdom 🧙‍♂️
 
 > "Slow is smooth, smooth is fast." Don't rush to failure.
@@ -27,19 +29,22 @@ Neil Storey:
 
 # Notes
 
-* [Cheat sheet](#cheat-sheet)
-  * [Functions and procedures](#functions-and-procedures)
-  * [Packages](#-packages)
-  * [Types](#types)
-    * [Range constraints](#range-constraints)
-  * [Scope and visibility](#scope-and-visibility)
-  * [Constraints and error handling](#constraints-and-error-handling)
-    * [Pre- and post-conditions](#pre--and-post-conditions)
-    * [Exceptions](#-exceptions)
-  * [Arrays](#arrays)
-  * [Vectors](#vectors)
-  * [Testing](#testing)
-  * [Concurrency](#concurrency)
+* [Expressions and statements](#expressions-and-statements)
+* [Functions and procedures](#functions-and-procedures)
+* [Packages](#-packages)
+* [Types](#types)
+   * [Elementary types](#elementary-types)
+   * [Composite types](#composite-types)
+   * [Derived types and subtypes](#derived-types-and-subtypes)
+   * [Range constraints](#range-constraints)
+* [Scope and visibility](#scope-and-visibility)
+* [Constraints and error handling](#constraints-and-error-handling)
+   * [Pre- and post-conditions](#pre--and-post-conditions)
+   * [Exceptions](#-exceptions)
+* [Arrays](#arrays)
+* [Vectors](#vectors)
+* [Testing](#testing)
+* [Concurrency](#concurrency)
 * [References](#-references)
 * [Explore](#explore)
 
@@ -70,7 +75,7 @@ end Countdown;
 * Execution of a branch in a `case` statement does not fall through to the next branch.
 * `and` and `or` are not short-circuiting (both operands are evaluated in no fixed order), but their variants `and then` and `or else` are (for example `I /= 0 and then N/I > 1`) 
 
-# Cheat sheet
+## Expressions and statements
 
 Blocks are of the general form:
 ```ada
