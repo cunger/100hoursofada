@@ -1,7 +1,7 @@
 with AUnit.Test_Caller;
 with AUnit.Assertions; use AUnit.Assertions;
 
-with TCP.Server;
+with TCP.Server.Echo;
 with TCP.Client;
 
 package body Smoke_Test is
@@ -29,10 +29,10 @@ package body Smoke_Test is
    ----------------------------------------------------------------------------
 
    procedure Test_Echo_Server (T : in out Test) is
-      Echo_Server : TCP.Server.Echo;
       Message : constant String := "Ping";
    begin
-      Echo_Server.Start (7000);
+      TCP.Server.Echo.Start (Port => 7000);
+      TCP.Server.Echo.Stop_After_Next_Request;
 
       declare
          Response : constant String := TCP.Client.Send (
