@@ -1,22 +1,24 @@
-------------------------------------------------------
--- TCP server implemeting the echo protocol (RFC 862):
+-------------------------------------------------------
+-- TCP server implementing the echo protocol (RFC 862).
 -- https://www.rfc-editor.org/rfc/rfc862.html
 --
--- Use like this:
+-- Start an echo server like this:
 --
 -- TCP.Server.Echo.Start (Port => 7000);
 --
 -- Every message you then send to the server
 -- is simply echoed back as a response.
-------------------------------------------------------
+--
+-- You can stop the server by calling:
+--
+-- TCP.Server.Echo.Stop;
+-------------------------------------------------------
 package TCP.Server.Echo is
 
    procedure Start (Port : in Port_Number);
-   procedure Stop_After_Next_Request;
+   procedure Stop;
 
 private
-
-   Shutdown_Flag : Boolean;
 
    task Service is
       entry Start (Port : in Port_Number);

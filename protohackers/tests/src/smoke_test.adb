@@ -32,7 +32,6 @@ package body Smoke_Test is
       Message : constant String := "Ping";
    begin
       TCP.Server.Echo.Start (Port => 7000);
-      TCP.Server.Echo.Stop_After_Next_Request;
 
       declare
          Response : constant String := TCP.Client.Send (
@@ -40,6 +39,8 @@ package body Smoke_Test is
             Port      => 7000,
             Message   => Message);
       begin
+         TCP.Server.Echo.Stop;
+
          Assert (
             Response = Message,
             "Server did not return '" & Message & "' but '" & Response & "'"

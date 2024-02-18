@@ -1,20 +1,20 @@
 with GNAT.Sockets; use GNAT.Sockets;
 
 with Ada.Exceptions; use Ada.Exceptions;
+with Ada.Task_Identification;
 with Ada.Text_IO;
 
 package body TCP.Server.Echo is
 
    procedure Start (Port : in Port_Number) is
    begin
-      Shutdown_Flag := False;
       Service.Start (Port);
    end Start;
 
-   procedure Stop_After_Next_Request is
+   procedure Stop is
    begin
-      Shutdown_Flag := True;
-   end Stop_After_Next_Request;
+      Ada.Task_Identification.Abort_Task (Service'Identity);
+   end Stop;
 
    task body Service is
       Address : Sock_Addr_Type;
@@ -40,8 +40,6 @@ package body TCP.Server.Echo is
          Connection_Address : Sock_Addr_Type;
       begin
          loop
-            exit when Shutdown_Flag;
-
             Accept_Socket (Server, Connection_Socket, Connection_Address);
 
             -- Read incoming message and echo it back.
@@ -50,11 +48,11 @@ package body TCP.Server.Echo is
                Message : constant String := String'Input (Channel);
             begin
                String'Output (Channel, Message);
+
+               -- Finally, close the connection.
                Close_Socket (Connection_Socket);
             end;
          end loop;
-
-         Close_Socket (Server);
       end;
 
    exception when E : others =>
