@@ -1,8 +1,10 @@
 with AUnit.Test_Caller;
 with AUnit.Assertions; use AUnit.Assertions;
-with TCP_Client;
 
-package body Smoke_Test.Tests is
+with TCP.Server;
+with TCP.Client;
+
+package body Smoke_Test is
 
    ----------------------------------------------------------------------------
    -- Test suite
@@ -15,7 +17,7 @@ package body Smoke_Test.Tests is
    begin
       S.Add_Test (Smoke_Test_Caller.Create (
          "TCP request to echo server returns the data it received",
-         Check_Echo'Access
+         Test_Echo_Server'Access
       ));
       -- add more tests if you want
 
@@ -26,23 +28,23 @@ package body Smoke_Test.Tests is
    -- Implementation of test cases
    ----------------------------------------------------------------------------
 
-   procedure Check_Echo (T : in out Test) is
+   procedure Test_Echo_Server (T : in out Test) is
+      Echo_Server : TCP.Server.Echo;
       Message : constant String := "Ping";
    begin
-      TCP_Echo_Server.Start (7000);
+      Echo_Server.Start (7000);
 
       declare
-         Response : constant String := TCP_Client.Send (
+         Response : constant String := TCP.Client.Send (
             Host_Name => "127.0.1.1",
             Port      => 7000,
             Message   => Message);
       begin
-
          Assert (
             Response = Message,
             "Server did not return '" & Message & "' but '" & Response & "'"
          );
       end;
-   end Check_Echo;
+   end Test_Echo_Server;
 
-end Smoke_Test.Tests;
+end Smoke_Test;

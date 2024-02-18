@@ -3,14 +3,9 @@ with GNAT.Sockets; use GNAT.Sockets;
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Text_IO;
 
-package body Smoke_Test is
+package body TCP.Server is
 
-   procedure Start_TCP_Echo_Server_Listening_To (Port : in Port_Number) is
-   begin
-      TCP_Echo_Server.Start (Port);
-   end Start_TCP_Echo_Server_Listening_To;
-
-   task body TCP_Echo_Server is
+   task body Echo is
       Address : Sock_Addr_Type;
       Server  : Socket_Type;
    begin
@@ -52,6 +47,6 @@ package body Smoke_Test is
       Ada.Text_IO.Put_Line (Exception_Name (E) & ": " & Exception_Message (E));
       Close_Socket (Server);
 
-   end TCP_Echo_Server;
+   end Echo;
 
-end Smoke_Test;
+end TCP.Server;

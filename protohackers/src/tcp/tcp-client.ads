@@ -1,6 +1,6 @@
-package TCP_Client is
+package TCP.Client is
 
    function Send (Host_Name : in String; Port : in Positive; Message : in String)
       return String;
 
-end TCP_Client;
+end TCP.Client;

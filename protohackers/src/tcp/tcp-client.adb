@@ -2,7 +2,7 @@ with GNAT.Sockets; use GNAT.Sockets;
 with Ada.Exceptions; use Ada.Exceptions;
 with Ada.Text_IO;
 
-package body TCP_Client is
+package body TCP.Client is
 
    function Send (Host_Name : in String; Port : in Positive; Message : in String)
       return String
@@ -26,9 +26,12 @@ package body TCP_Client is
 
       -- Read response and return it.
       return String'Input (Channel);
-   exception when E : others =>
+
+      -- Closing the connection socket is done by the server.
+   exception
+      when E : others =>
          Ada.Text_IO.Put_Line ("⚡ " & Exception_Name (E) & ": " & Exception_Message (E));
          return "";
    end Send;
 
-end TCP_Client;
+end TCP.Client;
