@@ -5,6 +5,7 @@ This is a playground for learning Ada, with the following toy projects:
 * `aoc2023` solves some Advent of Code puzzles.
 * `minesweeper` is implementing the board generation and part of the game logic of Minesweeper. Mainly for learning AUnit and trying pre- and post-conditions.
 * `playground` collects bits and pieces to try out.
+* `protohackers` are basic solutions to the [Protohackers challenges](https://protohackers.com)
 * `semaphores` is a basic implementation of a semaphore and a timed semaphore. Also to get familiar with tasks and timing.
 * `sniff` is a simple, crude port scanner. Mainly for learning network programming.
 * `watchdog` is a basic implementation of a [watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer). Mainly to get familiar with tasks and timing.
@@ -547,9 +548,32 @@ begin
 end Main;
 ```
 
-Communication between tasks:
-* rendevouz via entry points (synchronous)
-* protected objects (asynchronous)
+**Synchronous communication: Rendevouz via entry points
+
+
+```ada
+task A is
+   entry Start;
+end A;
+
+task body A is
+begin
+   -- do initialization
+
+   -- rendevouz point
+   -- this means here we wait until Start is called
+   accept Start do
+      -- start
+   end Start;
+
+   -- do something once Start was called.
+end A;
+```
+
+**Asynchronous communcation: Protected objects**
+
+...
+
 
 ## Testing
 
