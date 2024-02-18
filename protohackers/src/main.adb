@@ -1,4 +1,4 @@
-with TCP.Server;
+with TCP.Server.Echo;
 
 procedure Main is
 begin
