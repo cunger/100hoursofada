@@ -1,0 +1,9 @@
+name = "protohackers"
+description = "Ada solutions to the Protohackers challenges"
+version = "0.1.0-dev"
+
+authors = ["Christina Unger"]
+maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
+maintainers-logins = ["cunger"]
+
+executables = ["main"]
