@@ -13,7 +13,7 @@ procedure AOC2021 is
 
       case Number is
          when 1 =>
-            Print ("Part 1:" & AOC2021_01.Solution'Image);
+            Print ("Part 1:" & AOC2021_01.Solution_Part1'Image);
             Print ("Part 2: TODO");
 
          when others =>

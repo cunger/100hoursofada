@@ -9,4 +9,4 @@ maintainers-logins = ["cunger"]
 executables = ["aoc2021"]
 
 [[depends-on]]
-gnatprove = "^13.2.1"
+gnatprove = "13.2.1"

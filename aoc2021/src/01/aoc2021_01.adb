@@ -1,18 +1,17 @@
 with AOC2021_01_Input; use AOC2021_01_Input;
 
-package body AOC2021_01 with
-   SPARK_Mode
-is
+package body AOC2021_01 with SPARK_Mode => On is
 
    function Number_Of_Depth_Increases (Values : in Depth_Measurements) return Natural with
+      Global  => null,
       Depends => (Number_Of_Depth_Increases'Result => Values),
       Post    => Number_Of_Depth_Increases'Result < Values'Size;
 
-   function Solution return Natural is
+   function Solution_Part1 return Natural is
       Values : constant Depth_Measurements := Parse_Input_Data (Input_File_Name);
    begin
       return Number_Of_Depth_Increases (Values);
-   end Solution;
+   end Solution_Part1;
 
    function Number_Of_Depth_Increases (Values : in Depth_Measurements) return Natural is
       Count : Natural := 0;
