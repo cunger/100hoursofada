@@ -9,5 +9,4 @@ maintainers-logins = ["cunger"]
 executables = ["aoc2021"]
 
 [[depends-on]]
-utilada = "2.6.0"
 gnatprove = "^13.2.1"

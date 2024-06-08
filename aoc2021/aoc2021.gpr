@@ -1,5 +1,3 @@
-with "utilada_base";
-
 project AOC2021 is
 
    for Source_Dirs use (
@@ -22,7 +20,6 @@ project AOC2021 is
          ,"-gnatyC"    -- Check comments without extra space
          ,"-gnatyM100" -- Check maximum line length of 100
          ,"-gnat2022"  -- Compile as Ada 2022
-         ,"-gnatp"     -- Run GNATprove
       );
    end Compiler;
 

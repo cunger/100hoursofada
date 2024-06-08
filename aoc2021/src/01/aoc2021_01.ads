@@ -2,7 +2,9 @@
 -- https://adventofcode.com/2021/day/1
 --------------------------------------
 
-package AOC2021_01 is
+package AOC2021_01 with
+   SPARK_Mode
+is
 
    function Solution return Natural;
 

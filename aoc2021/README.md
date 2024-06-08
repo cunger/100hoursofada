@@ -10,3 +10,8 @@ Build and run with:
 ```
 $ alr run
 ```
+
+Run GNAT prover with:
+```
+$ alr gnatprove
+```

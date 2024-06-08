@@ -1,8 +1,12 @@
 with AOC2021_01_Input; use AOC2021_01_Input;
 
-package body AOC2021_01 is
+package body AOC2021_01 with
+   SPARK_Mode
+is
 
-   function Number_Of_Depth_Increases (Values : in Depth_Measurements) return Natural;
+   function Number_Of_Depth_Increases (Values : in Depth_Measurements) return Natural with
+      Depends => (Number_Of_Depth_Increases'Result => Values),
+      Post    => Number_Of_Depth_Increases'Result < Values'Size;
 
    function Solution return Natural is
       Values : constant Depth_Measurements := Parse_Input_Data (Input_File_Name);
@@ -20,10 +24,12 @@ package body AOC2021_01 is
          begin
             if I > 1 and Value > Previous_Value
             then
-               Count := @ + 1;
+               Count := Count + 1;
             end if;
             Previous_Value := Value;
          end;
+
+         pragma Loop_Invariant (Count >= 0 and Count < Values'Size);
       end loop;
 
       return Count;
