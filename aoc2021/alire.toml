@@ -1,0 +1,13 @@
+name = "aoc2021"
+description = "Advent of Code 2021"
+version = "0.1.0-dev"
+
+authors = ["Christina Unger"]
+maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
+maintainers-logins = ["cunger"]
+
+executables = ["aoc2021"]
+
+[[depends-on]]
+utilada = "2.6.0"
+gnatprove = "^13.2.1"
