@@ -17,6 +17,8 @@ package body AOC2021_01 with SPARK_Mode => On is
       Previous_Value : Natural := 0;
    begin
       for I in Values'Range loop
+         pragma Loop_Invariant (Count <= I);
+
          declare
             Value : constant Natural := Values (I);
          begin
