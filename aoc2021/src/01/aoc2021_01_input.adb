@@ -1,11 +1,13 @@
 with Ada.Text_IO;
 
-package body AOC2021_01_Input is
+package body AOC2021_01_Input with
+   SPARK_Mode => Off
+is
 
-   function Parse_Input_Data (File_Name : in String) return Depth_Measurements is
+   function Parse_Input_Data (File_Name : in String) return Measurements is
       Input  : Ada.Text_IO.File_Type;
       Index  : Natural := 1;
-      Values : Depth_Measurements := [others => 0];
+      Values : Measurements := [others => 0];
    begin
       Ada.Text_IO.Open (File => Input, Mode => Ada.Text_IO.In_File, Name => File_Name);
 
