@@ -1,0 +1,9 @@
+name = "nbody"
+description = "Model the orbits of Jovian planets, using a simple symplectic integrator"
+version = "0.1.0-dev"
+
+authors = ["Christina Unger"]
+maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
+maintainers-logins = ["cunger"]
+
+executables = ["main"]
