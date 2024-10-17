@@ -1,0 +1,5 @@
+name = "aoc2015"
+description = "Advent of Code 2015"
+version = "0.1.0-dev"
+
+executables = ["day_02"]
