@@ -4,18 +4,17 @@ This is a playground for learning Ada, with the following toy projects:
 
 * `aoc2023` was my first Advent of Code, and I used it mainly to practice Ada.
 * `aoc2021` was done later, mainly to get familiar with SPARK.
+* `aoc2015` was also done later, and is just a quick and dirty warmup.
 * `minesweeper` is implementing the board generation and part of the game logic of Minesweeper. Mainly for learning AUnit and trying pre- and post-conditions.
 * `playground` collects bits and pieces to try out.
 * `protohackers` are basic solutions to the [Protohackers challenges](https://protohackers.com)
-* `semaphores` is a basic implementation of a semaphore and a timed semaphore. Also to get familiar with tasks and timing.
+* `semaphores` is a basic implementation of a semaphore and a timed semaphore. Mainly to get familiar with tasks and timing.
 * `sniff` is a simple, crude port scanner. Mainly for getting a feel for network programming.
 * `watchdog` is a basic implementation of a [watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer). Mainly to get familiar with tasks and timing.
 
 The general project structure was extracted into a template: https://github.com/cunger/alr-template
 
 I'm jumping between projects and topics, because these 100 hours are meant for exploration and experimenting.
-Here are some ideas what I might try next:
-* https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/nbody.html#nbody
 
 # Wisdom 🧙‍♂️
 
@@ -555,8 +554,7 @@ begin
 end Main;
 ```
 
-**Synchronous communication: Rendevouz via entry points
-
+**Synchronous communication: Rendevouz via entry points**
 
 ```ada
 task A is
