@@ -23,9 +23,10 @@ package body AOC2024_01 with SPARK_Mode => On is
             pragma Assume (Left_Value  < 100_000); -- True about the specific input file.
             pragma Assume (Right_Value < 100_000); -- True about the specific input file.
             pragma Assert (Difference  < 100_000);
-            pragma Loop_Invariant (Sum < Natural (Index) * 100_000);
 
             Sum := @ + Difference;
+
+            pragma Loop_Invariant (Sum < Natural (Index) * 100_000);
          end;
       end loop;
 
@@ -47,9 +48,11 @@ package body AOC2024_01 with SPARK_Mode => On is
          begin
             pragma Assume (Value_On_The_Left < 100_000); -- True about the specific input file.
             pragma Assert (Occurences_On_The_Right <= 1000);
-            pragma Loop_Invariant (Score <= Long_Natural (Index) * 100_000_000);
+            pragma Assert (Value_On_The_Left * Occurences_On_The_Right <= 100_000_000);
 
             Score := @ + Long_Natural (Value_On_The_Left * Occurences_On_The_Right);
+
+            pragma Loop_Invariant (Score <= Long_Natural (Index) * 100_000_000);
          end;
       end loop;
 
@@ -60,13 +63,12 @@ package body AOC2024_01 with SPARK_Mode => On is
       Number_Of_Occurences : Natural := 0;
    begin
       for Index in List'Range loop
-         pragma Assert (Index > 0 and Index <= 1000);
-         pragma Loop_Invariant (Number_Of_Occurences <= Natural (Index));
-
          if List (Index) = Value
          then
             Number_Of_Occurences := @ + 1;
          end if;
+
+         pragma Loop_Invariant (Number_Of_Occurences <= Natural (Index));
       end loop;
 
       return Number_Of_Occurences;
