@@ -4,10 +4,10 @@ package body AOC2024_01 with SPARK_Mode => On is
 
    Lists : constant Location_Lists := Parse_Input_Data (Input_File_Name);
 
-   function Solution_Part1 return Long_Natural is
+   function Solution_Part1 return Natural is
       Left_List  : Location_List := Lists.Left;
       Right_List : Location_List := Lists.Right;
-      Sum        : Long_Natural  := 0;
+      Sum        : Natural := 0;
    begin
       -- Sort the lists.
       Sort (Left_List);
@@ -22,10 +22,10 @@ package body AOC2024_01 with SPARK_Mode => On is
          begin
             pragma Assume (Left_Value  < 100_000); -- True about the specific input file.
             pragma Assume (Right_Value < 100_000); -- True about the specific input file.
-            pragma Assert (Difference < 100_000);
-            -- pragma Loop_Invariant (Sum <= Long_Natural (Index * 100_000));
+            pragma Assert (Difference  < 100_000);
+            pragma Loop_Invariant (Sum < Natural (Index) * 100_000);
 
-            Sum := @ + Long_Natural (Difference);
+            Sum := @ + Difference;
          end;
       end loop;
 
@@ -33,7 +33,7 @@ package body AOC2024_01 with SPARK_Mode => On is
    end Solution_Part1;
 
    function Count (Value : Natural; List : Location_List) return Natural
-   with Post => Count'Result <= Location_List'Length;
+      with Post => Count'Result <= List'Length;
 
    function Solution_Part2 return Long_Natural is
       Score : Long_Natural := 0;
@@ -42,11 +42,14 @@ package body AOC2024_01 with SPARK_Mode => On is
       -- it occurs in the right list.
       for Index in Line_Number'Range loop
          declare
-            Value : constant Natural := Lists.Left (Index);
+            Value_On_The_Left       : constant Natural := Lists.Left (Index);
+            Occurences_On_The_Right : constant Natural := Count (Value_On_The_Left, Lists.Right);
          begin
-            pragma Assume (Value < 100_000); -- True about the specific input file.
+            pragma Assume (Value_On_The_Left < 100_000); -- True about the specific input file.
+            pragma Assert (Occurences_On_The_Right <= 1000);
+            pragma Loop_Invariant (Score <= Long_Natural (Index) * 100_000_000);
 
-            Score := @ + Long_Natural (Value * Count (Value, Lists.Right));
+            Score := @ + Long_Natural (Value_On_The_Left * Occurences_On_The_Right);
          end;
       end loop;
 
@@ -57,6 +60,7 @@ package body AOC2024_01 with SPARK_Mode => On is
       Number_Of_Occurences : Natural := 0;
    begin
       for Index in List'Range loop
+         pragma Assert (Index > 0 and Index <= 1000);
          pragma Loop_Invariant (Number_Of_Occurences <= Natural (Index));
 
          if List (Index) = Value

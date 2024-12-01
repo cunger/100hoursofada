@@ -6,7 +6,7 @@ package AOC2024_01 with SPARK_Mode => On is
 
    subtype Long_Natural is Long_Integer range 0 .. Long_Integer'Last;
 
-   function Solution_Part1 return Long_Natural;
+   function Solution_Part1 return Natural;
    function Solution_Part2 return Long_Natural;
 
 private
