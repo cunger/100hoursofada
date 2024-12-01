@@ -278,14 +278,14 @@ Extending a record type:
 -- A record type must be tagged in order to be extensible.
 type Message is tagged
    record
-      Content : Undbounded_String;
+      Content : Unbounded_String;
       Length : Natural;
    end record;
 
 -- Extending a record type adds fields.
 type Sent_Message is new Message with
    record
-      Recipient : Undbounded_String;
+      Recipient : Unbounded_String;
       Timestamp : Date;
    end record;
 ```

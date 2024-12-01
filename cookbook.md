@@ -1,5 +1,32 @@
 # String handling
 
+## Reading the content of a file as a string
+
+```ada
+with Ada.Text_IO;
+
+-- package IO renames Ada.Text_IO; 
+
+declare
+   Input : IO.File_Type;
+begin
+   -- Open the input file in read mode.
+   IO.Open (File => Input, Mode => IO.In_File, Name => "input.txt");
+
+   -- Walk through the file line by line.
+   while not IO.End_Of_File (Input) loop
+      declare
+         Line : constant String := IO.Get_Line (Input);
+      begin
+         ...
+      end;
+   end loop;
+
+   -- Finally, close the file again.
+   IO.Close (Input);
+end;
+```
+
 ## Iterating over all characters in a string
 
 ```ada

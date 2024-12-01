@@ -1,0 +1,12 @@
+name = "aoc2024"
+description = "Advent of Code 2024"
+version = "0.1.0-dev"
+
+authors = ["Christina Unger"]
+maintainers = ["Christina Unger <andrea.christina.unger@gmail.com>"]
+maintainers-logins = ["cunger"]
+
+executables = ["aoc2024"]
+
+[[depends-on]]
+gnatprove = "13.2.1"
