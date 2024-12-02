@@ -1,7 +1,7 @@
 with AOC2024_02_Input; use AOC2024_02_Input;
 with Natural_Vectors;  use Natural_Vectors;
 
-package body AOC2024_02 with SPARK_Mode => On is
+package body AOC2024_02 with SPARK_Mode => Off is
 
    All_Reports : constant Reports := Parse_Input_Data (Input_File_Name);
 

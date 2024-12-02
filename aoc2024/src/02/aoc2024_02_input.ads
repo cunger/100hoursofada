@@ -1,8 +1,6 @@
 with Natural_Vectors;
 
-package AOC2024_02_Input with
-   SPARK_Mode => On
-is
+package AOC2024_02_Input with SPARK_Mode => Off is
 
    subtype Report is Natural_Vectors.Vector;
 

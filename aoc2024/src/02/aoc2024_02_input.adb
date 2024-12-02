@@ -1,8 +1,6 @@
 with Ada.Text_IO;
 
-package body AOC2024_02_Input with
-   SPARK_Mode => Off
-is
+package body AOC2024_02_Input with SPARK_Mode => Off is
 
    function Parse_Input_Data (File_Name : in String) return Reports is
       Input       : Ada.Text_IO.File_Type;
