@@ -6,6 +6,9 @@ package body AOC2024_02 with SPARK_Mode => On is
    All_Reports : constant Reports := Parse_Input_Data (Input_File_Name);
 
    function Is_Safe (Values : Report) return Boolean;
+   -- Determines whether a report is safe or not.
+   -- It counts as safe if all values are either decresing or increasing,
+   -- and if any two adjacent values differ by at least one and at most three.
 
    function Solution_Part1 return Natural is
       Number_Of_Safe_Reports : Natural := 0;
@@ -24,17 +27,19 @@ package body AOC2024_02 with SPARK_Mode => On is
          if Is_Safe (R) then
             Number_Of_Safe_Reports := @ + 1;
          else
-            for I in R.First_Index .. R.Last_Index loop
+            -- If the report is not safe, try removing any of the levels
+            -- and see whether the modified report is safe.
+            Try_Without_I : for I in R.First_Index .. R.Last_Index loop
                declare
                   Modified_R : Report := R;
                begin
                   Modified_R.Delete (Index => I);
                   if Is_Safe (Modified_R) then
                      Number_Of_Safe_Reports := @ + 1;
-                     exit;
+                     exit Try_Without_I;
                   end if;
                end;
-            end loop;
+            end loop Try_Without_I;
          end if;
       end loop;
 
