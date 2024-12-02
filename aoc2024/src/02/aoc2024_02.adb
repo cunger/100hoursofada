@@ -17,6 +17,30 @@ package body AOC2024_02 with SPARK_Mode => On is
       return Number_Of_Safe_Reports;
    end Solution_Part1;
 
+   function Solution_Part2 return Natural is
+      Number_Of_Safe_Reports : Natural := 0;
+   begin
+      for R of All_Reports loop
+         if Is_Safe (R) then
+            Number_Of_Safe_Reports := @ + 1;
+         else
+            for I in R.First_Index .. R.Last_Index loop
+               declare
+                  Modified_R : Report := R;
+               begin
+                  Modified_R.Delete (Index => I);
+                  if Is_Safe (Modified_R) then
+                     Number_Of_Safe_Reports := @ + 1;
+                     exit;
+                  end if;
+               end;
+            end loop;
+         end if;
+      end loop;
+
+      return Number_Of_Safe_Reports;
+   end Solution_Part2;
+
    function Is_Safe (Values : Report) return Boolean is
       type Direction is (Increasing, Decreasing, None);
 
@@ -63,10 +87,5 @@ package body AOC2024_02 with SPARK_Mode => On is
       -- If we haven't found a violation yet, then the report is safe.
       return True;
    end Is_Safe;
-
-   function Solution_Part2 return Natural is
-   begin
-      return 0;
-   end Solution_Part2;
 
 end AOC2024_02;
