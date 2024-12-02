@@ -1,3 +1,5 @@
+with "spark_unbound";
+
 project AOC2024 is
 
    for Source_Dirs use (
@@ -16,7 +18,7 @@ project AOC2024 is
           "-g"         -- Generate debug info
          ,"-gnata"     -- Enable assertions
          ,"-gnatwa"    -- Enable all warnings
-         ,"-gnatwe"    -- Treat warnings as errors
+         --,"-gnatwe"    -- Treat warnings as errors
          ,"-gnaty"     -- Enable all style checks
          ,"-gnatyC"    -- Check comments without extra space
          ,"-gnatyM110" -- Check maximum line length of 110

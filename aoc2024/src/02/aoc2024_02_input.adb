@@ -14,7 +14,7 @@ package body AOC2024_02_Input with SPARK_Mode => Off is
       while not Ada.Text_IO.End_Of_File (Input) loop
          Process_Line : declare
             Line : constant String := Ada.Text_IO.Get_Line (Input);
-            Current_Report : Report;
+            Current_Report : Arrays.Unbound_Array := Arrays.To_Unbound_Array (2);
 
             -- Read each line character by character.
             -- If we encounter a space or the end of the line,
@@ -27,8 +27,11 @@ package body AOC2024_02_Input with SPARK_Mode => Off is
                      Start_Index : constant Positive := Index_Of_Last_Space + 1;
                      End_Index   : constant Positive := (if I = Line'Last then I else I - 1);
                      Value       : constant String := Line (Start_Index .. End_Index);
+                     Success     : Boolean;
                   begin
-                     Current_Report.Append (Natural'Value (Value));
+                     Arrays.Append (Current_Report, Natural'Value (Value), Success);
+                     pragma Assume (Success);
+
                      Index_Of_Last_Space := I;
                   end;
                end if;

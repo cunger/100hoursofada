@@ -10,3 +10,4 @@ executables = ["aoc2024"]
 
 [[depends-on]]
 gnatprove = "13.2.1"
+spark_unbound = "0.2.1"
