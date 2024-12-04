@@ -4,10 +4,10 @@ package body AOC2024_04 with SPARK_Mode => Off is
 
    Input : constant Word_Search := Parse_Input_Data (Input_File_Name);
 
-   function Number_Of_Xmas_Around (Row : Positive; Col : Positive) return Natural;
+   function Number_Of_Xmas_Around (Row : Dimension; Col : Dimension) return Natural;
    -- For an 'X' at (Row, Col), check in each direction whether there is an 'XMAS'.
 
-   function Is_Center_Of_X_Mas (Row : Positive; Col : Positive) return Boolean;
+   function Is_Center_Of_X_Mas (Row : Dimension; Col : Dimension) return Boolean;
    -- For an 'A' at (Row, Col), check whether it's the center or a 'MAS' cross.
 
    function Solution_Part1 return Natural is
@@ -42,12 +42,12 @@ package body AOC2024_04 with SPARK_Mode => Off is
       return Number_Of_Occurences;
    end Solution_Part2;
 
-   function Number_Of_Xmas_Around (Row : Positive; Col : Positive) return Natural is
+   function Number_Of_Xmas_Around (Row : Dimension; Col : Dimension) return Natural is
       Count     : Natural := 0;
       Candidate : String (1 .. 4);
    begin
       -- Check to the left (unless it's too close to the left edge).
-      if Col >= 4 then
+      if Col >= Dimension'First + 3 then
          Candidate := Input (Row, Col) & Input (Row, Col - 1) & Input (Row, Col - 2) & Input (Row, Col - 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -55,7 +55,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check to the right (unless it's too close to the right edge).
-      if Col <= 137 then
+      if Col <= Dimension'Last - 3 then
          Candidate := Input (Row, Col) & Input (Row, Col + 1) & Input (Row, Col + 2) & Input (Row, Col + 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -63,7 +63,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check up (unless it's too close to the top).
-      if Row >= 4 then
+      if Row >= Dimension'First + 3 then
          Candidate := Input (Row, Col) & Input (Row - 1, Col) & Input (Row - 2, Col) & Input (Row - 3, Col);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -71,7 +71,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check down (unless it's too close to the bottom).
-      if Row <= 137 then
+      if Row <= Dimension'Last - 3 then
          Candidate := Input (Row, Col) & Input (Row + 1, Col) & Input (Row + 2, Col) & Input (Row + 3, Col);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -79,7 +79,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check diagonal to the left and up (unless it's too close to the edges).
-      if Row >= 4 and Col >= 4 then
+      if Row >= Dimension'First + 3 and Col >= Dimension'First + 3 then
          Candidate := Input (Row, Col) & Input (Row - 1, Col - 1) & Input (Row - 2, Col - 2) & Input (Row - 3, Col - 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -87,7 +87,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check diagonal to the right and up (unless it's too close to the edges).
-      if Row >= 4 and Col <= 137 then
+      if Row >= Dimension'First + 3 and Col <= Dimension'Last - 3 then
          Candidate := Input (Row, Col) & Input (Row - 1, Col + 1) & Input (Row - 2, Col + 2) & Input (Row - 3, Col + 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -95,7 +95,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check diagonal to the left and down (unless it's too close to the edges).
-      if Row <= 137 and Col >= 4 then
+      if Row <= Dimension'Last - 3 and Col >= Dimension'First + 3 then
          Candidate := Input (Row, Col) & Input (Row + 1, Col - 1) & Input (Row + 2, Col - 2) & Input (Row + 3, Col - 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -103,7 +103,7 @@ package body AOC2024_04 with SPARK_Mode => Off is
       end if;
 
       -- Check diagonal to the right and down (unless it's too close to the edges).
-      if Row <= 137 and Col <= 137 then
+      if Row <= Dimension'Last - 3 and Col <= Dimension'Last - 3 then
          Candidate := Input (Row, Col) & Input (Row + 1, Col + 1) & Input (Row + 2, Col + 2) & Input (Row + 3, Col + 3);
          if Candidate = "XMAS" then
             Count := @ + 1;
@@ -113,10 +113,10 @@ package body AOC2024_04 with SPARK_Mode => Off is
       return Count;
    end Number_Of_Xmas_Around;
 
-   function Is_Center_Of_X_Mas (Row : Positive; Col : Positive) return Boolean is
+   function Is_Center_Of_X_Mas (Row : Dimension; Col : Dimension) return Boolean is
    begin
       -- If we're too close to an edge, then there is not enough space for an X.
-      if Row = 1 or Row = 140 or Col = 1 or Col = 140 then
+      if Row = Dimension'First or Row = Dimension'Last or Col = Dimension'First or Col = Dimension'Last then
          return False;
       end if;
 

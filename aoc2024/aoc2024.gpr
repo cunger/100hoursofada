@@ -21,7 +21,7 @@ project AOC2024 is
          ,"-gnatwe"    -- Treat warnings as errors
          ,"-gnaty"     -- Enable all style checks
          ,"-gnatyC"    -- Check comments without extra space
-         ,"-gnatyM121" -- Check maximum line length of 121
+         ,"-gnatyM130" -- Check maximum line length of 130
          ,"-gnat2022"  -- Compile as Ada 2022
       );
    end Compiler;

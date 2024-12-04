@@ -16,8 +16,8 @@ package body AOC2024_04_Input with SPARK_Mode => Off is
          Process_Line : declare
             Line : constant String := Ada.Text_IO.Get_Line (File);
          begin
-            for Column in Line'First .. Line'Last loop
-               Input (Line_Number, Column) := Line (Column);
+            for Column in Line'Range loop
+               Input (Dimension (Line_Number), Dimension (Column)) := Line (Column);
             end loop;
 
             Line_Number := @ + 1;
