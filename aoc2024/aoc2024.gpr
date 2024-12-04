@@ -4,7 +4,8 @@ project AOC2024 is
       "src/",
       "src/01/",
       "src/02/",
-      "src/03/"
+      "src/03/",
+      "src/04/"
    );
    for Object_Dir use "obj";
    for Exec_Dir use "bin";
@@ -20,7 +21,7 @@ project AOC2024 is
          ,"-gnatwe"    -- Treat warnings as errors
          ,"-gnaty"     -- Enable all style checks
          ,"-gnatyC"    -- Check comments without extra space
-         ,"-gnatyM110" -- Check maximum line length of 110
+         ,"-gnatyM121" -- Check maximum line length of 121
          ,"-gnat2022"  -- Compile as Ada 2022
       );
    end Compiler;

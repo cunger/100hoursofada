@@ -2,6 +2,7 @@ with Ada.Text_IO;
 with AOC2024_01;
 with AOC2024_02;
 with AOC2024_03;
+with AOC2024_04;
 
 procedure AOC2024 is
 
@@ -26,6 +27,10 @@ procedure AOC2024 is
             Print ("Part 1:" & AOC2024_03.Solution_Part1'Image);
             Print ("Part 2:" & AOC2024_03.Solution_Part2'Image);
 
+         when 4 =>
+            Print ("Part 1:" & AOC2024_04.Solution_Part1'Image);
+            Print ("Part 2:" & AOC2024_04.Solution_Part2'Image);
+
          when others =>
             Print ("No solution yet for puzzles of day" & Number'Image);
       end case;
@@ -33,6 +38,6 @@ procedure AOC2024 is
 
 begin
 
-   Solve_Day (3);
+   Solve_Day (4);
 
 end AOC2024;
