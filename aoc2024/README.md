@@ -18,7 +18,7 @@ $ alr run
 
 Run GNAT prover with:
 ```
-$ alr gnatprove
+$ alr gnatprove --timeout=0 --prover=all
 ```
 
 ## Structure of implementation

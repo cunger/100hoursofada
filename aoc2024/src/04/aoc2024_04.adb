@@ -23,11 +23,8 @@ package body AOC2024_04 with SPARK_Mode => On is
             end if;
 
             -- In each column of a row, there can be a maximum of 8 matches.
-            pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * (Integer (Col) * 8));
+            pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * Natural (Col) * 8);
          end loop;
-
-         -- In each row, there can be maximal as many 'X' as columns, thus a maximum of 140 * 8 matches.
-         pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * (140 * 8));
       end loop;
 
       return Number_Of_Occurences;
@@ -45,11 +42,8 @@ package body AOC2024_04 with SPARK_Mode => On is
             end if;
 
             -- In each column of a row, there can be a maximum of 1 match.
-            pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * Integer (Col));
+            pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * Natural (Col));
          end loop;
-
-         -- In each row, there can be maximal as many 'A' as columns, this a maximum of 140 matches.
-         pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * 140);
       end loop;
 
       return Number_Of_Occurences;
@@ -113,11 +107,6 @@ package body AOC2024_04 with SPARK_Mode => On is
             Count := @ + 1;
          end if;
       end if;
-
-      pragma Assert (Count >= 0);
-      pragma Assert (Count <= 8);
-      -- There can be at most 8 XMAS involving one X,
-      -- because we do 8 checks and for each increase by 1 if it's true.
 
       return Count;
    end Number_Of_Xmas_Around;
