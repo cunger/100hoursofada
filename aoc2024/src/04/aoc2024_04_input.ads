@@ -1,4 +1,4 @@
-package AOC2024_04_Input with SPARK_Mode => Off is
+package AOC2024_04_Input with SPARK_Mode => On is
 
    type Dimension is range 1 .. 140;
    -- The dimension of the data contained in the input file.

@@ -1,10 +1,11 @@
 with AOC2024_04_Input; use AOC2024_04_Input;
 
-package body AOC2024_04 with SPARK_Mode => Off is
+package body AOC2024_04 with SPARK_Mode => On is
 
    Input : constant Word_Search := Parse_Input_Data (Input_File_Name);
 
-   function Number_Of_Xmas_Around (Row : Dimension; Col : Dimension) return Natural;
+   function Number_Of_Xmas_Around (Row : Dimension; Col : Dimension) return Natural
+      with Post => (Number_Of_Xmas_Around'Result <= 8);
    -- For an 'X' at (Row, Col), check in each direction whether there is an 'XMAS'.
 
    function Is_Center_Of_X_Mas (Row : Dimension; Col : Dimension) return Boolean;
@@ -20,7 +21,13 @@ package body AOC2024_04 with SPARK_Mode => Off is
             if Input (Row, Col) = 'X' then
                Number_Of_Occurences := @ + Number_Of_Xmas_Around (Row, Col);
             end if;
+
+            -- In each column of a row, there can be a maximum of 8 matches.
+            pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * (Integer (Col) * 8));
          end loop;
+
+         -- In each row, there can be maximal as many 'X' as columns, thus a maximum of 140 * 8 matches.
+         pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * (140 * 8));
       end loop;
 
       return Number_Of_Occurences;
@@ -36,79 +43,81 @@ package body AOC2024_04 with SPARK_Mode => Off is
             if Input (Row, Col) = 'A' and Is_Center_Of_X_Mas (Row, Col) then
                Number_Of_Occurences := @ + 1;
             end if;
+
+            -- In each column of a row, there can be a maximum of 1 match.
+            pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * Integer (Col));
          end loop;
+
+         -- In each row, there can be maximal as many 'A' as columns, this a maximum of 140 matches.
+         pragma Loop_Invariant (Number_Of_Occurences <= Integer (Row) * 140);
       end loop;
 
       return Number_Of_Occurences;
    end Solution_Part2;
 
    function Number_Of_Xmas_Around (Row : Dimension; Col : Dimension) return Natural is
-      Count     : Natural := 0;
-      Candidate : String (1 .. 4);
+      Count : Natural := 0;
    begin
       -- Check to the left (unless it's too close to the left edge).
       if Col >= Dimension'First + 3 then
-         Candidate := Input (Row, Col) & Input (Row, Col - 1) & Input (Row, Col - 2) & Input (Row, Col - 3);
-         if Candidate = "XMAS" then
+         if Input (Row, Col - 1) = 'M' and Input (Row, Col - 2) = 'A' and Input (Row, Col - 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check to the right (unless it's too close to the right edge).
       if Col <= Dimension'Last - 3 then
-         Candidate := Input (Row, Col) & Input (Row, Col + 1) & Input (Row, Col + 2) & Input (Row, Col + 3);
-         if Candidate = "XMAS" then
+         if Input (Row, Col + 1) = 'M' and Input (Row, Col + 2) = 'A' and Input (Row, Col + 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check up (unless it's too close to the top).
       if Row >= Dimension'First + 3 then
-         Candidate := Input (Row, Col) & Input (Row - 1, Col) & Input (Row - 2, Col) & Input (Row - 3, Col);
-         if Candidate = "XMAS" then
+         if Input (Row - 1, Col) = 'M' and Input (Row - 2, Col) = 'A' and Input (Row - 3, Col) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check down (unless it's too close to the bottom).
       if Row <= Dimension'Last - 3 then
-         Candidate := Input (Row, Col) & Input (Row + 1, Col) & Input (Row + 2, Col) & Input (Row + 3, Col);
-         if Candidate = "XMAS" then
+         if Input (Row + 1, Col) = 'M' and Input (Row + 2, Col) = 'A' and Input (Row + 3, Col) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check diagonal to the left and up (unless it's too close to the edges).
       if Row >= Dimension'First + 3 and Col >= Dimension'First + 3 then
-         Candidate := Input (Row, Col) & Input (Row - 1, Col - 1) & Input (Row - 2, Col - 2) & Input (Row - 3, Col - 3);
-         if Candidate = "XMAS" then
+         if Input (Row - 1, Col - 1) = 'M' and Input (Row - 2, Col - 2) = 'A' and Input (Row - 3, Col - 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check diagonal to the right and up (unless it's too close to the edges).
       if Row >= Dimension'First + 3 and Col <= Dimension'Last - 3 then
-         Candidate := Input (Row, Col) & Input (Row - 1, Col + 1) & Input (Row - 2, Col + 2) & Input (Row - 3, Col + 3);
-         if Candidate = "XMAS" then
+         if Input (Row - 1, Col + 1) = 'M' and Input (Row - 2, Col + 2) = 'A' and Input (Row - 3, Col + 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check diagonal to the left and down (unless it's too close to the edges).
       if Row <= Dimension'Last - 3 and Col >= Dimension'First + 3 then
-         Candidate := Input (Row, Col) & Input (Row + 1, Col - 1) & Input (Row + 2, Col - 2) & Input (Row + 3, Col - 3);
-         if Candidate = "XMAS" then
+         if Input (Row + 1, Col - 1) = 'M' and Input (Row + 2, Col - 2) = 'A' and Input (Row + 3, Col - 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
 
       -- Check diagonal to the right and down (unless it's too close to the edges).
       if Row <= Dimension'Last - 3 and Col <= Dimension'Last - 3 then
-         Candidate := Input (Row, Col) & Input (Row + 1, Col + 1) & Input (Row + 2, Col + 2) & Input (Row + 3, Col + 3);
-         if Candidate = "XMAS" then
+         if Input (Row + 1, Col + 1) = 'M' and Input (Row + 2, Col + 2) = 'A' and Input (Row + 3, Col + 3) = 'S' then
             Count := @ + 1;
          end if;
       end if;
+
+      pragma Assert (Count >= 0);
+      pragma Assert (Count <= 8);
+      -- There can be at most 8 XMAS involving one X,
+      -- because we do 8 checks and for each increase by 1 if it's true.
 
       return Count;
    end Number_Of_Xmas_Around;
