@@ -25,6 +25,9 @@ package body AOC2024_04 with SPARK_Mode => On is
             -- In each column of a row, there can be a maximum of 8 matches.
             pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * Natural (Col) * 8);
          end loop;
+
+         -- In each row, there can be maximally as many matches as 8 per column.
+         pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * 140 * 8);
       end loop;
 
       return Number_Of_Occurences;
@@ -33,17 +36,19 @@ package body AOC2024_04 with SPARK_Mode => On is
    function Solution_Part2 return Natural is
       Number_Of_Occurences : Natural := 0;
    begin
-      -- Walk over input. For each 'A', check its surroundings
-      -- to see whether there is an 'X-MAS' around it.
+      -- Walk over input. For each coordinate, check whether it's the center of an 'X-MAS'.
       for Row in Input'Range (1) loop
          for Col in Input'Range (2) loop
-            if Input (Row, Col) = 'A' and Is_Center_Of_X_Mas (Row, Col) then
+            if Is_Center_Of_X_Mas (Row, Col) then
                Number_Of_Occurences := @ + 1;
             end if;
 
             -- In each column of a row, there can be a maximum of 1 match.
             pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * Natural (Col));
          end loop;
+
+         -- In each row, there can be maximally as many matches as columns.
+         pragma Loop_Invariant (Number_Of_Occurences <= Natural (Row) * 140);
       end loop;
 
       return Number_Of_Occurences;
@@ -113,6 +118,11 @@ package body AOC2024_04 with SPARK_Mode => On is
 
    function Is_Center_Of_X_Mas (Row : Dimension; Col : Dimension) return Boolean is
    begin
+      -- If the center letter is not an A, then it's not an X-MAS.
+      if Input (Row, Col) /= 'A' then
+         return False;
+      end if;
+
       -- If we're too close to an edge, then there is not enough space for an X.
       if Row = Dimension'First or Row = Dimension'Last or Col = Dimension'First or Col = Dimension'Last then
          return False;
