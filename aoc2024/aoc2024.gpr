@@ -1,4 +1,4 @@
--- with "sparklib";
+with "sparklib";
 
 project AOC2024 is
 
