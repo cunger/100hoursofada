@@ -4,7 +4,8 @@ package body AOC2024_01 with SPARK_Mode => On is
 
    Lists : constant Location_Lists := Parse_Input_Data (Input_File_Name);
 
-   function Solution_Part1 return Natural is
+   -- TODO Sort might be non-terminating.
+   function Solution_Part1 return Natural with SPARK_Mode => Off is
       Left_List  : Location_List := Lists.Left;
       Right_List : Location_List := Lists.Right;
       Sum        : Natural := 0;

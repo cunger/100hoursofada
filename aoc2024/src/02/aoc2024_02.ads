@@ -2,7 +2,9 @@
 -- https://adventofcode.com/2024/day/2
 --------------------------------------
 
-package AOC2024_02 with SPARK_Mode => On is
+-- TODO Use formal unbounded arrays from SPARKlib.
+
+package AOC2024_02 with SPARK_Mode => Off is
 
    function Solution_Part1 return Natural;
    function Solution_Part2 return Natural;

@@ -1,11 +1,9 @@
 with AOC2024_06_Input; use AOC2024_06_Input;
 with Ada.Text_IO;
 
-package body AOC2024_06 with SPARK_Mode => On is
+package body AOC2024_06 with SPARK_Mode => Off is
 
-   Initial_Map : Map := Parse_Input_Data (Input_File_Name);
-
-   procedure Let_Guard_Patrol;
+   procedure Let_Guard_Patrol (M : in out Map);
    -- Move the guard according to the rules until she leaves the map,
    -- and update each visited cell.
 
@@ -13,9 +11,10 @@ package body AOC2024_06 with SPARK_Mode => On is
    -- Count the number of unique positions that the guard visited.
 
    function Solution_Part1 return Natural is
+      Current_Map : Map := Parse_Input_Data (Input_File_Name);
    begin
-      Let_Guard_Patrol;
-      return Number_Of_Visited_Cells (Initial_Map);
+      Let_Guard_Patrol (Current_Map);
+      return Number_Of_Visited_Cells (Current_Map);
    end Solution_Part1;
 
    function Solution_Part2 return Natural is
@@ -23,15 +22,15 @@ package body AOC2024_06 with SPARK_Mode => On is
       return 0;
    end Solution_Part2;
 
-   procedure Let_Guard_Patrol is
-      Current_Direction : Direction;
-      Current_Position  : Coordinate;
-      Next_Position     : Coordinate;
+   procedure Let_Guard_Patrol (M : in out Map) is
+      Current_Direction : Direction  := Right;
+      Current_Position  : Coordinate := (0, 0);
+      Next_Position     : Coordinate := (0, 0);
    begin
       -- Find current position and direction of guard.
-      for X in Initial_Map'Range (1) loop
-         for Y in Initial_Map'Range (2) loop
-            case Initial_Map (X, Y) is
+      for X in M'Range (1) loop
+         for Y in M'Range (2) loop
+            case M (X, Y) is
                when Guard_Facing_Left =>
                   Current_Position  := (X, Y);
                   Current_Direction := Left;
@@ -60,11 +59,11 @@ package body AOC2024_06 with SPARK_Mode => On is
             exit Move_Guard;
          end if;
 
-         if Initial_Map (Next_Position.X, Next_Position.Y) = Obstacle then
+         if M (Next_Position.X, Next_Position.Y) = Obstacle then
             Current_Direction := Turn_Right (Current_Direction);
          else
             Current_Position := Next_Position;
-            Initial_Map (Current_Position.X, Current_Position.Y) := Visited;
+            M (Current_Position.X, Current_Position.Y) := Visited;
          end if;
       end loop Move_Guard;
    end Let_Guard_Patrol;
