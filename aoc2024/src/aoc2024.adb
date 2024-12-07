@@ -4,6 +4,7 @@ with AOC2024_02;
 with AOC2024_03;
 with AOC2024_04;
 with AOC2024_06;
+with AOC2024_07;
 
 procedure AOC2024 is
 
@@ -36,6 +37,10 @@ procedure AOC2024 is
             Print ("Part 1:" & AOC2024_06.Solution_Part1'Image);
             Print ("Part 2:" & AOC2024_06.Solution_Part2'Image);
 
+         when 7 =>
+            Print ("Part 1:" & AOC2024_07.Solution_Part1'Image);
+            Print ("Part 2:" & AOC2024_07.Solution_Part2'Image);
+
          when others =>
             Print ("No solution yet for puzzles of day" & Number'Image);
       end case;
@@ -43,6 +48,6 @@ procedure AOC2024 is
 
 begin
 
-   Solve_Day (6);
+   Solve_Day (7);
 
 end AOC2024;
