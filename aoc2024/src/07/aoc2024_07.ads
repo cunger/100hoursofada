@@ -5,7 +5,7 @@
 package AOC2024_07 with SPARK_Mode => On is
 
    function Solution_Part1 return Long_Long_Integer;
-   function Solution_Part2 return Natural;
+   function Solution_Part2 return Long_Long_Integer;
 
 private
 
