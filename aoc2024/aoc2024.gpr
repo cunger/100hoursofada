@@ -16,7 +16,7 @@ project AOC2024 is
           "-g"         -- Generate debug info
          ,"-gnata"     -- Enable assertions
          ,"-gnatwa"    -- Enable all warnings
-         --,"-gnatwe"    -- Treat warnings as errors
+         ,"-gnatwe"    -- Treat warnings as errors
          ,"-gnaty"     -- Enable all style checks
          ,"-gnatyC"    -- Check comments without extra space
          ,"-gnatyM120" -- Check maximum line length of 120

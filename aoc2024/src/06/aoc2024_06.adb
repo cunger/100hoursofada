@@ -1,5 +1,4 @@
 with AOC2024_06_Input; use AOC2024_06_Input;
-with Ada.Text_IO;
 
 package body AOC2024_06 with SPARK_Mode => Off is
 
