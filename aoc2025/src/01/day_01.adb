@@ -24,31 +24,32 @@ package body Day_01 is
          begin
             Prev_Position := Current_Position;
 
-            -- raw addition or substraction
+            -- Raw addition or substraction, depending on direction.
             if Direction = 'L' then
                Raw := Current_Position - Steps;
             elsif Direction = 'R' then
                Raw := Current_Position + Steps;
             end if;
 
-            -- determine new position within the 0 .. 99 range
+            -- From raw result, determine new position within the 0 .. 99 range.
             Current_Position := Raw mod 100;
-            -- count if dial stops at zero
+            -- For part 1, count if dial stops at zero.
             if Current_Position = 0 then
                Stops_At_Zero := Stops_At_Zero + 1;
             end if;
 
-            -- determine the number of times zero was passed
+            -- For part 2, determine the number of times zero was passed,
+            -- including stopping at 0.
             New_Passes := abs (Raw / 100);
-            -- there are two edge cases when New_Passes is too low
+            -- There are two edge cases when New_Passes is too low.
             if Raw = 0 then
-               -- for example: 46 L 46 -> 0
-               -- New_Passes is 0 but should be 1
+               -- For example: 46 L 46 -> 0
+               -- New_Passes is 0 but should be 1.
                New_Passes := New_Passes + 1;
             end if;
             if Raw < 0 and Prev_Position > 0 then
-               -- for example 8 L 14 -> 94
-               -- New_Passes is 0 but should be 1
+               -- For example: 8 L 14 -> 94
+               -- New_Passes is 0 but should be 1.
                New_Passes := New_Passes + 1;
             end if;
 
