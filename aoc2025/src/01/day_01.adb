@@ -42,9 +42,13 @@ package body Day_01 is
             New_Passes := abs (Raw / 100);
             -- there are two edge cases when New_Passes is too low
             if Raw = 0 then
+               -- for example: 46 L 46 -> 0
+               -- New_Passes is 0 but should be 1
                New_Passes := New_Passes + 1;
             end if;
             if Raw < 0 and Prev_Position > 0 then
+               -- for example 8 L 14 -> 94
+               -- New_Passes is 0 but should be 1
                New_Passes := New_Passes + 1;
             end if;
 
