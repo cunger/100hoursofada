@@ -11,7 +11,8 @@ package Day_02 is
 
 private
 
-   -- Compute solution for part 1.
-   function Sum_Valid_Ids return Big_Integer;
+   -- Part 1 and 2
+   function Sum_Invalid_Ids_1 return Big_Integer;
+   function Sum_Invalid_Ids_2 return Big_Integer;
 
 end Day_02;
