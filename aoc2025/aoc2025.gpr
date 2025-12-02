@@ -1,4 +1,6 @@
+with "utilada_base";
 with "config/aoc2025_config.gpr";
+
 project Aoc2025 is
 
    for Source_Dirs use (

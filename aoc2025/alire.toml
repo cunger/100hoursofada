@@ -10,3 +10,6 @@ website = ""
 tags = ["advent-of-code"]
 
 executables = ["aoc2025"]
+
+[[depends-on]]
+utilada = "2.6.0"
