@@ -31,30 +31,45 @@ package body Day_04 is
       return Output;
    end Read_Input;
 
-   Floor : constant Grid := Read_Input;
+   Floor : Grid := Read_Input;
 
-   -- Part 1
-   function Number_Of_Accessible_Forklifts return Natural is
+   function Number_Of_Accessible_Rolls (G : in out Grid; Remove : Boolean) return Natural is
       Count : Natural := 0;
       Adjacent_Rolls : Natural;
    begin
       for Row in 1 .. 139 loop
          for Col in 1 .. 140 loop
-            Adjacent_Rolls := Floor (Row - 1, Col) + Floor (Row + 1, Col) +
-               Floor (Row - 1, Col - 1) + Floor (Row, Col - 1) + Floor (Row + 1, Col - 1) +
-               Floor (Row - 1, Col + 1) + Floor (Row, Col + 1) + Floor (Row + 1, Col + 1);
-            if Floor (Row, Col) = 1 and Adjacent_Rolls < 4 then
+            Adjacent_Rolls := G (Row - 1, Col) + G (Row + 1, Col) +
+               G (Row - 1, Col - 1) + G (Row, Col - 1) + G (Row + 1, Col - 1) +
+               G (Row - 1, Col + 1) + G (Row, Col + 1) + G (Row + 1, Col + 1);
+            if G (Row, Col) = 1 and Adjacent_Rolls < 4 then
                Count := @ + 1;
+               if Remove then
+                  G (Row, Col) := 0;
+               end if;
             end if;
          end loop;
       end loop;
       return Count;
-   end Number_Of_Accessible_Forklifts;
+   end Number_Of_Accessible_Rolls;
+
+   function Number_Of_Recursively_Accessible_Rolls (G : in out Grid) return Natural is
+      Total : Natural := 0;
+      Count : Natural;
+   begin
+      loop
+         Count := Number_Of_Accessible_Rolls (G, True);
+         Total := @ + Count;
+         exit when Count = 0;
+      end loop;
+
+      return Total;
+   end Number_Of_Recursively_Accessible_Rolls;
 
    procedure Solve is
    begin
-      IO.Put_Line ("Part 1:" & Number_Of_Accessible_Forklifts'Image);
-      IO.Put_Line ("Part 2: -");
+      IO.Put_Line ("Part 1:" & Number_Of_Accessible_Rolls (Floor, False)'Image);
+      IO.Put_Line ("Part 2:" & Number_Of_Recursively_Accessible_Rolls (Floor)'Image);
    end Solve;
 
 end Day_04;

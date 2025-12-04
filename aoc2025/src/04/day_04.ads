@@ -13,7 +13,7 @@ private
    -- With an extra empty row at the top and bottom, and
    -- an extra empty colum left and right, for padding.
 
-   -- Part 1
-   function Number_Of_Accessible_Forklifts return Natural;
+   function Number_Of_Accessible_Rolls (G : in out Grid; Remove : Boolean) return Natural;
+   function Number_Of_Recursively_Accessible_Rolls (G : in out Grid) return Natural;
 
 end Day_04;
