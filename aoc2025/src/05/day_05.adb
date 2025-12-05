@@ -77,9 +77,41 @@ package body Day_05 is
    function Number_Of_Fresh_Ingredients return Big_Integer;
    function Number_Of_Fresh_Ingredients return Big_Integer is
       Count : Big_Integer := 0;
+      Start_Again : Boolean := True;
    begin
-      -- TODO
-      -- (Max Upper - Min Lower) - gaps
+      -- Merge all overlapping intervals.
+      while Start_Again loop
+         Start_Again := False;
+         One_Round_Of_Merging : for I in Fresh_Ingredients'Range loop
+            for J in Fresh_Ingredients'Range loop
+               declare
+                  Lower1 : constant Big_Integer := Fresh_Ingredients (I).Lower_Id;
+                  Lower2 : constant Big_Integer := Fresh_Ingredients (J).Lower_Id;
+                  Upper1 : constant Big_Integer := Fresh_Ingredients (I).Upper_Id;
+                  Upper2 : constant Big_Integer := Fresh_Ingredients (J).Upper_Id;
+               begin
+                  if I /= J and                            -- if the intervals are not the same 
+                     Lower1 /= 0 and Upper1 /= 0 and       -- if the interval was not yet merged
+                     Lower2 <= Lower1 and Upper2 >= Lower1 -- if the intervals overlap
+                  then
+                     Fresh_Ingredients (I).Lower_Id := Min (Lower1, Lower2);
+                     Fresh_Ingredients (I).Upper_Id := Max (Upper1, Upper2);
+                     Fresh_Ingredients (J).Lower_Id := 0;
+                     Fresh_Ingredients (J).Upper_Id := 0;
+                     Start_Again := True;
+                  end if;
+               end;
+               exit One_Round_Of_Merging when Start_Again;
+            end loop;
+         end loop One_Round_Of_Merging;
+      end loop;
+
+      -- Then count the number of IDs in the remaining intervals.
+      for I in Fresh_Ingredients'Range loop
+         if Fresh_Ingredients (I).Lower_Id /= 0 and Fresh_Ingredients (I).Upper_Id /= 0 then
+            Count := @ + (Fresh_Ingredients (I).Upper_Id - Fresh_Ingredients(I).Lower_Id) + 1;
+         end if;
+      end loop;
 
       return Count;
    end Number_Of_Fresh_Ingredients;
