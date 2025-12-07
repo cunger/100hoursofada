@@ -1,0 +1,33 @@
+procedure Spawn_Tachyon_Beam (Row : Dimension; Column : Dimension);
+
+   task type Tachyon_Beam (Row : Dimension; Column : Dimension);
+   task body Tachyon_Beam is
+      Current : Cell := Tachyon_Manifold (Row, Column);
+      Keep_Moving : Boolean := True;
+   begin
+      while Keep_Moving loop
+         if Current = Empty and Row < Dimension'Last then
+            Current := Tachyon_Manifold (Row + 1, Column);
+         end if;
+
+         if Current = Splitter then
+            Number_Of_Splits := @ + 1;
+            Keep_Moving := False;
+
+            if Column > Dimension'First and Tachyon_Manifold (Row, Column - 1) /= Beam_Was_Spawned then
+               Tachyon_Manifold (Row, Column - 1) := Beam_Was_Spawned;
+               Spawn_Tachyon_Beam (Row, Column - 1);
+            end if;
+            if Column < Dimension'Last and Tachyon_Manifold (Row, Column + 1) /= Beam_Was_Spawned then
+               Tachyon_Manifold (Row, Column + 1) := Beam_Was_Spawned;
+               Spawn_Tachyon_Beam (Row, Column + 1);
+            end if;
+         end if;
+      end loop;
+   end Tachyon_Beam;
+
+   procedure Spawn_Tachyon_Beam (Row : Dimension; Column : Dimension) is
+      New_Tachyon_Beam : Tachyon_Beam (Row, Column);
+   begin
+      null;
+   end Spawn_Tachyon_Beam;
