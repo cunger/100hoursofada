@@ -38,12 +38,9 @@ package body Day_07 is
 
    procedure Send_Tachyon;
    procedure Send_Tachyon is
-      Tachyon_Worlds : Worlds_Grid := [others => [others => 0]];
-      -- We count the number of worlds in a kind of Pascal triangle.
    begin
       -- There is a tachyon beam or particle at the start position.
       Tachyon_Manifold (Start_Position.Row, Start_Position.Col) := Visited;
-      Tachyon_Worlds   (Start_Position.Row, Start_Position.Col) := 1;
       -- Then walk over each row and determine where tachyons are.
       for Row in Start_Position.Row + 1 .. Dimension'Last loop
          for Column in Dimension'Range loop
@@ -51,41 +48,55 @@ package body Day_07 is
             if Tachyon_Manifold (Row - 1, Column) = Visited then
                if Tachyon_Manifold (Row, Column) = Empty then
                   Tachyon_Manifold (Row, Column) := Visited;
-                  Tachyon_Worlds   (Row, Column) := Tachyon_Worlds (Row - 1, Column);
-                  -- No splitting, no new worlds are created.
                elsif Tachyon_Manifold (Row, Column) = Splitter then
                   -- If the cell is a splitter, we count it as a split.
                   Number_Of_Splits := @ + 1;
-                  -- We also mark the cells left and right of it as visited,
-                  -- and create a new world in each of them.
+                  -- We also mark the cells left and right of it as visited.
                   if Column > Dimension'First then
                      Tachyon_Manifold (Row, Column - 1) := Visited;
-                     Tachyon_Worlds   (Row, Column - 1) := @ + Tachyon_Worlds (Row - 1, Column);
                   end if;
                   if Column < Dimension'Last then
                      Tachyon_Manifold (Row, Column + 1) := Visited;
-                     Tachyon_Worlds   (Row, Column + 1) := @ + Tachyon_Worlds (Row - 1, Column);
                   end if;
                end if;
             end if;
          end loop;
-
-         -- Print row for debugging
-         --  for Col in Dimension'Range loop
-         --     IO.Put (Tachyon_Worlds (Row, Col)'Image);
-         --  end loop;
-         --  IO.New_Line;
-      end loop;
-   
-      -- Sum worlds in the last row.
-      for Column in Dimension'Range loop
-         Number_Of_Worlds := @ + Tachyon_Worlds (Dimension'Last, Column);
       end loop;
    end Send_Tachyon;
+
+   procedure Compute_Timelines is
+      Tachyon_Worlds : Worlds_Grid := [others => [others => 0]];
+   begin
+      for Row in reverse Dimension'Range loop
+         for Column in Dimension'Range loop
+            if Tachyon_Manifold (Row, Column) = Empty then
+               if Row = Dimension'Last then
+                  Tachyon_Worlds (Row, Column) := 1;
+               else
+                  Tachyon_Worlds (Row, Column) := Tachyon_Worlds (Row + 1, Column);
+               end if;
+            elsif Tachyon_Manifold (Row, Column) = Splitter then
+               if Row = Dimension'Last then
+                  Tachyon_Worlds (Row, Column) := 2;
+               else
+                  if Column > Dimension'First then
+                     Tachyon_Worlds (Row, Column) := @ + Tachyon_Worlds (Row + 1, Column - 1);
+                  end if;
+                  if Column < Dimension'Last then
+                     Tachyon_Worlds (Row, Column) := @ + Tachyon_Worlds (Row + 1, Column + 1);
+                  end if;
+               end if;
+            end if;
+         end loop;
+      end loop;
+
+      Number_Of_Worlds := Tachyon_Worlds (Start_Position.Row, Start_Position.Col);
+   end Compute_Timelines;
 
    procedure Solve is
    begin
       Read_Input;
+      Compute_Timelines;
       Send_Tachyon;
       IO.Put_Line ("Part 1:" & Number_Of_Splits'Image);
       IO.Put_Line ("Part 2:" & To_String (Number_Of_Worlds));
